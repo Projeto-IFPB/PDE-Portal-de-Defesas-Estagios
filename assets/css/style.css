@@ -1,0 +1,165 @@
+/* Reset das configurações*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Configurações para Mobile First */
+
+body, html {
+    height: 100%;
+    width: 100%;
+}
+
+/* Fundo da tela */
+.background-conteudo {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=1470&auto=format&fit=crop') center/cover no-repeat;
+    position: relative;
+    padding: 20px;
+}
+
+/* Fazendo o fundo ficar desfocado */
+.background-conteudo::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
+    z-index: 1;
+}
+
+/* Cartão principal */
+.cartao-autenticacao {
+    background-color: #dbe0eb;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+}
+
+/* Container que segura os dois forms lado a lado */
+.container-formulario {
+    display: flex;
+    width: 200%;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Quando o JS adicionar essa classe, ele desliza para a esquerda (mostrando o cadastro) */
+.cartao-autenticacao.mostrar-cadastro .container-formulario {
+    transform: translateX(-50%);
+}
+
+/* Cada formulário ocupa 50% do container (que é igual a 100% do cartão) */
+.secao-formulario {
+    width: 50%;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Tipografia e Logo */
+.logo {
+    width: 90%; 
+    max-width: 300px; 
+    height: auto; 
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 25px; 
+}
+
+.subtitulo {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.destaque {
+    color: black;
+    font-weight: bold;
+}
+
+/* Formulários */
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.grupo-input {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.grupo-input label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #000;
+    padding-left: 5px;
+}
+
+.grupo-input input, 
+.grupo-input select {
+    width: 100%;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 25px; 
+    background-color: #c4c7d0;
+    color: #333;
+    font-size: 0.9rem;
+    outline: none;
+    transition: box-shadow 0.3s ease;
+}
+
+.grupo-input input:focus,
+.grupo-input select:focus {
+    box-shadow: 0 0 0 2px #1e3a8a;
+}
+
+/* Botão principal */
+.botao-principal {
+    background-color: #1e3a8a;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.botao-principal:hover {
+    background-color: #152963;
+}
+
+/* Texto de alternância no rodapé */
+.texto-alternativo {
+    margin-top: 20px;
+    font-size: 0.85rem;
+    color: #333;
+}
+
+.texto-alternativo a {
+    color: #1e3a8a;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.texto-alternativo a:hover {
+    text-decoration: underline;
+}
