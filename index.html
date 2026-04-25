@@ -3,9 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal de Defesas de Estágios</title>
+    <title>PDE - Portal de Defesas de Estágios</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/script.js" defer></script>
 </head>
 <body>
-    
+    <div class="background-conteudo">
+        <div class="cartao-autenticacao" id="cartaoAutenticacao">
+            
+            <div class="container-formulario" id="containerFormulario">
+                
+                <div class="secao-formulario secao-login">
+                    <img src="assets/img/preview-pde-com-titulo-e-transparente.png" alt="Logo PDE" class="logo">
+                    <p class="subtitulo">Faça <span class="destaque">Login</span> para acessar sua conta</p>
+                    
+                    <form id="formularioLogin">
+                        <div class="grupo-input">
+                            <label for="login-email">Email</label>
+                            <input type="email" id="login-email" placeholder="Seu@email.com" required>
+                        </div>
+                        <div class="grupo-input">
+                            <label for="login-senha">Senha</label>
+                            <input type="password" id="login-senha" placeholder="••••••••••••" required>
+                        </div>
+                        
+                        <button type="submit" class="botao-principal">Entrar</button>
+                    </form>
+                    
+                    <p class="texto-alternativo">
+                        Não tem uma conta? <a href="#" id="botaoParaCadastro">Cadastre-se</a>
+                    </p>
+                </div>
+
+                <div class="secao-formulario secao-cadastro">
+                    <img src="assets/img/preview-pde-com-titulo-e-transparente.png" alt="Logo PDE" class="logo">
+                    <p class="subtitulo"><span class="destaque">Cadastre-se</span> no sistema de estágios</p>
+                    
+                    <form id="formularioCadastro">
+                        <div class="grupo-input">
+                            <label for="cadastro-perfil">Tipo de Perfil</label>
+                            <select id="cadastro-perfil" required>
+                                <option value="" disabled selected>Selecione seu perfil</option>
+                                <option value="aluno">Aluno</option>
+                                <option value="professor">Professor/Orientador</option>
+                                <option value="coordenador">Coordenador</option>
+                            </select>
+                        </div>
+                        <div class="grupo-input">
+                            <label for="cadastro-nome">Nome Completo</label>
+                            <input type="text" id="cadastro-nome" placeholder="Seu nome completo" required>
+                        </div>
+                        <div class="grupo-input">
+                            <label for="cadastro-email">Email</label>
+                            <input type="email" id="cadastro-email" placeholder="Seu@email.com" required>
+                        </div>
+                        <div class="grupo-input">
+                            <label for="cadastro-senha">Senha</label>
+                            <input type="password" id="cadastro-senha" placeholder="••••••••••••" required>
+                        </div>
+                        <div class="grupo-input">
+                            <label for="cadastro-confirmar-senha">Confirmar Senha</label>
+                            <input type="password" id="cadastro-confirmar-senha" placeholder="••••••••••••" required>
+                        </div>
+                        
+                        <button type="submit" class="botao-principal">Cadastrar</button>
+                    </form>
+                    
+                    <p class="texto-alternativo">
+                        Já tem uma conta? <a href="#" id="botaoParaLogin">Faça Login</a>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </body>
 </html>
