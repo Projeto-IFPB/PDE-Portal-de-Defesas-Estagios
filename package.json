@@ -1,0 +1,26 @@
+{
+  "name": "pde",
+  "version": "1.0.0",
+  "description": "Esse repositório foi criado para desenvolvimento de uma aplicação WEB que gerencia as defesas de estágios dos alunos do IFPB.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Projeto-IFPB/PDE-Portal-de-Defesas-Estagios.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Projeto-IFPB/PDE-Portal-de-Defesas-Estagios/issues"
+  },
+  "homepage": "https://github.com/Projeto-IFPB/PDE-Portal-de-Defesas-Estagios#readme",
+  "devDependencies": {
+    "vite": "^8.0.10"
+  }
+}
