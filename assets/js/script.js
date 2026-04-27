@@ -66,13 +66,21 @@ async function login(event) {
     password.value = "";
   }
 }
+function Comparar_Senhas() {
+  const senha = document.getElementById("cadastro-senha");
+  const confirmar_senha = document.getElementById("cadastro-confirmar-senha");
 
+  if (senha.value !== confirmar_senha.value) {
+    console.log("As senhas Não coincidem");
+    return false;
+  }
+  return true;
+}
 // Selecão do botão de Login e evento que chama a função quando o botão for clicado
 const btn_entrar = document.querySelector("#botao-login");
 btn_entrar.addEventListener("click", login);
 
-// DomContentLoaded 
+// DomContentLoaded
 document.addEventListener("DOMContentLoaded", () => {
   Troca_Telas();
 });
-
