@@ -1,3 +1,4 @@
+import bcrypt from "bcryptjs";
 const URL_CADASTRO = import.meta.env.VITE_URL_JSON;
 
 function Troca_Telas() {
@@ -43,6 +44,18 @@ function Comparar_Senhas() {
   }
   return true;
 }
+async function Gerar_Hash(usuario) {
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(usuario["senha"], salt);
+
+  // 3. Substitui a senha pura pelo hash
+  usuario["senha"] = hash;
+
+  // Remove o confirmar-senha como você já faz
+  delete usuario["confirmar-senha"];
+
+  return usuario;
+}
 function Cadastro() {
   const formulario = document.getElementById("formularioCadastro");
 
@@ -54,6 +67,7 @@ function Cadastro() {
 
     let dados = new FormData(formulario);
     let usuario = Object.fromEntries(dados.entries());
+    Gerar_Hash(usuario);
 
     try {
       const busca = await fetch(URL_CADASTRO);
