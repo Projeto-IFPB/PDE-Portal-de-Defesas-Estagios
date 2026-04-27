@@ -1,58 +1,61 @@
+function Troca_Telas() {
+  // Seleciona os elementos
+  const cartaoAutenticacao = document.getElementById("cartaoAutenticacao");
+  const botaoParaCadastro = document.getElementById("botaoParaCadastro");
+  const botaoParaLogin = document.getElementById("botaoParaLogin");
+
+  // Verificacao: se nao existe o elemento na pagina ele passa reto
+  if (!cartaoAutenticacao || !botaoParaCadastro || !botaoParaLogin) return;
+  // Evento para ir para a tela de Cadastro
+  botaoParaCadastro.addEventListener("click", (e) => {
+    e.preventDefault();
+    cartaoAutenticacao.classList.add("mostrar-cadastro");
+  });
+
+  // Evento para voltar para a tela de Login
+  botaoParaLogin.addEventListener("click", (e) => {
+    e.preventDefault();
+    cartaoAutenticacao.classList.remove("mostrar-cadastro");
+  });
+}
 document.addEventListener("DOMContentLoaded", () => {
-    // Seleciona os elementos
-    const cartaoAutenticacao = document.getElementById('cartaoAutenticacao');
-    const botaoParaCadastro = document.getElementById('botaoParaCadastro');
-    const botaoParaLogin = document.getElementById('botaoParaLogin');
-
-    // Evento para ir para a tela de Cadastro
-    botaoParaCadastro.addEventListener('click', (e) => {
-        e.preventDefault();
-        cartaoAutenticacao.classList.add('mostrar-cadastro'); 
-    });
-
-    // Evento para voltar para a tela de Login
-    botaoParaLogin.addEventListener('click', (e) => {
-        e.preventDefault();
-        cartaoAutenticacao.classList.remove('mostrar-cadastro'); 
-    });
+  Troca_Telas();
 });
 
 // Lógica de Login
 async function login(event) {
-    // Impede o envio padrão do formulário
-    event.preventDefault();
+  // Impede o envio padrão do formulário
+  event.preventDefault();
 
-    // Pega os valores dos campos de email e senha
-    let email = document.querySelector("#login-email")
-    let email_value = email.value;
-    let password = document.querySelector("#login-senha");
-    let password_value = password.value;
-    
-    // Busca o arquivo JSON e converte para um objeto JavaScript
-    const resposta = await fetch("../data/users.json");
-    const users = await resposta.json();
+  // Pega os valores dos campos de email e senha
+  let email = document.querySelector("#login-email");
+  let email_value = email.value;
+  let password = document.querySelector("#login-senha");
+  let password_value = password.value;
 
-    // Procura o usuário com o email fornecido
-    const email_encontrado = users.find(user => user.email === email_value);
-    
-    // Se encontrar o email, verifica se a senha bate com a senha armazenada
-    if (email_encontrado) {
-        if (email_encontrado.password_hash === password_value) {
-            alert("Login bem-sucedido!");
-            email.value = "";
-            password.value = "";
-            return current_user = email_encontrado;
-        }
-        else {
-            alert("Senha incorreta!");
-            password.value = "";
-        }
+  // Busca o arquivo JSON e converte para um objeto JavaScript
+  const resposta = await fetch("../data/users.json");
+  const users = await resposta.json();
+
+  // Procura o usuário com o email fornecido
+  const email_encontrado = users.find((user) => user.email === email_value);
+
+  // Se encontrar o email, verifica se a senha bate com a senha armazenada
+  if (email_encontrado) {
+    if (email_encontrado.password_hash === password_value) {
+      alert("Login bem-sucedido!");
+      email.value = "";
+      password.value = "";
+      return (current_user = email_encontrado);
+    } else {
+      alert("Senha incorreta!");
+      password.value = "";
     }
-    else {
-        alert("Email não encontrado!");
-        email.value = "";
-        password.value = "";
-    }
+  } else {
+    alert("Email não encontrado!");
+    email.value = "";
+    password.value = "";
+  }
 }
 
 // Selecão do botão de Login e evento que chama a função quando o botão for clicado
