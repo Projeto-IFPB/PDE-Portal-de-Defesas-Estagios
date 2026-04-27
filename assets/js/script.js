@@ -18,10 +18,19 @@ function Troca_Telas() {
     cartaoAutenticacao.classList.remove("mostrar-cadastro");
   });
 }
-document.addEventListener("DOMContentLoaded", () => {
-  Troca_Telas();
-});
+function campos_preenchidos() {
+  let campos = document.querySelectorAll("campos_validacao");
+  let preenchidos = true;
 
+  for (let i = 0; campos.length > i; i++) {
+    let campo = campos[i];
+
+    if (campo.value === "" || campo.value === null) {
+      preenchidos = false;
+    }
+  }
+  return preenchidos;
+}
 // Lógica de Login
 async function login(event) {
   // Impede o envio padrão do formulário
@@ -61,3 +70,9 @@ async function login(event) {
 // Selecão do botão de Login e evento que chama a função quando o botão for clicado
 const btn_entrar = document.querySelector("#botao-login");
 btn_entrar.addEventListener("click", login);
+
+// DomContentLoaded 
+document.addEventListener("DOMContentLoaded", () => {
+  Troca_Telas();
+});
+
