@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "perfil": "aluno",
+    "nome": "João Roberto",
+    "email": "joao.roberto@academico.ifpb.edu.br",
+    "password_hash": "joao"
+  },
+  {
+    "id": 2,
+    "perfil": "aluno",
+    "nome": "Maria da Silva",
+    "email": "maria.silva@academico.ifpb.edu.br",
+    "password_hash": "maria"
+  }
+]
