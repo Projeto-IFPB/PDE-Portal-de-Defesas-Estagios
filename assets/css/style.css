@@ -250,6 +250,8 @@ form {
     font-size: 0.9rem;
     font-weight: bold;
     width: 100%;
+
+    min-height: 44px;
     opacity: 1;
     transition: opacity 0.8s ease;
 }
@@ -265,7 +267,8 @@ form {
 }
 
 .oculto {
-    display: none;
+    visibility: hidden;
+    opacity: 0;
 }
 
 .fade-out{
