@@ -75,7 +75,7 @@ body, html {
     color: #ffffff;
     z-index: -1;
     overflow: hidden;
-    transition: transform 0.30s ease-in-out;
+    transition: transform 0.25s ease-in-out;
 }
 
 /*
