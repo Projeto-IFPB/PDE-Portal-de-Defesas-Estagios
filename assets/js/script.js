@@ -405,3 +405,40 @@ document.addEventListener("DOMContentLoaded", () => {
   Troca_Telas();
   Cadastro();
 });
+
+
+//Função reutilizável de mensagens
+function mostrarMensagem(idElemento, texto, tipo) {
+    //Busca o elemento pelo id no HTML
+    const mensagem = document.getElementById(idElemento);
+
+    //Limpa o estado antigo
+    mensagem.className = "mensagem";
+     //Troca o texto dentro do elemento
+    mensagem.textContent = texto;
+    //Retira o display None
+    mensagem.classList.remove("oculto");
+
+    //Verifica o tipo, adiciona classe de acordo com isso e remove .oculto
+    if(tipo === "sucesso") {
+        mensagem.classList.add("sucesso");
+    } else {
+        mensagem.classList.add("erro");
+    }
+
+    //Garante que mensagem esteja visível
+    mensagem.classList.remove("fade-out");
+    //Força a reiniciar animação CSS
+    void mensagem.offsetWidth;
+    //sucess = 2500ms error = 4000ms
+    const tempo = tipo === "sucesso" ? 2500 : 4000;
+
+    //Adiciona fade-out depois do "tempo", espera animção terminar e some
+    setTimeout(() => {
+      mensagem.classList.add("fade-out")
+
+      setTimeout(() => {
+        mensagem.classList.add("oculto");
+      }, 800)
+    }, tempo);
+}
