@@ -342,7 +342,7 @@ function Cadastro() {
       if (resposta.ok) {
         alert("Cadastro realizado com sucesso no MockAPI!");
         formulario.reset();
-        Troca_Telas()
+        document.getElementById("botaoRedirecionarLogin").click();
       } else {
         alert("Erro ao salvar os dados.");
       }
