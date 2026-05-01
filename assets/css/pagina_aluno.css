@@ -369,4 +369,7 @@ body {
     flex-direction: column;
     justify-content: space-around;
   }
+  .card-estagio-disponivel {
+    min-width: 49.5%;
+  }
 }
