@@ -275,7 +275,7 @@ function Comparar_Senhas() {
     senha.value === "" ||
     senha.value === null
   ) {
-    mostrarMensagem("mensagem_cadastro", "As senhas não coincidem!", "erro");
+    mostrarMensagem("mensagem-cadastro", "As senhas não coincidem!", "erro");
     return false;
   }
   return true;
