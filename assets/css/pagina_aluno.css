@@ -22,6 +22,9 @@ body {
   letter-spacing: -0.5px;
   margin-bottom: 0.8rem;
 }
+.desktop {
+  display: none;
+}
 
 #titulo p {
   color: #444664;
@@ -69,7 +72,7 @@ body {
 }
 
 #cadastrar-estagio button {
-  background-color: #1900FF;
+  background-color: #1900ff;
   display: inline-flex;
   color: white;
   border: none;
@@ -118,10 +121,10 @@ body {
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
   border: 1px solid #e0e0e0;
 }
-.card-estagio:hover{
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    background-color:#f0f2f5 ;
-    transform: translateY(-2px)
+.card-estagio:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background-color: #f0f2f5;
+  transform: translateY(-2px);
 }
 
 .card-estagio h2 {
@@ -131,11 +134,12 @@ body {
   margin: 0;
 }
 
-.card-estagio p, .card-estagio-disponivel p {
-    color: #444664;
+.card-estagio p,
+.card-estagio-disponivel p {
+  color: #444664;
 }
 .card-estagio span {
-    font-size: 1rem;
+  font-size: 1rem;
 }
 
 .card-header {
@@ -182,7 +186,7 @@ body {
 
 .estagios-andamento #status {
   background-color: #adf3ad;
-  color: #316F31;
+  color: #316f31;
   padding: 0.1rem 0.6rem;
   border-radius: 15px;
   background-size: cover;
@@ -245,10 +249,10 @@ body {
   color: black;
   text-align: center;
 }
-.card-estagio-disponivel:hover{
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    background-color:#f0f2f5 ;
-    transform: translateY(-2px)
+.card-estagio-disponivel:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background-color: #f0f2f5;
+  transform: translateY(-2px);
 }
 
 .card-estagio-disponivel h2 {
@@ -268,7 +272,7 @@ body {
 }
 
 .card-estagio-disponivel button {
-  background-color: #1900FF;
+  background-color: #1900ff;
   display: inline-flex;
   justify-content: center;
   color: white;
@@ -299,4 +303,28 @@ body {
 
 .card-estagio-disponivel button:active {
   transform: scale(0.95);
+}
+
+/* Responsividade: Desktop */
+@media (min-width: 1024px) {
+  .mobile {
+    display: none;
+  }
+  .desktop {
+    display: flex;
+  }
+  #cadastrar-estagio button {
+    height: 50px;
+    border-radius: 15px;
+    width: 280px;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1rem;
+  }
+  .container-novo-estagio-desktop {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    margin-right: 15px;
+  }
 }
