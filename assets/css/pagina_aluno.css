@@ -184,13 +184,24 @@ body {
   color: blue;
 }
 
-.estagios-andamento #status {
+.estagios-andamento #status-mobile {
   background-color: #adf3ad;
   color: #316f31;
   padding: 0.1rem 0.6rem;
   border-radius: 15px;
   background-size: cover;
   display: inline-block;
+  margin-bottom: 0.8rem;
+  font-weight: 400;
+  font-size: 0.85rem;
+}
+.estagios-andamento #status-desktop {
+  background-color: #adf3ad;
+  color: #316f31;
+  padding: 0.1rem 0.6rem;
+  border-radius: 15px;
+  background-size: cover;
+  display: none;
   margin-bottom: 0.8rem;
   font-weight: 400;
   font-size: 0.85rem;
@@ -313,6 +324,10 @@ body {
   .desktop {
     display: flex;
   }
+  #cadastrar-estagio h3 {
+    margin-top: 1.5px;
+    margin-bottom: 0;
+  }
   #cadastrar-estagio button {
     height: 50px;
     border-radius: 15px;
@@ -326,5 +341,32 @@ body {
     justify-content: space-between;
     margin-top: 1rem;
     margin-right: 15px;
+  }
+  .estagios-andamento #status-desktop {
+    margin-top: 5px;
+    display: flex;
+  }
+  .estagios-andamento #status-mobile {
+    display: none;
+  }
+  .card-header {
+    margin-top: -0.8rem;
+  }
+  .meus-estagios-desktop-titulo {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
+  .meus-estagios-desktop  {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 150px;
+    margin-top: -0.5rem;
+  }
+  .card-estagio {
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
   }
 }
