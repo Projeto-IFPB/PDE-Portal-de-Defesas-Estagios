@@ -386,6 +386,7 @@ async function login(event) {
       mostrarMensagem("mensagem-login", "Login bem-sucedido!", "sucesso");
       email.value = "";
       password.value = "";
+      window.location.replace("../../pages/pagina_aluno.html");
       return (current_user = email_encontrado);
     } else {
       mostrarMensagem("mensagem-login", "Senha incorreta!", "erro");

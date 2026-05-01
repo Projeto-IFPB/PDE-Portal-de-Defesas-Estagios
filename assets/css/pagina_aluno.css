@@ -1,0 +1,274 @@
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', Arial, sans-serif;
+    background-color: #ced0dc;
+    color: #333;
+    padding: 1rem;
+}
+
+#titulo h1{
+    font-size: 1.5rem;
+    color: black;
+    line-height: 23px;
+    letter-spacing: -0.5px;
+    margin-bottom: 0.8rem;
+}
+
+#titulo p {
+    color:black;
+    letter-spacing: -0.5px;
+    margin-bottom: 2rem;
+}
+
+#cadastrar-estagio {
+    background-color: #dbddf6;
+    border: 2.5px solid #1445af;
+    border-radius: 15px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 2px 2px 5px rgba(2, 63, 194, 0.486);
+}
+
+#cadastrar-estagio:hover {
+    border-color: #d4d7dd;
+    transition: 0.3s;
+    transform: translateY(1.2);
+}
+
+#cadastrar-estagio h3 i{
+    color: blue;
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+}
+
+#cadastrar-estagio h3 {
+    font-size: 1.2rem;
+    color: black;
+    margin: 0 0 0.5rem 0.5rem;
+}
+
+#cadastrar-estagio h4 {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: rgb(29, 29, 29);
+    margin-bottom: 1rem;
+}
+
+#cadastrar-estagio button {
+    background-color: #110fd5;
+    display: inline-flex;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+#cadastrar-estagio button:hover {
+    background-color: #0909b9;
+    transition: 0.2s;
+}
+
+
+#cadastrar-estagio p {
+    margin-left: 0.5rem;
+}
+
+#meus-estagios > h2 {
+    font-size: 1.4rem;
+    color: black;
+    margin-bottom: 1.2rem;
+}
+
+#meus-estagios > h2 i{
+    color: blue;
+    margin-right: 0.8rem;
+    font-size: 2rem;
+}
+
+.estagios-andamento {
+    display: flex;
+    flex-direction: column; /* Um card abaixo do outro */
+    gap: 20px;
+}
+
+.card-estagio {
+    background-color: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0e0e0;
+}
+
+.card-estagio h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.897);
+    margin: 0;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+}
+
+.btn-detalhes {
+    background-color: white;
+    border: 2px solid #ccc;
+    padding: 5px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s;
+    font-weight: 400;
+    color: black;
+}
+
+.btn-detalhes:hover {
+    background-color: #f0f0f0;
+}
+
+.btn-detalhes i {
+    font-size: 1rem;
+    color: #333;
+}
+
+.estagios-andamento h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.897);
+}
+
+.estagios-andamento h2 i{
+    margin-right: 0.6rem;
+    color: blue;
+}
+
+.estagios-andamento #status {
+    background-color: rgba(0, 128, 0, 0.568);
+    color: rgb(1, 78, 1);
+    padding: 0.1rem 0.6rem;
+    border-radius: 15px;
+    background-size: cover;
+    display: inline-block;
+    margin-bottom: 0.8rem;
+    font-weight: 400;
+    font-size: 0.85rem;
+}
+
+.estagios-andamento span {
+    font-weight: bold;
+    margin-right: 0.2rem;
+}
+
+.estagios-disponibilizados {
+    margin-top: 2rem;
+}
+
+.estagios-disponibilizados > h2 {
+    font-size: 1.4rem;
+    color: black;
+    margin-bottom: 1.2rem;
+}
+
+.estagios-disponibilizados i {
+    color: blue;
+    margin-right: 0.8rem;
+    font-size: 2rem;
+}
+
+.estagios-disponiveis {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    text-align: center;
+
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Oculta a barra de rolagem */
+.estagios-disponiveis::-webkit-scrollbar {
+    display: none;
+}
+
+/* Esconde a barra de rolagem*/
+.estagios-disponiveis {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+
+.card-estagio-disponivel {
+    background-color: white;
+    border-radius: 15px;
+    padding: 1rem;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0e0e0;
+    max-width: 50%;
+    font-weight: 500;
+    color: black;
+    text-align: center;
+}
+
+.card-estagio-disponivel h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.card-estagio-disponivel p {
+    margin-bottom: 0.5rem;
+}
+
+.card-estagio-disponivel span{
+    font-weight: bold;
+    margin-right: 0.2rem;
+}
+
+.card-estagio-disponivel button {
+    background-color: #110fd5;
+    display: inline-flex;
+    color: white;
+    border: none;
+    padding: 0.7rem 1rem;
+    width: 100%;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.card-estagio-disponivel button:hover {
+    background-color: #0909b9;
+    transition: 0.2s;
+}
+
+/* Adicione no .btn-detalhes ou no botão do seu formulário */
+.card-estagio-disponivel button {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease;
+}
+
+.card-estagio-disponivel button:hover {
+    transform: scale(1.02); /* Aumenta levemente o tamanho */
+    filter: brightness(1.2);
+}
+
+.card-estagio-disponivel button:active {
+    transform: scale(0.95);
+}
