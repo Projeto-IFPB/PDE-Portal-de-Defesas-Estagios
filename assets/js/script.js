@@ -386,8 +386,15 @@ async function login(event) {
       mostrarMensagem("mensagem-login", "Login bem-sucedido!", "sucesso");
       email.value = "";
       password.value = "";
-      window.location.replace("../../pages/pagina_aluno.html");
-      return (current_user = email_encontrado);
+      sessionStorage.setItem("perfilUsuario", email_encontrado["perfil"]);
+    if (email_encontrado["perfil"] === "aluno") {
+        window.location.replace("../pages/pagina_aluno.html");
+    // Conforme fomos fazendo as paginas a gente des-comenta as proximas linhas
+    }/* else if (usuarioEncontrado.perfil === "orientador") {
+        window.location.replace("../pages/pagina_orientador.html");
+    } else if (usuarioEncontrado.perfil === "coordenador") {
+        window.location.replace("../pages/pagina_coordenador.html");
+    }*/
     } else {
       mostrarMensagem("mensagem-login", "Senha incorreta!", "erro");
       password.value = "";

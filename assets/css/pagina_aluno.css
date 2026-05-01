@@ -11,6 +11,7 @@ body {
   background-color: #d2d3df;
   color: #333;
   padding: 1rem;
+  visibility: hidden;
 }
 #titulo {
   margin-top: 3rem;
