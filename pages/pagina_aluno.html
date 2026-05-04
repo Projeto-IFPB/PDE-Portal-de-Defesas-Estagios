@@ -11,6 +11,8 @@
 </head>
 <body>
 
+<div id="mensagem-estagio" class="mensagem oculto"></div>
+
 <div id='titulo'>
     <h1>Bem Vindo Ao Portal de Defesas de Estágio</h1>
     <p>Gerencie seus estágios e encontre novas oportunidades</p>
@@ -20,7 +22,7 @@
     <h4 class="mobile">Registre seu novo estágio.</h4>
     <div class="container-novo-estagio-desktop">
         <h4 class="desktop">Registre um novo estágio para começar o processo de aprovação.</h4>
-        <button type="button"><i class="fa-solid fa-plus"></i><p>Novo Estágio</p></button>
+        <button id="abrir-modal-estagio" type="button"><i class="fa-solid fa-plus"></i><p>Novo Estágio</p></button>
     </div>
 </div>
 
@@ -117,6 +119,60 @@
 
     </div>
 </section>
+
+<div id="modal-overlay" class="modal-overlay">
+  <div class="modal-conteudo">
+    <div class="modal-cabecalho">
+      <div>
+        <h2>Cadastrar Novo Estágio</h2>
+        <p>Preencha os dados do Estágio</p>
+      </div>
+      <button id="fechar-modal-estagio" type="button" class="fechar-modal" aria-label="Fechar modal">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <form class="modal-formulario" id="formulario-estagio" autocomplete="off">
+      <div class="modal-grid">
+        <label>
+          Empresa
+          <input type="text" name="empresa" placeholder="Nome da empresa">
+        </label>
+        <label>
+          Data de Início
+          <input type="date" name="dataInicio">
+        </label>
+        <label>
+          Nome do Orientador
+          <input type="text" name="nomeOrientador" placeholder="Nome do orientador">
+        </label>
+        <label>
+          Curso do Estagiário
+          <input type="text" name="cursoEstagiario" placeholder="Engenharia de Software">
+        </label>
+        <label>
+          Email do Coordenador de Curso
+          <input type="email" name="emailCoordenador" placeholder="coordenador@ifpb.edu.br">
+        </label>
+        <label class="span-dobrado">
+          Upload do Termo de Compromisso
+          <input type="file" name="termoCompromisso">
+        </label>
+        <label class="span-dobrado">
+          Upload do Termo de Orientação
+          <input type="file" name="termoOrientacao">
+        </label>
+      </div>
+
+      <div class="modal-acoes">
+        <button type="button" class="botao-cancelar">Cancelar</button>
+        <button type="submit" class="botao-cadastrar">Cadastrar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script type="module" src="../assets/js/pagina_aluno.js" defer></script>
 
 </body>
 </html>
