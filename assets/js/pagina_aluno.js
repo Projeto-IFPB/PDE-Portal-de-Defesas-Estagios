@@ -1,0 +1,1 @@
+const URL_ESTAGIO = import.meta.env.VITE_URL_JSON_ESTAGIO;

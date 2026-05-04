@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs";
-const URL_CADASTRO = import.meta.env.VITE_URL_JSON;
+const URL_USUARIO = import.meta.env.VITE_URL_JSON_USUARIO;
 
 function Troca_Telas() {
   // ==========================================
@@ -312,7 +312,7 @@ function Cadastro() {
     Gerar_Hash(usuario);
 
     try {
-      const busca = await fetch(URL_CADASTRO);
+      const busca = await fetch(URL_USUARIO);
       const lista_usuarios = await busca.json();
 
       const email_existe = lista_usuarios.some(
@@ -333,7 +333,7 @@ function Cadastro() {
         return;
       }
       // Envia para o JSON da API
-      const resposta = await fetch(URL_CADASTRO, {
+      const resposta = await fetch(URL_USUARIO, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -370,7 +370,7 @@ async function login(event) {
   let password_value = password.value;
 
   // Busca o arquivo JSON e converte para um objeto JavaScript
-  const resposta = await fetch(URL_CADASTRO);
+  const resposta = await fetch(URL_USUARIO);
   const users = await resposta.json();
 
   // Procura o usuário com o email fornecido
