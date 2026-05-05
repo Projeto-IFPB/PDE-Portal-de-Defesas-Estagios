@@ -205,3 +205,5 @@ async function carregarEstagiosCadastrados() {
     containerEstagios.innerHTML = `<p class="mensagem-erro">Erro ao carregar dados.</p>`;
   }
 }
+
+document.addEventListener('DOMContentLoaded', carregarEstagiosCadastrados);
