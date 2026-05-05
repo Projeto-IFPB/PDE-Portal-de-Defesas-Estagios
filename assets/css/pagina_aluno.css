@@ -482,6 +482,17 @@ body {
   pointer-events: none;
 }
 
+.carregando, .mensagem-vazia, .mensagem-erro {
+    padding: 2rem;
+    text-align: center;
+    background: #fff;
+    
+    border-radius: 15px;
+    margin: 1rem 0;
+    width: 100%;
+}
+
+
 @media (max-width: 900px) {
   .modal-grid {
     grid-template-columns: 1fr;
