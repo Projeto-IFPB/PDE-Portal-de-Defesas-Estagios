@@ -152,3 +152,58 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+
+const containerEstagios = document.getElementById('container-meus-estagios');
+
+function renderizarEstagios(dados) {
+  //se não houver nenhum estágio ainda exibe isso
+  if (dados.length === 0) {
+    containerEstagios.innerHTML = `
+    <div class="mensagem-vazia">
+      <i class="fa-solid fa-folder-open"></i>
+      <p>Você ainda não possui estagios cadastrados.</p>
+    </div>`;
+    return;
+  }
+  //percorre os dados salvos na API e retorna estrutura completa html com os dados da API
+  containerEstagios.innerHTML = dados.map(estagio => {
+    //formatação da data
+    const [ano, mes, dia] = estagio.dataInicio.split("-");
+    const data = new Date(ano, mes-1, dia).toLocaleDateString("pt-BR");
+    return `
+    <div class="card-estagio">
+
+            <div class="card-header">
+                <div class="meus-estagios-desktop-titulo">
+                    <h2><i class="fa-regular fa-building"></i>${estagio.empresa}</h2>
+                    <span id="status-desktop">Em Andamento</span>
+                </div>
+                <button class="btn-detalhes"><i class="fa-regular fa-eye"></i> Detalhes</button>
+            </div>
+
+            <p id="status-mobile">Em Andamento</p>
+            <div class="meus-estagios-desktop">
+                <p id="inicio"><i class="fa-regular fa-calendar"></i> <span>Início:</span>${data}</p>
+                <p id="orientador"><span>Orientador:</span>${estagio.nomeOrientador}</p>
+            </div>
+            <p id="curso"><span>Curso:</span>${estagio.cursoEstagiario}</p>
+        </div>
+`}).join('');
+}
+
+async function carregarEstagiosCadastrados() {
+  try {
+    //espera a requisição dos dados da API ser completada
+    const resposta = await fetch(URL_ESTAGIO);
+    //se der erro vai pro catch
+    if (!resposta.ok) throw new Error();
+    //converte a resposta JSON em objeto/array js
+    const dados = await resposta.json();
+    renderizarEstagios(dados);
+  } catch (error) {
+    containerEstagios.innerHTML = `<p class="mensagem-erro">Erro ao carregar dados.</p>`;
+  }
+}
+//chama a função apenas depois que o DOM estiver totalmente carregado
+document.addEventListener('DOMContentLoaded', carregarEstagiosCadastrados);
