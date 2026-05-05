@@ -205,5 +205,5 @@ async function carregarEstagiosCadastrados() {
     containerEstagios.innerHTML = `<p class="mensagem-erro">Erro ao carregar dados.</p>`;
   }
 }
-
+//chama a função apenas depois que o DOM estiver totalmente carregado
 document.addEventListener('DOMContentLoaded', carregarEstagiosCadastrados);
