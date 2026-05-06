@@ -199,7 +199,7 @@ async function renderizarEstagios(dados) {
   const estagiosDoAluno = dados.filter((estagio) => estagio.id_aluno == meuId);
   
   //se não houver nenhum estágio ainda exibe isso
-  if (dados.length === 0) {
+  if (estagiosDoAluno.length === 0) {
     containerEstagios.innerHTML = `
     <div class="mensagem-vazia">
       <i class="fa-solid fa-folder-open"></i>
