@@ -171,6 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (resposta.ok) {
           mostrarMensagem("Estágio cadastrado com sucesso!", "sucesso");
           await carregarEstagiosCadastrados();
+          await Sugestoes()
           formulario.reset();
           fechar();
         } else {
@@ -186,6 +187,41 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+async function Sugestoes() {
+  try {
+    const busca = await fetch(URL_USUARIOS);
+    const usuarios = await busca.json();
+
+    const listaOrientadores = document.getElementById("lista-orientadores");
+    const listaCoordenadores = document.getElementById("lista-coordenadores");
+
+    // Limpa listas anteriores
+    listaOrientadores.innerHTML = "";
+    listaCoordenadores.innerHTML = "";
+
+    usuarios.forEach(user => {
+      const option = document.createElement("option");
+      
+      // Se for orientador, adiciona na lista de nomes
+      if (user.perfil === "orientador") { // Ajuste "perfil" para o nome da chave no seu JSON
+        option.value = user.nome;
+        listaOrientadores.appendChild(option.cloneNode(true));
+      }
+      
+      // Se for coordenador, adiciona na lista de emails
+      if (user.perfil === "coordenador") {
+        option.value = user.email;
+        listaCoordenadores.appendChild(option);
+      }
+    });
+  } catch (error) {
+    console.error("Erro ao carregar sugestões:", error);
+  }
+}
+
+
+
+
 
 const containerEstagios = document.getElementById("container-meus-estagios");
 
@@ -256,4 +292,8 @@ async function carregarEstagiosCadastrados() {
   }
 }
 //chama a função apenas depois que o DOM estiver totalmente carregado
-document.addEventListener("DOMContentLoaded", carregarEstagiosCadastrados);
+document.addEventListener("DOMContentLoaded", () =>{
+   carregarEstagiosCadastrados()
+   Sugestoes()
+  
+})
