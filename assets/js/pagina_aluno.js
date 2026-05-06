@@ -1,4 +1,5 @@
 const URL_ESTAGIOS = import.meta.env.VITE_URL_JSON_ESTAGIOS;
+const URL_USUARIOS = import.meta.env.VITE_URL_JSON_USUARIOS;
 
 const mostrarMensagem = (texto, tipo = "erro") => {
   const mensagem = document.getElementById("mensagem-estagio");
@@ -100,25 +101,55 @@ document.addEventListener("DOMContentLoaded", () => {
       botaoEnviar.innerText = "Enviando...";
 
       try {
+        const busca = await fetch(URL_USUARIOS);
+        const lista_usuarios = await busca.json();
+        const orientador = lista_usuarios.find((user) => user["nome"] === nomeOrientador);
+        let id_orientador = null
+        if (orientador) {
+          id_orientador = orientador["id"];
+        } else {
+          mostrarMensagem("Não foi possivel encontrar esse orientador.","erro");
+        }
+        const aluno = lista_usuarios.find(
+          (user) => user["email"] === sessionStorage.getItem("EmailUsuario"));
+        const id_aluno = aluno["id"];
+
+        const coordenador = lista_usuarios.find((user) => user["email"] === emailCoordenador);
+        let id_coordenador = null
+        let id_banca_examinadora = null
+        if (coordenador) {
+          id_coordenador = {
+            coordenador: coordenador["id"],
+          };
+          id_banca_examinadora = [];
+          id_banca_examinadora.push(id_coordenador);
+        } else{
+          mostrarMensagem("Não foi possivel o coordenador.","erro");
+        }
+
+        const status = "em andamento";
+
         const [compBase64, oriBase64] = await Promise.all([
           lerArquivoComoBase64(termoCompromisso),
           lerArquivoComoBase64(termoOrientacao),
         ]);
 
         const payload = {
-          empresa,
-          dataInicio,
-          nomeOrientador,
-          cursoEstagiario,
-          emailCoordenador,
-          termoCompromisso: {
+          empresa: empresa,
+          curso_aluno: cursoEstagiario,
+          data_inicio: dataInicio,
+          id_aluno: id_aluno,
+          id_orientador: id_orientador,
+          id_banca_examinadora: id_banca_examinadora,
+          status: status,
+          termo_compromisso: {
             fileName: termoCompromisso.name,
             fileType: termoCompromisso.type,
             fileSize: termoCompromisso.size,
             path: `files/termo-compromisso/${termoCompromisso.name}`,
             content: compBase64,
           },
-          termoOrientacao: {
+          termo_orientacao: {
             fileName: termoOrientacao.name,
             fileType: termoOrientacao.type,
             fileSize: termoOrientacao.size,
@@ -153,10 +184,20 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+const containerEstagios = document.getElementById("container-meus-estagios");
 
-const containerEstagios = document.getElementById('container-meus-estagios');
+async function renderizarEstagios(dados) {
+  const busca = await fetch(URL_USUARIOS);
+  const lista_usuarios = await busca.json();
 
-function renderizarEstagios(dados) {
+  const emailLogado = sessionStorage.getItem("EmailUsuario");
+
+  const usuarioLogado = lista_usuarios.find((user) => user["email"] === emailLogado);
+  const meuId = usuarioLogado ? usuarioLogado.id : null;
+
+
+  const estagiosDoAluno = dados.filter((estagio) => estagio.id_aluno == meuId);
+  
   //se não houver nenhum estágio ainda exibe isso
   if (dados.length === 0) {
     containerEstagios.innerHTML = `
@@ -167,35 +208,41 @@ function renderizarEstagios(dados) {
     return;
   }
   //percorre os dados salvos na API e retorna estrutura completa html com os dados da API
-  containerEstagios.innerHTML = dados.map(estagio => {
-    //formatação da data
-    const [ano, mes, dia] = estagio.dataInicio.split("-");
-    const data = new Date(ano, mes-1, dia).toLocaleDateString("pt-BR");
-    return `
+  containerEstagios.innerHTML = estagiosDoAluno
+    .map((estagio) => {
+
+      const orientador = lista_usuarios.find((user) => user["id"] === estagio.id_orientador);
+      const nome_orientador = orientador ? orientador["nome"] : "Não Cadastrado";
+      //formatação da data
+      const [ano, mes, dia] = estagio.data_inicio.split("-");
+      const data = new Date(ano, mes - 1, dia).toLocaleDateString("pt-BR");
+      return `
     <div class="card-estagio">
 
             <div class="card-header">
                 <div class="meus-estagios-desktop-titulo">
                     <h2><i class="fa-regular fa-building"></i>${estagio.empresa}</h2>
-                    <span id="status-desktop">Em Andamento</span>
+                    <span id="status-desktop">${estagio.status}</span>
                 </div>
                 <button class="btn-detalhes"><i class="fa-regular fa-eye"></i> Detalhes</button>
             </div>
 
-            <p id="status-mobile">Em Andamento</p>
+            <p id="status-mobile">${estagio.status}</p>
             <div class="meus-estagios-desktop">
                 <p id="inicio"><i class="fa-regular fa-calendar"></i> <span>Início:</span>${data}</p>
-                <p id="orientador"><span>Orientador:</span>${estagio.nomeOrientador}</p>
+                <p id="orientador"><span>Orientador:</span>${nome_orientador}</p>
             </div>
-            <p id="curso"><span>Curso:</span>${estagio.cursoEstagiario}</p>
+            <p id="curso"><span>Curso:</span>${estagio.curso_aluno}</p>
         </div>
-`}).join('');
+`;
+    })
+    .join("");
 }
 
 async function carregarEstagiosCadastrados() {
   try {
     //espera a requisição dos dados da API ser completada
-    const resposta = await fetch(URL_ESTAGIO);
+    const resposta = await fetch(URL_ESTAGIOS);
     //se der erro vai pro catch
     if (!resposta.ok) throw new Error();
     //converte a resposta JSON em objeto/array js
@@ -206,4 +253,4 @@ async function carregarEstagiosCadastrados() {
   }
 }
 //chama a função apenas depois que o DOM estiver totalmente carregado
-document.addEventListener('DOMContentLoaded', carregarEstagiosCadastrados);
+document.addEventListener("DOMContentLoaded", carregarEstagiosCadastrados);
