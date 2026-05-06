@@ -1,4 +1,4 @@
-const URL_ESTAGIO = import.meta.env.VITE_URL_JSON_ESTAGIO;
+const URL_ESTAGIOS = import.meta.env.VITE_URL_JSON_ESTAGIOS;
 
 const mostrarMensagem = (texto, tipo = "erro") => {
   const mensagem = document.getElementById("mensagem-estagio");
@@ -127,7 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
           },
         };
 
-        const resposta = await fetch(URL_ESTAGIO, {
+        const resposta = await fetch(URL_ESTAGIOS, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

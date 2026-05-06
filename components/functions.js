@@ -1,5 +1,4 @@
-// const URL_ESTAGIOS = import.meta.env.URL_ESTAGIOS;
-const URL_ESTAGIOS = import.meta.env.URL_ESTAGIOS;
+const URL_ESTAGIOS = import.meta.env.VITE_URL_JSON_ESTAGIOS;
 
 // Função para carregar os estágios do mockapi. Retorna um array de objetos que representam os estágios
 async function carregar_estagios() {
