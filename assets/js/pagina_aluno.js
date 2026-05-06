@@ -76,20 +76,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const empresa = formulario.querySelector("[name=empresa]").value.trim();
       const dataInicio = formulario.querySelector("[name=dataInicio]").value;
-      const nomeOrientador = formulario
-        .querySelector("[name=nomeOrientador]")
-        .value.trim();
-      const cursoEstagiario = formulario
-        .querySelector("[name=cursoEstagiario]")
-        .value.trim();
-      const emailCoordenador = formulario
-        .querySelector("[name=emailCoordenador]")
-        .value.trim();
-      const termoCompromisso = formulario.querySelector(
-        "[name=termoCompromisso]"
-      ).files[0];
-      const termoOrientacao = formulario.querySelector("[name=termoOrientacao]")
-        .files[0];
+      const nomeOrientador = formulario.querySelector("[name=nomeOrientador]").value.trim();
+      const cursoEstagiario = formulario.querySelector("[name=cursoEstagiario]").value.trim();
+      const emailCoordenador = formulario.querySelector("[name=emailCoordenador]").value.trim();
+      const termoCompromisso = formulario.querySelector("[name=termoCompromisso]").files[0];
+      const termoOrientacao = formulario.querySelector("[name=termoOrientacao]").files[0];
       const botaoEnviar = formulario.querySelector("button[type=submit]");
 
       if (
@@ -113,8 +104,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const busca = await fetch(URL_USUARIOS);
         const lista_usuarios = await busca.json();
         const orientador = lista_usuarios.find((user) => user["nome"] === nomeOrientador);
+        let id_orientador = null
         if (orientador) {
-          const id_orientador = orientador["id"];
+          id_orientador = orientador["id"];
         } else {
           mostrarMensagem("Não foi possivel encontrar esse orientador.","erro");
         }
@@ -123,12 +115,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const id_aluno = aluno["id"];
 
         const coordenador = lista_usuarios.find((user) => user["email"] === emailCoordenador);
+        let id_coordenador = null
+        let id_banca_examinadora = null
         if (coordenador) {
-          const id_coordenador = {
+          id_coordenador = {
             coordenador: coordenador["id"],
           };
-          const id_banca_exaninadora = [];
-          id_banca_exaninadora.push(id_coordenador);
+          id_banca_examinadora = [];
+          id_banca_examinadora.push(id_coordenador);
         } else{
           mostrarMensagem("Não foi possivel o coordenador.","erro");
         }
@@ -146,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
           data_inicio: dataInicio,
           id_aluno: id_aluno,
           id_orientador: id_orientador,
-          id_banca_examinadora: id_banca_exaninadora,
+          id_banca_examinadora: id_banca_examinadora,
           status: status,
           termo_compromisso: {
             fileName: termoCompromisso.name,

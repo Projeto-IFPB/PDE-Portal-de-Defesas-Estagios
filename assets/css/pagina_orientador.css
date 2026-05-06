@@ -1,0 +1,195 @@
+body{
+    background-color: #d2d3df;
+    font-family: "Inter", Arial, sans-serif;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.alunos_orientados{
+    margin-left: 2.2rem;
+    margin-bottom: -0.7rem;
+    display: flex;
+    align-items: center;
+}
+.alunos_orientados i{
+    font-size: 30px;
+    color: #143280;
+    margin-right: 1.1rem;
+}
+/* Container do Card */
+#lista-estagios {
+    
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 383px));
+  gap: 1px;
+  justify-content: center;
+}
+
+.grid-alunos {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+.card-aluno {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 20px;
+    min-height: 200px;
+    width: 400px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: 0.3s;
+}
+
+.card-aluno:hover {
+    box-shadow: 0 8px 12px rgba(0,0,0,0.1);
+}
+
+.card-aluno h3 {
+    margin: 0 0 5px 0;
+    font-size: medium;
+    color: black;
+}
+
+.card-aluno p , .card-aluno a {
+    margin: 2px 0;
+    font-size: 0.91rem;
+    color: #444664;
+    margin-bottom: 0.5rem;
+    text-decoration: none;
+}
+.card-aluno p i, .card-aluno a i {
+    color: #143280;
+    font-size: 1rem;
+    margin-right: 0.3rem;
+}
+.card-aluno a i{
+    margin-bottom: 0.5rem;
+}
+.card-info{
+    margin-left: -0.5rem;
+}
+
+.header-card {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.2rem;
+    margin-top: -15px;
+    margin-left: -0.2rem;
+}
+.circulo{
+    margin-top: 0px;
+    background-color: #143280;
+    border-radius: 50%;
+    height: 60px;
+    width: 60px;
+    text-align: center;
+}
+.circulo i{
+    margin-top: 12px;
+    color: white;
+    font-size: 30px;
+}
+#status {
+    margin-top: 15px;
+}
+
+.status {
+    background-color: #adf3ad;
+  color: #316f31;
+    padding: 4px 8px;
+    border-radius: 15px;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+ #status-mobile {
+  background-color: #adf3ad;
+  color: #316f31;
+  padding: 0.1rem 0.6rem;
+  border-radius: 15px;
+  background-size: cover;
+  display: inline-block;
+  margin-bottom: 0.8rem;
+  font-weight: 400;
+  font-size: 0.85rem;
+}
+ #status-desktop {
+  background-color: #adf3ad;
+  color: #316f31;
+  padding: 0.1rem 0.6rem;
+  border-radius: 15px;
+  background-size: cover;
+  display: none;
+  margin-bottom: 0.8rem;
+  font-weight: 400;
+  font-size: 0.85rem;
+}
+@media (min-width: 770px) {
+    #lista-estagios {
+        grid-template-columns: repeat(auto-fit, minmax(400px, 450px));
+        justify-content: start;
+}
+@media (min-width: 1024px) {
+    #lista-estagios {
+        justify-content: center;
+    }
+}
+
+@media (min-width: 1440px) {
+    #lista-estagios {
+        grid-template-columns: repeat(auto-fit, minmax(400px, 700px));
+        gap: 24px; 
+        justify-content: start;
+    }
+    
+    .card-aluno {
+        height: auto; 
+        height: 260px; 
+        width: 650px;
+        padding: 32px; 
+    }
+
+
+    .circulo {
+        height: 80px;
+        width: 80px;
+    }
+
+    .circulo i {
+        margin-top: 16px;
+        font-size: 42px; 
+    }
+
+    
+    .status {
+        font-size: 0.95rem;
+        padding: 6px 14px;  
+        border-radius: 20px;
+    }
+
+
+    .card-aluno h3 {
+        font-size: 1.5rem; 
+        margin-top: 10px;
+        margin-bottom: 9px;
+    }
+
+    
+    .card-aluno p, .card-aluno a {
+        font-size: 1.15rem; 
+        margin-bottom: 0.8rem;
+    }
+
+   
+    .card-aluno p i, .card-aluno a i {
+        font-size: 1.25rem; 
+        margin-right: 0.6rem;
+    }
+    .card-aluno a i{
+        margin-bottom: 0.8rem;
+    }
+}
