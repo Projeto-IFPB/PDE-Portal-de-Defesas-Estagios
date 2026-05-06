@@ -132,6 +132,7 @@ body{
     #lista-estagios {
         grid-template-columns: repeat(auto-fit, minmax(400px, 450px));
         justify-content: start;
+    }
 }
 @media (min-width: 1024px) {
     #lista-estagios {
