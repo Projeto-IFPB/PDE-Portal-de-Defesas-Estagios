@@ -127,7 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } else{
           mostrarMensagem("Não foi possivel o coordenador.","erro");
         }
-        
+
         const status = "em andamento";
 
         const [compBase64, oriBase64] = await Promise.all([
@@ -170,6 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (resposta.ok) {
           mostrarMensagem("Estágio cadastrado com sucesso!", "sucesso");
+          await carregarEstagiosCadastrados();
           formulario.reset();
           fechar();
         } else {
