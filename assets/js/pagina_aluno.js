@@ -82,6 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const termoCompromisso = formulario.querySelector("[name=termoCompromisso]").files[0];
       const termoOrientacao = formulario.querySelector("[name=termoOrientacao]").files[0];
       const botaoEnviar = formulario.querySelector("button[type=submit]");
+      const convite_orientacao = "aceito"
 
       if (
         !empresa ||
@@ -119,14 +120,14 @@ document.addEventListener("DOMContentLoaded", () => {
         let id_banca_examinadora = null
         if (coordenador) {
           id_coordenador = {
-            coordenador: coordenador["id"],
+            id_coordenador: coordenador["id"],
           };
           id_banca_examinadora = [];
           id_banca_examinadora.push(id_coordenador);
         } else{
           mostrarMensagem("Não foi possivel o coordenador.","erro");
         }
-
+        
         const status = "em andamento";
 
         const [compBase64, oriBase64] = await Promise.all([
@@ -142,6 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
           id_orientador: id_orientador,
           id_banca_examinadora: id_banca_examinadora,
           status: status,
+          convite_orientacao: convite_orientacao,
           termo_compromisso: {
             fileName: termoCompromisso.name,
             fileType: termoCompromisso.type,
