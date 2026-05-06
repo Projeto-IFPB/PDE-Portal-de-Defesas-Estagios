@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs";
-const URL_CADASTRO = import.meta.env.VITE_URL_JSON;
+const URL_USUARIO = import.meta.env.VITE_URL_JSON_USUARIO;
 
 function Troca_Telas() {
   // ==========================================
@@ -258,7 +258,9 @@ function campos_preenchidos() {
     let campo = campos[i];
 
     if (campo.value === "" || campo.value === null) {
+      mostrarMensagem("mensagem-cadastro", "Preencha todos os campos!", "erro");
       preenchidos = false;
+      break;
     }
   }
   return preenchidos;
@@ -273,7 +275,7 @@ function Comparar_Senhas() {
     senha.value === "" ||
     senha.value === null
   ) {
-    console.log("As senhas Não coincidem");
+    mostrarMensagem("mensagem-cadastro", "As senhas não coincidem!", "erro");
     return false;
   }
   return true;
@@ -310,7 +312,7 @@ function Cadastro() {
     Gerar_Hash(usuario);
 
     try {
-      const busca = await fetch(URL_CADASTRO);
+      const busca = await fetch(URL_USUARIO);
       const lista_usuarios = await busca.json();
 
       const email_existe = lista_usuarios.some(
@@ -321,17 +323,17 @@ function Cadastro() {
       );
 
       if (email_existe) {
-        alert("Este e-mail já está cadastrado! Tente outro.");
+        mostrarMensagem("mensagem-cadastro", "Este e-mail já está cadastrado!", "erro");
         formulario.email.value = "";
         return;
       }
       if (nome_existe) {
-        alert("Este nome já está cadastrado! Tente outro.");
+        mostrarMensagem("mensagem-cadastro", "Este nome já está cadastrado!", "erro");
         formulario.nome.value = "";
         return;
       }
       // Envia para o JSON da API
-      const resposta = await fetch(URL_CADASTRO, {
+      const resposta = await fetch(URL_USUARIO, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -340,15 +342,15 @@ function Cadastro() {
       });
 
       if (resposta.ok) {
-        alert("Cadastro realizado com sucesso no MockAPI!");
+        mostrarMensagem("mensagem-cadastro", "Cadastro realizado com sucesso!", "sucesso");
         formulario.reset();
         document.getElementById("botaoRedirecionarLogin").click();
       } else {
-        alert("Erro ao salvar os dados.");
+        mostrarMensagem("mensagem-cadastro", "Erro ao salvar os dados.", "erro");
       }
     } catch (erro) {
       console.error("Erro na requisição:", erro);
-      alert("Não foi possível conectar ao servidor.");
+      mostrarMensagem("mensagem-cadastro", "Não foi possível conectar ao servidor.", "erro");
     } finally {
       botaoEnviar.disabled = false;
       botaoEnviar.innerText = textoOriginal;
@@ -368,7 +370,7 @@ async function login(event) {
   let password_value = password.value;
 
   // Busca o arquivo JSON e converte para um objeto JavaScript
-  const resposta = await fetch(URL_CADASTRO);
+  const resposta = await fetch(URL_USUARIO);
   const users = await resposta.json();
 
   // Procura o usuário com o email fornecido
@@ -381,16 +383,24 @@ async function login(event) {
       email_encontrado["senha"]
     );
     if (SenhaCorreta) {
-      alert("Login bem-sucedido!");
+      mostrarMensagem("mensagem-login", "Login bem-sucedido!", "sucesso");
       email.value = "";
       password.value = "";
-      return (current_user = email_encontrado);
+      sessionStorage.setItem("perfilUsuario", email_encontrado["perfil"]);
+    if (email_encontrado["perfil"] === "aluno") {
+        window.location.replace("../pages/pagina_aluno.html");
+    // Conforme fomos fazendo as paginas a gente des-comenta as proximas linhas
+    }/* else if (usuarioEncontrado.perfil === "orientador") {
+        window.location.replace("../pages/pagina_orientador.html");
+    } else if (usuarioEncontrado.perfil === "coordenador") {
+        window.location.replace("../pages/pagina_coordenador.html");
+    }*/
     } else {
-      alert("Senha incorreta!");
+      mostrarMensagem("mensagem-login", "Senha incorreta!", "erro");
       password.value = "";
     }
   } else {
-    alert("Email não encontrado!");
+    mostrarMensagem("mensagem-login", "Email não encontrado!", "erro");
     email.value = "";
     password.value = "";
   }
@@ -405,3 +415,40 @@ document.addEventListener("DOMContentLoaded", () => {
   Troca_Telas();
   Cadastro();
 });
+
+
+//Função reutilizável de mensagens
+function mostrarMensagem(idElemento, texto, tipo) {
+    //Busca o elemento pelo id no HTML
+    const mensagem = document.getElementById(idElemento);
+
+    //Limpa o estado antigo
+    mensagem.className = "mensagem";
+     //Troca o texto dentro do elemento
+    mensagem.textContent = texto;
+    //Retira o display None
+    mensagem.classList.remove("oculto");
+
+    //Verifica o tipo, adiciona classe de acordo com isso e remove .oculto
+    if(tipo === "sucesso") {
+        mensagem.classList.add("sucesso");
+    } else {
+        mensagem.classList.add("erro");
+    }
+
+    //Garante que mensagem esteja visível
+    mensagem.classList.remove("fade-out");
+    //Força a reiniciar animação CSS
+    void mensagem.offsetWidth;
+    //sucess = 2500ms error = 4000ms
+    const tempo = tipo === "sucesso" ? 2500 : 4000;
+
+    //Adiciona fade-out depois do "tempo", espera animção terminar e some
+    setTimeout(() => {
+      mensagem.classList.add("fade-out")
+
+      setTimeout(() => {
+        mensagem.classList.add("oculto");
+      }, 800)
+    }, tempo);
+}

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Aluno</title>
+    <link rel="stylesheet" href="../assets/css/pagina_aluno.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script type="module" src="../assets/js/autenticacoes.js" defer></script>
+    
+</head>
+<body>
+
+<div id="mensagem-estagio" class="mensagem oculto"></div>
+
+<div id='titulo'>
+    <h1>Bem Vindo Ao Portal de Defesas de Estágio</h1>
+    <p>Gerencie seus estágios e encontre novas oportunidades</p>
+</div>    
+<div id="cadastrar-estagio">
+    <h3><i class="fa-solid fa-plus"></i>Cadastrar Novo Estágio</h3>
+    <h4 class="mobile">Registre seu novo estágio.</h4>
+    <div class="container-novo-estagio-desktop">
+        <h4 class="desktop">Registre um novo estágio para começar o processo de aprovação.</h4>
+        <button id="abrir-modal-estagio" type="button"><i class="fa-solid fa-plus"></i><p>Novo Estágio</p></button>
+    </div>
+</div>
+
+<section id="meus-estagios">
+    <h2><i class="fa-solid fa-briefcase"></i>Meus Estágios</h2>
+
+    <div class="estagios-andamento" id="container-meus-estagios">
+
+        <div class="card-estagio">
+            <p class="carregando">Carregando seus estágios...</p>
+        </div>
+            
+</section>
+<section class="estagios-disponibilizados">
+    <h2><i class="fa-solid fa-briefcase"></i>Estágios Disponíveis Pela Faculdade</h2>
+
+    <div class="estagios-disponiveis">
+
+        <div class="card-estagio-disponivel">
+            <h2 id="titulo-vaga">Desenvolvedor Front end</h2>
+            <p id="empresa">Wall Interprise</p>
+            <p id="area-vaga"><span>Área:</span>Tecnologia</p>
+            <p id="quantidade-vagas"><span>Vagas:</span>4</p>
+            <button type="button">Ver Detalhes</button>
+        </div>
+
+        <div class="card-estagio-disponivel">
+            <h2 id="titulo-vaga">Desenvolvedor Back end</h2>
+            <p id="empresa">IFPB</p>
+            <p id="area-vaga"><span>Área:</span>Tecnologia</p>
+            <p id="quantidade-vagas"><span>Vagas:</span>2</p>
+            <button type="button">Ver Detalhes</button>
+        </div>
+
+        <div class="card-estagio-disponivel">
+            <h2 id="titulo-vaga">Desenvolvedor Full Stack</h2>
+            <p id="empresa">SOFTCOM</p>
+            <p id="area-vaga"><span>Área:</span>Tecnologia</p>
+            <p id="quantidade-vagas"><span>Vagas:</span>1</p>
+            <button type="button">Ver Detalhes</button>
+        </div>
+
+    </div>
+</section>
+
+<div id="modal-overlay" class="modal-overlay">
+  <div class="modal-conteudo">
+    <div class="modal-cabecalho">
+      <div>
+        <h2>Cadastrar Novo Estágio</h2>
+        <p>Preencha os dados do Estágio</p>
+      </div>
+      <button id="fechar-modal-estagio" type="button" class="fechar-modal" aria-label="Fechar modal">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <form class="modal-formulario" id="formulario-estagio" autocomplete="off">
+      <div class="modal-grid">
+        <label>
+          Empresa
+          <input type="text" name="empresa" placeholder="Nome da empresa">
+        </label>
+        <label>
+          Data de Início
+          <input type="date" name="dataInicio">
+        </label>
+        <label>
+          Nome do Orientador
+          <input type="text" name="nomeOrientador" placeholder="Nome do orientador">
+        </label>
+        <label>
+          Curso do Estagiário
+          <input type="text" name="cursoEstagiario" placeholder="Engenharia de Software">
+        </label>
+        <label>
+          Email do Coordenador de Curso
+          <input type="email" name="emailCoordenador" placeholder="coordenador@ifpb.edu.br">
+        </label>
+        <label class="span-dobrado">
+          Upload do Termo de Compromisso
+          <input type="file" name="termoCompromisso">
+        </label>
+        <label class="span-dobrado">
+          Upload do Termo de Orientação
+          <input type="file" name="termoOrientacao">
+        </label>
+      </div>
+
+      <div class="modal-acoes">
+        <button type="button" class="botao-cancelar">Cancelar</button>
+        <button type="submit" class="botao-cadastrar">Cadastrar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script type="module" src="../assets/js/pagina_aluno.js" defer></script>
+
+</body>
+</html>
