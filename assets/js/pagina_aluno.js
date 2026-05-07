@@ -232,17 +232,6 @@ async function renderizarEstagios(dados) {
 
   const estagiosDoAluno = dados.filter((estagio) => estagio.id_aluno == meuId);
   
-async function renderizarEstagios(dados) {
-  const busca = await fetch(URL_USUARIOS);
-  const lista_usuarios = await busca.json();
-
-  const emailLogado = sessionStorage.getItem("EmailUsuario");
-
-  const usuarioLogado = lista_usuarios.find((user) => user["email"] === emailLogado);
-  const meuId = usuarioLogado ? usuarioLogado.id : null;
-
-
-  const estagiosDoAluno = dados.filter((estagio) => estagio.id_aluno == meuId);
   
   //se não houver nenhum estágio ainda exibe isso
   if (estagiosDoAluno.length === 0) {
@@ -299,8 +288,8 @@ async function carregarEstagiosCadastrados() {
   }
 }
 //chama a função apenas depois que o DOM estiver totalmente carregado
-document.addEventListener("DOMContentLoaded", () =>{
-   carregarEstagiosCadastrados()
-   Sugestoes()
+document.addEventListener("DOMContentLoaded", () => {
+  carregarEstagiosCadastrados()
+  Sugestoes()
   
-})
+});
