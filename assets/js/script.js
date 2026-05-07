@@ -310,10 +310,14 @@ function Cadastro() {
     let dados = new FormData(formulario);
     let usuario = Object.fromEntries(dados.entries());
     Gerar_Hash(usuario);
+    
 
     try {
       const busca = await fetch(URL_USUARIOS);
       const lista_usuarios = await busca.json();
+
+      let matricula = (lista_usuarios.length +1)
+      usuario["matricula"] = matricula
 
       const email_existe = lista_usuarios.some(
         (u) => u["email"] === usuario["email"]
@@ -387,14 +391,14 @@ async function login(event) {
       email.value = "";
       password.value = "";
       sessionStorage.setItem("perfilUsuario", email_encontrado["perfil"]);
-    if (email_encontrado["perfil"] === "aluno") {
-        window.location.replace("../pages/pagina_aluno.html");
-    // Conforme fomos fazendo as paginas a gente des-comenta as proximas linhas
-    }/* else if (usuarioEncontrado.perfil === "orientador") {
-        window.location.replace("../pages/pagina_orientador.html");
-    } else if (usuarioEncontrado.perfil === "coordenador") {
-        window.location.replace("../pages/pagina_coordenador.html");
-    }*/
+      sessionStorage.setItem("EmailUsuario", email_encontrado["email"])
+      if (email_encontrado["perfil"] === "aluno") {
+        window.location.replace("../pages/pagina_aluno");
+    }else if (email_encontrado["perfil"] === "orientador") {
+        window.location.replace("../pages/orientador");
+    } else if (email_encontrado["perfil"] === "coordenador") {
+        window.location.replace("../pages/coordenador");
+    }
     } else {
       mostrarMensagem("mensagem-login", "Senha incorreta!", "erro");
       password.value = "";

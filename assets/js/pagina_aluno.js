@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
             path: `files/termo-compromisso/${termoCompromisso.name}`,
             content: compBase64,
           },
-          termoOrientacao: {
+          termo_orientacao: {
             fileName: termoOrientacao.name,
             fileType: termoOrientacao.type,
             fileSize: termoOrientacao.size,
@@ -232,6 +232,18 @@ async function renderizarEstagios(dados) {
 
   const estagiosDoAluno = dados.filter((estagio) => estagio.id_aluno == meuId);
   
+async function renderizarEstagios(dados) {
+  const busca = await fetch(URL_USUARIOS);
+  const lista_usuarios = await busca.json();
+
+  const emailLogado = sessionStorage.getItem("EmailUsuario");
+
+  const usuarioLogado = lista_usuarios.find((user) => user["email"] === emailLogado);
+  const meuId = usuarioLogado ? usuarioLogado.id : null;
+
+
+  const estagiosDoAluno = dados.filter((estagio) => estagio.id_aluno == meuId);
+  
   //se não houver nenhum estágio ainda exibe isso
   if (estagiosDoAluno.length === 0) {
     containerEstagios.innerHTML = `
@@ -242,14 +254,15 @@ async function renderizarEstagios(dados) {
     return;
   }
   //percorre os dados salvos na API e retorna estrutura completa html com os dados da API
-  containerEstagios.innerHTML = dados.map(estagio => {
+  containerEstagios.innerHTML = estagiosDoAluno
+    .map((estagio) => {
 
-    const orientador = lista_usuarios.find((user) => user["id"] === estagio.id_orientador);
+      const orientador = lista_usuarios.find((user) => user["id"] === estagio.id_orientador);
       const nome_orientador = orientador ? orientador["nome"] : "Não Cadastrado";
-    //formatação da data
-    const [ano, mes, dia] = estagio.dataInicio.split("-");
-    const data = new Date(ano, mes-1, dia).toLocaleDateString("pt-BR");
-    return `
+      //formatação da data
+      const [ano, mes, dia] = estagio.data_inicio.split("-");
+      const data = new Date(ano, mes - 1, dia).toLocaleDateString("pt-BR");
+      return `
     <div class="card-estagio">
 
             <div class="card-header">
@@ -263,17 +276,19 @@ async function renderizarEstagios(dados) {
             <p id="status-mobile">${estagio.status}</p>
             <div class="meus-estagios-desktop">
                 <p id="inicio"><i class="fa-regular fa-calendar"></i> <span>Início:</span>${data}</p>
-                <p id="orientador"><span>Orientador:</span>${estagio.nome_orientador}</p>
+                <p id="orientador"><span>Orientador:</span>${nome_orientador}</p>
             </div>
-            <p id="curso"><span>Curso:</span>${estagio.curso_estagiario}</p>
+            <p id="curso"><span>Curso:</span>${estagio.curso_aluno}</p>
         </div>
-`}).join('');
+`;
+    })
+    .join("");
 }
 
 async function carregarEstagiosCadastrados() {
   try {
     //espera a requisição dos dados da API ser completada
-    const resposta = await fetch(URL_ESTAGIO);
+    const resposta = await fetch(URL_ESTAGIOS);
     //se der erro vai pro catch
     if (!resposta.ok) throw new Error();
     //converte a resposta JSON em objeto/array js

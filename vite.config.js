@@ -9,7 +9,9 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
-        pagina_aluno: resolve(__dirname, './pages/pagina_aluno.html'),
+        pagina_aluno: resolve(__dirname, './pages/pagina_aluno'),
+        orientador: resolve(__dirname, './pages/orientador'),
+        coordenador: resolve(__dirname, './pages/coordenador')
       },
     },
   },
