@@ -15,7 +15,7 @@ async function carregar_estagios() {
     }
 }
 
-async function total_alunos(id_orientador) {
+export async function total_alunos(id_orientador) {
 
     const lista_estagios = await carregar_estagios()
 
@@ -41,7 +41,7 @@ async function total_alunos(id_orientador) {
 
 // console.log(await total_alunos(3))
 
-async function estagios_em_orientacao(id_orientador) {
+export async function estagios_em_orientacao(id_orientador) {
 
     const lista_estagios = await carregar_estagios()
 
@@ -66,7 +66,7 @@ async function estagios_em_orientacao(id_orientador) {
 
 // console.log(await estagios_em_orientacao(3))
 
-async function pedidos_pendentes(id_orientador) {
+export async function pedidos_pendentes(id_orientador) {
     const lista_estagios = await carregar_estagios()
 
     if (lista_estagios) {
@@ -81,3 +81,39 @@ async function pedidos_pendentes(id_orientador) {
 }
 
 // console.log(await pedidos_pendentes(3))
+
+export function renderizarDashboardInformativo(configuracaoCards) {
+    const container = document.querySelector('.dashboard-informativo');
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    configuracaoCards.forEach(card => {
+        const divCardInformativo = document.createElement("div");
+        divCardInformativo.className = `card ${card.classesCss}`;''
+
+        divCardInformativo.innerHTML = `
+            <div class="card-content">
+                <div class="card-informacoes">
+                    <p class="card-label">${card.titulo}</p>
+                    <h2 class="card-valor">0</h2>
+                </div>
+                <i class="card-icone fa-solid ${card.icone}"></i>
+            </div>
+        `;
+
+        container.appendChild(divCardInformativo);
+    });
+
+    const divCardAgendarDefesa = document.createElement("div");
+    divCardAgendarDefesa.className = `card card-agendar-defesa`;
+
+    divCardAgendarDefesa.innerHTML = `
+        <div class="card-content card-content-agendar">
+            <p class="card-label-agendar">Agendar Defesa de Estágio</p>
+            <button class="btn-agendar">Agendar Defesa</button>
+        </div>
+    `;
+
+    container.appendChild(divCardAgendarDefesa);
+}
