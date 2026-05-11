@@ -115,5 +115,30 @@ export function renderizarDashboardInformativo(configuracaoCards) {
         </div>
     `;
 
+    const btnAbrir = divCardAgendarDefesa.querySelector(".btn-agendar");
+    const overlay = document.getElementById("modal-overlay");
+    const fecharModal = document.getElementById("fechar-modal-estagio");
+    const botaoCancelar = document.querySelector(".botao-cancelar");
+
+    const abrir = () => {
+        overlay.classList.add("ativo");
+        document.body.style.overflow = "hidden";
+    };
+
+    const fechar = () => {
+        overlay.classList.remove("ativo");
+        document.body.style.overflow = "";
+    };
+
+    if (btnAbrir) btnAbrir.addEventListener("click", abrir);
+    if (fecharModal) fecharModal.addEventListener("click", fechar);
+    if (botaoCancelar) botaoCancelar.addEventListener("click", fechar);
+    
+    if (overlay) {
+        overlay.addEventListener("click", (event) => {
+            if (event.target === overlay) fechar();
+        });
+    }
+
     container.appendChild(divCardAgendarDefesa);
 }
