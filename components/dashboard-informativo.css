@@ -1,0 +1,345 @@
+@import url("https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
+
+body {
+    background-color: #d2d3df;
+    font-family: "Inter", Arial, sans-serif;
+    padding: 1rem;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Título da página */
+.titulo {
+    margin-top: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.titulo h1 {
+    font-size: 1.5rem;
+    color: black;
+    line-height: 28px;
+    letter-spacing: -0.5px;
+    margin-bottom: 0.5rem;
+}
+
+.titulo p {
+    color: #444664;
+    letter-spacing: -0.5px;
+    font-size: 0.95rem;
+}
+
+/* Dashboard Informativo */
+.dashboard-informativo {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+    margin-bottom: 2.5rem;
+}
+
+/* Cards do Dashboard */
+.card {
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 2px 2px 5px rgba(2, 63, 194, 0.1);
+    border: 2px solid transparent;
+    transition: 0.3s;
+}
+
+.card:hover {
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.card-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    gap: 2rem;
+}
+
+.card-informacoes {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.card i {
+    font-size: 3.5rem;
+    width: fit-content;
+}
+
+.card-label {
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin: 0;
+}
+
+.card-valor {
+    font-size: 2rem;
+    font-weight: 500;
+    margin: 0;
+    line-height: 1;
+}
+
+/* Card Informativo 1 */
+.card-info-1 {
+    background-color: #d1f4f4;
+    border-color: #0b9496;
+}
+
+.card-info-1 i {
+    color: #0b9496;
+}
+
+.card-info-1 p {
+    color: #333;
+}
+
+.card-info-1 h2 {
+    color: #0b9496;
+}
+
+/* Card Informativo 2 */
+.card-info-2 {
+    background-color: #d4f5d4;
+    border-color: #47a94a;
+}
+
+.card-info-2 i {
+    color: #47a94a;
+}
+
+.card-info-2 p {
+    color: #333;
+}
+
+.card-info-2 h2 {
+    color: #47a94a;
+}
+
+/* Card Informativo 3 */
+.card-info-3 {
+    background-color: #fde4d1;
+    border-color: #d97706;
+}
+
+.card-info-3 i {
+    color: #d97706;
+}
+
+.card-info-3 p {
+    color: #333;
+}
+
+.card-info-3 h2 {
+    color: #d97706;
+}
+
+/* Card Informativo 4 */
+.card-info-4 {
+    background-color: #ebd4f5;
+    border-color: #b942c4;
+}
+
+.card-info-4 i {
+    color: #b942c4;
+}
+
+.card-info-4 p {
+    color: #333;
+}
+
+.card-info-4 h2 {
+    color: #b942c4;
+}
+
+/* Card Agendar Defesa */
+.card-agendar-defesa {
+    background-color: #dbddf6;
+    border-color: #1445af;
+}
+
+.card-label-agendar {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+    align-self: center;
+}
+
+.btn-agendar {
+    background-color: #1900ff;
+    color: white;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    width: fit-content;
+    transition: 0.3s;
+}
+
+.btn-agendar:hover {
+    background-color: #0909b9;
+}
+
+.btn-agendar:active {
+    transform: scale(0.98);
+}
+
+/* Seção Alunos Orientados */
+.alunos_orientados {
+    margin-left: 0;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.alunos_orientados i {
+    font-size: 30px;
+    color: #143280;
+    margin-right: 1.1rem;
+}
+
+.alunos_orientados h1 {
+    font-size: 1.35rem;
+    color: black;
+}
+
+/* Container do Card */
+#lista-estagios {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 383px));
+    gap: 1px;
+    justify-content: center;
+}
+
+.grid-alunos {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+.card-aluno {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 20px;
+    min-height: 200px;
+    width: 400px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: 0.3s;
+}
+
+.card-aluno:hover {
+    box-shadow: 0 8px 12px rgba(0,0,0,0.1);
+}
+
+.card-aluno h3 {
+    margin: 0 0 5px 0;
+    font-size: medium;
+    color: black;
+}
+
+.card-aluno p , .card-aluno a {
+    margin: 2px 0;
+    font-size: 0.91rem;
+    color: #444664;
+    margin-bottom: 0.5rem;
+    text-decoration: none;
+}
+
+.card-aluno p i, .card-aluno a i {
+    color: #143280;
+    font-size: 1rem;
+    margin-right: 0.3rem;
+}
+
+.card-aluno a i {
+    margin-bottom: 0.5rem;
+}
+
+.card-info {
+    margin-left: -0.5rem;
+}
+
+.header-card {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.2rem;
+    margin-top: -15px;
+    margin-left: -0.2rem;
+}
+
+.circulo {
+    margin-top: 0px;
+    background-color: #143280;
+    border-radius: 50%;
+    height: 60px;
+    width: 60px;
+    text-align: center;
+}
+
+.circulo i {
+    margin-top: 12px;
+    color: white;
+    font-size: 30px;
+}
+
+#status {
+    margin-top: 15px;
+}
+
+.status {
+    background-color: #adf3ad;
+    color: #316f31;
+    padding: 4px 8px;
+    border-radius: 15px;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+#status-mobile {
+    background-color: #adf3ad;
+    color: #316f31;
+    padding: 0.1rem 0.6rem;
+    border-radius: 15px;
+    background-size: cover;
+    display: inline-block;
+    margin-bottom: 0.8rem;
+    font-weight: 400;
+    font-size: 0.85rem;
+}
+
+#status-desktop {
+    background-color: #adf3ad;
+    color: #316f31;
+    padding: 0.1rem 0.6rem;
+    border-radius: 15px;
+    background-size: cover;
+    display: none;
+    margin-bottom: 0.8rem;
+    font-weight: 400;
+    font-size: 0.85rem;
+}
+
+/* Responsividade Geral da Página de Orientador e Coordenador*/
+@media (min-width: 1024px) {
+    .titulo {
+        margin-top: 3rem;
+    }
+
+    .titulo h1 {
+        font-size: 1.6rem;
+    }
+
+    #lista-estagios {
+        justify-content: center;
+    }
+}
