@@ -6,16 +6,23 @@
   box-sizing: border-box;
 }
 
-main {
+body {
   font-family: "Inter", Arial, sans-serif;
   background-color: #d2d3df;
   color: #333;
-  padding: 1rem;
   visibility: hidden;
 }
+
+.conteudo-principal {
+  padding: 1rem; 
+  display: block;
+  width: 100%;
+}
+
 #titulo {
   margin-top: 3rem;
 }
+
 #titulo h1 {
   font-size: 1.4rem;
   color: black;
@@ -23,6 +30,7 @@ main {
   letter-spacing: -0.5px;
   margin-bottom: 0.8rem;
 }
+
 .desktop {
   display: none;
 }
