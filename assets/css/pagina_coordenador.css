@@ -1,5 +1,6 @@
 /* Importa todos os estilos globais do dashboard informativo*/
 @import url('../../components/dashboard-informativo.css');
+@import url('../../components/modal/modal-base.css');
 
 @media (min-width: 900px) {
     .dashboard-informativo {
