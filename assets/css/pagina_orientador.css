@@ -1,0 +1,20 @@
+/* Importa todos os estilos globais do dashboard informativo */
+@import url('../../components/dashboard-informativo.css');
+@import url('../../components/modal/modal-base.css');
+
+
+
+@media (min-width: 900px) {
+    .dashboard-informativo {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .card-agendar-defesa {
+        grid-column: 1 / -1; 
+    }
+
+    #lista-estagios {
+        grid-template-columns: repeat(auto-fit, minmax(400px, 450px));
+        justify-content: start;
+    }
+}

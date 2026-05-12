@@ -1,0 +1,181 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(16, 24, 40, 0.55);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 1000;
+}
+
+.modal-overlay.ativo {
+  display: flex;
+}
+
+.modal-conteudo {
+  width: min(720px, 95%);
+  background: #f9fafb;
+  border-radius: 28px;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.18);
+  padding: 1.5rem;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.modal-cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.modal-cabecalho h2 {
+  font-size: 1.35rem;
+  margin-bottom: 0.25rem;
+}
+
+.modal-cabecalho p {
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+.fechar-modal {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 999px;
+  background: #e5e7eb;
+  color: #1f2937;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.fechar-modal:hover {
+  background: #d1d5db;
+}
+
+.modal-formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.modal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.modal-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.modal-grid input {
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid #d1d5db;
+  background: white;
+  padding: 0.95rem 1rem;
+  color: #111827;
+  font-size: 0.95rem;
+}
+
+.modal-grid input[type="file"] {
+  font-size: 0.8rem;
+  padding: 0.5rem;
+  overflow: hidden;
+}
+
+.span-dobrado {
+  grid-column: 1 / -1;
+}
+
+.modal-acoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.botao-cancelar,
+.botao-cadastrar,
+.botao-agendar {
+  border: none;
+  border-radius: 12px;
+  padding: 0.95rem 1.35rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.botao-cancelar {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.botao-cancelar:hover {
+  background: #e5e7eb;
+}
+
+.botao-cadastrar,
+.botao-agendar {
+  background: #1d4ed8;
+  color: white;
+}
+
+.botao-cadastrar:hover,
+.botao-agendar:hover {
+  background: #1e40af;
+}
+
+.label-icone {
+    display: flex;
+    align-items: center;
+    gap: 8px; 
+    margin-bottom: 0.5rem;
+}
+
+.btn-adicionar {
+    background: none;
+    border: none;
+    color: #1f2937;
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    transition: transform 0.2s;
+}
+
+.btn-adicionar:hover {
+    transform: scale(1.2);
+}
+
+@media (max-width: 400px) {
+    .modal-conteudo{
+        padding: 1rem;
+        border-radius: 20px;
+    }
+    
+    .modal-cabecalho h2 {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 900px) {
+  .modal-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-conteudo {
+    padding: 1.25rem;
+  }
+}
