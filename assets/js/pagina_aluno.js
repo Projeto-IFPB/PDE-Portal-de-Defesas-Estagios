@@ -1,6 +1,10 @@
 const URL_ESTAGIOS = import.meta.env.VITE_URL_JSON_ESTAGIOS;
 const URL_USUARIOS = import.meta.env.VITE_URL_JSON_USUARIOS;
 
+// Importando a função do componente para o header
+import { injetarCabecalho } from '../../components/cabecalho.js';
+injetarCabecalho()
+
 const mostrarMensagem = (texto, tipo = "erro") => {
   const mensagem = document.getElementById("mensagem-estagio");
   if (!mensagem) return;

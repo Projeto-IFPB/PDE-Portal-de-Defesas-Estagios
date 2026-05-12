@@ -1,0 +1,118 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+:root {
+    --azul-pde: #1f499b; 
+    --azul-pde-escuro: #163673;
+    --cor-texto-cabecalho: #ffffff;
+}
+
+/* Base do cabeçalho */
+.cabecalho-principal {
+    background-color: var(--azul-pde);
+    color: var(--cor-texto-cabecalho);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    position: relative; /* Importante para o menu mobile */
+}
+
+/* Logo */
+.cabecalho-logo img {
+    height: 65px; 
+    width: auto;
+    object-fit: contain; /* Garante que a imagem não distorça */
+}
+
+/* Botões sem fundo padrão */
+.botao-icone, .botao-menu-mobile {
+    background: none;
+    border: none;
+    color: var(--cor-texto-cabecalho);
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s;
+}
+
+.botao-icone:hover, .botao-menu-mobile:hover {
+    opacity: 0.7;
+}
+
+/* --- MOBILE FIRST (Escondendo a nav por padrão) --- */
+.cabecalho-navegacao {
+    display: none; /* Escondido no celular até clicar no menu */
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: var(--azul-pde);
+    padding: 20px;
+    gap: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+/* Classe adicionada pelo JS quando clica no sanduíche */
+.cabecalho-navegacao.menu-aberto {
+    display: flex; 
+}
+
+.links-navegacao, .icones-acao {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Estilo dos Links (Início e Perfil) */
+.item-nav {
+    color: var(--cor-texto-cabecalho);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    padding: 8px 16px;
+    border-radius: 20px; /* Borda arredondada tipo pílula */
+    transition: background-color 0.3s;
+}
+
+.item-nav:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* O item que está selecionado no momento */
+.item-nav.ativo {
+    background-color: var(--azul-pde-escuro);
+}
+
+/* --- DESKTOP (Telas maiores que 768px) --- */
+@media (min-width: 768px) {
+    .botao-menu-mobile {
+        display: none; /* Some com o sanduíche no PC */
+    }
+
+    .cabecalho-navegacao {
+        display: flex;
+        flex-direction: row;
+        position: static;
+        width: auto;
+        padding: 0;
+        box-shadow: none;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .links-navegacao, .icones-acao {
+        flex-direction: row;
+        align-items: center;
+        gap: 20px;
+    }
+}
