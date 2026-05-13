@@ -1,5 +1,3 @@
-import logoUrl from '../assets/img/preview-pde-transparente.png';
-
 // components/cabecalho.js
 
 export function injetarCabecalho() {
