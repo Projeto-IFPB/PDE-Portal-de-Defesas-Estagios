@@ -73,7 +73,7 @@ async function rederizar_card(lista) {
       }
 
       const [ano, mes, dia] = estagio.data_inicio.split("-");
-      const dataFormatada = `${dia}/${mes}/${ano}`;
+      const data = new Date(ano, mes - 1, dia).toLocaleDateString("pt-BR");
 
       const card = document.createElement("div");
       card.className = "card-aluno"; 
@@ -89,8 +89,9 @@ async function rederizar_card(lista) {
           </div>
           <div class="card-info">
               <h3>${nome_aluno}</h3>
-              <p>${email_aluno}</p>
-              <p><strong>Início:</strong> ${estagio.data_inicio}</p>
+              <a href="mailto:${email_aluno}"><i class="fa-regular fa-envelope"></i> ${email_aluno} </a>
+              <p><i class="fa-solid fa-hotel"></i> ${estagio["empresa"]}</p>
+              <p><i class="fa-regular fa-calendar"></i> ${data}</p>
           </div>
       `;
 
