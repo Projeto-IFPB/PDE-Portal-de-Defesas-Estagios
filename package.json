@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/Projeto-IFPB/PDE-Portal-de-Defesas-Estagios/issues"
   },
-  "homepage": "https://github.com/Projeto-IFPB/PDE-Portal-de-Defesas-Estagios#readme",
+  "homepage": "https://projeto-ifpb.github.io/PDE-Portal-de-Defesas-Estagios/",
   "devDependencies": {
     "vite": "^8.0.10"
   },
