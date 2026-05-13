@@ -142,3 +142,38 @@ export function renderizarDashboardInformativo(configuracaoCards) {
 
     container.appendChild(divCardAgendarDefesa);
 }
+
+// botoes arquivos dos modais
+export function configurarUpload(inputId, labelId, spanId) {
+    const input = document.getElementById(inputId);
+    const label = document.getElementById(labelId);
+    const span = document.getElementById(spanId);
+
+    input.addEventListener('change', function() {
+        const fileName = this.files[0] ? this.files[0].name : "Selecionar arquivo...";
+        
+        if (this.files[0]) {
+            label.classList.add('envio-sucesso');
+            span.innerHTML = `<i class="fa-solid fa-check"></i> ${fileName}`;
+        } else {
+            label.classList.remove('envio-sucesso');
+            span.textContent = "Selecionar arquivo...";
+        }
+    });
+}
+export const resetarBotaoUpload = () => {
+  const ids = [
+    { label: 'label-compromisso', span: 'span-compromisso' },
+    { label: 'label-orientacao', span: 'span-orientacao' }
+  ];
+
+  ids.forEach(id => {
+    const label = document.getElementById(id.label);
+    const span = document.getElementById(id.span);
+    
+    if (label && span) {
+      label.classList.remove('envio-sucesso');
+      span.textContent = "Selecionar arquivo...";
+    }
+  });
+};

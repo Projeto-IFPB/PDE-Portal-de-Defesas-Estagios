@@ -2,6 +2,7 @@ const URL_ESTAGIOS = import.meta.env.VITE_URL_JSON_ESTAGIOS;
 const URL_USUARIOS = import.meta.env.VITE_URL_JSON_USUARIOS;
 
 // Importando a função do componente para o header
+import { configurarUpload, resetarBotaoUpload } from '../../components/functions.js';
 import { injetarCabecalho } from '../../components/cabecalho.js';
 injetarCabecalho()
 
@@ -52,6 +53,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const fechar = () => {
     overlay.classList.remove("ativo");
     document.body.style.overflow = "";
+    formulario.reset()
+    resetarBotaoUpload()
   };
 
   if (abrirModal) {
@@ -82,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const dataInicio = formulario.querySelector("[name=dataInicio]").value;
       const nomeOrientador = formulario.querySelector("[name=nomeOrientador]").value.trim();
       const cursoEstagiario = formulario.querySelector("[name=cursoEstagiario]").value.trim();
-      const emailCoordenador = formulario.querySelector("[name=emailCoordenador]").value.trim();
+      const nomeCoordenador = formulario.querySelector("[name=nomeCoordenador]").value.trim();
       const termoCompromisso = formulario.querySelector("[name=termoCompromisso]").files[0];
       const termoOrientacao = formulario.querySelector("[name=termoOrientacao]").files[0];
       const botaoEnviar = formulario.querySelector("button[type=submit]");
@@ -93,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
         !dataInicio ||
         !nomeOrientador ||
         !cursoEstagiario ||
-        !emailCoordenador ||
+        !nomeCoordenador ||
         !termoCompromisso ||
         !termoOrientacao
       ) {
@@ -119,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
           (user) => user["email"] === sessionStorage.getItem("EmailUsuario"));
         const id_aluno = aluno["id"];
 
-        const coordenador = lista_usuarios.find((user) => user["email"] === emailCoordenador);
+        const coordenador = lista_usuarios.find((user) => user["nome"] === nomeCoordenador);
         let id_coordenador = null
         let id_banca_examinadora = null
         if (coordenador) {
@@ -176,7 +179,6 @@ document.addEventListener("DOMContentLoaded", () => {
           mostrarMensagem("Estágio cadastrado com sucesso!", "sucesso");
           await carregarEstagiosCadastrados();
           await Sugestoes()
-          formulario.reset();
           fechar();
         } else {
           mostrarMensagem("Não foi possível cadastrar o estágio.", "erro");
@@ -206,15 +208,14 @@ async function Sugestoes() {
     usuarios.forEach(user => {
       const option = document.createElement("option");
       
-      // Se for orientador, adiciona na lista de nomes
-      if (user.perfil === "orientador") { // Ajuste "perfil" para o nome da chave no seu JSON
-        option.value = user.nome;
+
+      if (user['perfil'] === "orientador" || user['perfil'] === "coordenador") { 
+        option.value = user['nome'];
         listaOrientadores.appendChild(option.cloneNode(true));
       }
       
-      // Se for coordenador, adiciona na lista de emails
-      if (user.perfil === "coordenador") {
-        option.value = user.email;
+      if (user['perfil'] === "coordenador") {
+        option.value = user['nome'];
         listaCoordenadores.appendChild(option);
       }
     });
@@ -297,3 +298,5 @@ document.addEventListener("DOMContentLoaded", () => {
   Sugestoes()
   
 });
+configurarUpload('file-compromisso', 'label-compromisso', 'span-compromisso');
+configurarUpload('file-orientacao', 'label-orientacao', 'span-orientacao');
