@@ -15,72 +15,66 @@ async function carregar_estagios() {
     }
 }
 
-export async function total_alunos(id_orientador) {
+export async function dados_estatisticos_orientador(id_orientador, tipo) {
+    try {
+        const lista_estagios = await carregar_estagios()
 
-    const lista_estagios = await carregar_estagios()
+        if (!lista_estagios) return 0
 
-    if (lista_estagios) {
-        // Filtra os estágios para permanecerem apenas os estagios orientados por um orientador específico e que tenham sido aceitos pelo mesmo
-        const alunos_orientador = lista_estagios.filter(estagio => estagio["id_orientador"] === id_orientador && estagio['convite_orientacao'] === 'aceito')
-        
-        // Criação de um Set para armazenar uma unica vez cada aluno orientado
+        let estagios_filtrados = []
+
+        if (tipo === 'total_alunos_orientador') {
+            estagios_filtrados = lista_estagios.filter(estagio => estagio["id_orientador"] === String(id_orientador) && estagio['convite_orientacao'] === 'aceito')
+        }
+        else if (tipo === 'estagios_ativos_orientador') {
+            estagios_filtrados = lista_estagios.filter(estagio => estagio["id_orientador"] === String(id_orientador) && estagio['convite_orientacao'] === 'aceito' && estagio['status'] === 'em andamento')
+            return estagios_filtrados.length
+        }
+        else if (tipo === 'estagios_pendentes_orientador') {
+            estagios_filtrados = lista_estagios.filter(estagio => estagio["id_orientador"] === String(id_orientador) && estagio['convite_orientacao'] === 'pendente')
+        }
+
         const alunos_unicos = new Set();
-        
-        // Intera sobre os estágios e garante que não seja contado o mesmo aluno repetidamente, caso ele tenha sido orientado pelo mesmo orientador mais de uma vez
-        alunos_orientador.forEach(estagio => {
-            alunos_unicos.add(estagio['id_aluno']);
-        });
+        estagios_filtrados.forEach(estagio => alunos_unicos.add(estagio['id_aluno']));
 
-        // Retorna a quantidade de alunos únicos
+        // Retorna a quantidade sem existir duplicatas
         return alunos_unicos.size;
-    }
-    else {
+
+    } catch (error) {
         console.log('erro ao carregar os estagios')
+        return 0
     }
 }
 
-// console.log(await total_alunos(3))
+export async function dados_estatisticos_coordenador(curso, tipo) {
+    try {
+        const lista_estagios = await carregar_estagios()
 
-export async function estagios_em_orientacao(id_orientador) {
+        if (!lista_estagios) return 0
 
-    const lista_estagios = await carregar_estagios()
+        let estagios_filtrados = []
 
-    if (lista_estagios) {
+        if (tipo === 'total_estagios_curso') {
+            estagios_filtrados = lista_estagios.filter(estagio => estagio["curso_aluno"] === curso && estagio['convite_orientacao'] === 'aceito')
+        }
+        else if (tipo === 'estagios_ativos_curso') {
+            estagios_filtrados = lista_estagios.filter(estagio => estagio["curso_aluno"] === curso && estagio['convite_orientacao'] === 'aceito' && estagio['status'] === 'em andamento')
+        }
+        else if (tipo === 'estagios_pendentes_orientador') {
+            estagios_filtrados = lista_estagios.filter(estagio => estagio["curso_aluno"] === curso && estagio['convite_orientacao'] === 'pendente')
+        }
 
-        // Filtra os estágios para permanecerem apenas os estagios orientados por um orientador específico e que tenham sido aceitos pelo mesmo e que estejam em andamento
-        const alunos_sendo_orientados = lista_estagios.filter(estagio => estagio["id_orientador"] === id_orientador && estagio['convite_orientacao'] === 'aceito' && estagio['status'] === 'em andamento')
-        
-        // Criação de um Set para armazenar uma unica vez cada aluno orientado
         const alunos_unicos = new Set();
-        alunos_sendo_orientados.forEach(estagio => {
-            alunos_unicos.add(estagio['id_aluno']);
-        });
+        estagios_filtrados.forEach(estagio => alunos_unicos.add(estagio['id_aluno']));
 
-        // Retorna a quantidade de alunos únicos
+        // Retorna a quantidade sem existir duplicatas
         return alunos_unicos.size;
-    }
-    else {
+
+    } catch (error) {
         console.log('erro ao carregar os estagios')
+        return 0
     }
 }
-
-// console.log(await estagios_em_orientacao(3))
-
-export async function pedidos_pendentes(id_orientador) {
-    const lista_estagios = await carregar_estagios()
-
-    if (lista_estagios) {
-
-        // Filtra os estágios para permanecerem apenas os estagios que estão pendentes de aceitação por um orientador específico
-        const pedidos_pendentes = lista_estagios.filter(estagio => estagio["id_orientador"] === id_orientador && estagio['convite_orientacao'] === 'pendente')
-        return pedidos_pendentes.length;
-    }
-    else {
-        console.log('erro ao carregar os estagios')
-    }
-}
-
-// console.log(await pedidos_pendentes(3))
 
 export function renderizarDashboardInformativo(configuracaoCards) {
     const container = document.querySelector('.dashboard-informativo');
