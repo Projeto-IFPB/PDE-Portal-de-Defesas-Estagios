@@ -1,7 +1,7 @@
 import{n as e,t}from"./modulepreload-polyfill-DvoRgtBb.js";import{t as n}from"./autenticacoes-DFogqr4f.js";function r(){let e=document.getElementById(`conteiner-cabecalho`);if(!e){console.error(`Div #conteiner-cabecalho não encontrada na página.`);return}e.innerHTML=`
         <header class="cabecalho-principal">
             <div class="cabecalho-logo">
-                <img src="/assets/img/preview-pde-transparente.png" alt="Logo PDE">
+                <img src="../assets/img/preview-pde-transparente.png" alt="Logo PDE">
             </div>
             
             <button class="botao-menu-mobile" id="botao-menu" aria-label="Abrir menu">
