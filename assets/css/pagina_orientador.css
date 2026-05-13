@@ -2,28 +2,7 @@
 @import url('../../components/dashboard-informativo.css');
 @import url('../../components/modal/modal-base.css');
 
-.label-icone {
-    display: flex;
-    align-items: center;
-    gap: 8px; 
-    margin-bottom: 0.5rem;
-}
 
-.btn-adicionar {
-    background: none;
-    border: none;
-    color: #1f2937;
-    cursor: pointer;
-    font-size: 1.1rem;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    transition: transform 0.2s;
-}
-
-.btn-adicionar:hover {
-    transform: scale(1.2);
-}
 
 @media (min-width: 900px) {
     .dashboard-informativo {

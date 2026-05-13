@@ -5,13 +5,15 @@ import { defineConfig } from 'vite'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig({
+
+  base: '/PDE-Portal-de-Defesas-Estagios/',
   build: {
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
-        pagina_aluno: resolve(__dirname, './pages/pagina_aluno'),
-        orientador: resolve(__dirname, './pages/orientador'),
-        coordenador: resolve(__dirname, './pages/coordenador')
+        pagina_aluno: resolve(__dirname, './pages/pagina_aluno.html'),
+        orientador: resolve(__dirname, './pages/orientador.html'),
+        coordenador: resolve(__dirname, './pages/coordenador.html')
       },
     },
   },
