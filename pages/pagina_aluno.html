@@ -104,18 +104,20 @@
                 Curso do Estagiário
                 <input type="text" name="cursoEstagiario" placeholder="Engenharia de Software">
               </label>
-              <label>
-                Email do Coordenador de Curso
-                <input type="email" name="emailCoordenador" placeholder="coordenador@ifpb.edu.br" list="lista-coordenadores">
+              <label class="span-dobrado">
+                Nome do Coordenador de Curso
+                <input type="text" name="nomeCoordenador" placeholder="Nome do Coordenador" list="lista-coordenadores">
                 <datalist id="lista-coordenadores"></datalist>
               </label>
-              <label class="span-dobrado">
+              <label class="span-dobrado novo-input" id="label-compromisso">
                 Upload do Termo de Compromisso
-                <input type="file" name="termoCompromisso">
+                <input type="file" id="file-compromisso" name="termoCompromisso">
+                <span id="span-compromisso" class="file-name">Selecionar arquivo...</span>
               </label>
-              <label class="span-dobrado">
+              <label class="span-dobrado novo-input" id="label-orientacao">
                 Upload do Termo de Orientação
-                <input type="file" name="termoOrientacao">
+                <input type="file" id="file-orientacao" name="termoOrientacao">
+                <span id="span-orientacao" class="file-name">Selecionar arquivo...</span>
               </label>
             </div>
 
