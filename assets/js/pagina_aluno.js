@@ -125,10 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (orientador) {
           id_orientador = orientador["id"];
         } else {
-          mostrarMensagem(
-            "Não foi possivel encontrar o orientador informado.",
-            "erro"
-          );
+          mostrarMensagem("Não foi possivel encontrar o orientador informado.", "erro");
           return;
         }
         const aluno = lista_usuarios.find(
@@ -154,7 +151,6 @@ document.addEventListener("DOMContentLoaded", () => {
           );
           return;
         }
-
         const status = "em andamento";
 
         const [compBase64, oriBase64] = await Promise.all([
