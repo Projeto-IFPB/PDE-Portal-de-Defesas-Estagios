@@ -38,41 +38,8 @@ O PDE veio para facilitar a organização e interação entre aluno, orientador 
 
 ## 📂 Estrutura do Projeto
 
-PDE-Portal-de-Defesa-Estagios
-|
-├── .github/
-|      └── workflows/
-├── assets/
-|      ├── css/                            # Arquivos css
-|           ├── cabecalho.css              # CSS do Header
-|           ├── pagina_aluno.css           # CSS da página de aluno
-|           ├── pagina_coordenador.css     # CSS da página do coordenador
-|           ├── pagina_orientador.css      # CSS da página de orientador
-|           └── style.css                  # CSS da página de autenticação
-|      ├── img/                            # Imagens da aplicação
-|      └── js/                             # Arquivos JavaScript da aplicação
-|          ├── autenticacoes.js            # JavaScript da responsável pela troca de telas
-|          ├── coordenador.js              # JavaScript da página de coordenador
-|          ├── orientador.js               # JavaScript da página de orientador
-|          ├── pagina_aluno.js             # JavaScript da página de aluno
-|          └── script.js                   # JavaScript da página de autenticação
-├── components/                            # Componentes reutilizáveis
-|     └── modal/                           # Módulo sobre os modais da aplicação
-|            ├── modal-base.css            # CSS do modal
-|      ├── cabecalho.js                    # JavaScript do Header
-|      ├── dashboard-informativo.css       # CSS do modal de "ver detalhes"
-|      └── functions.js                    # JavaScript com funções reutilizáveis
-├── pages/                                 # Páginas html da aplicação
-|    ├── coordenador.html                  # HTML da página de coordenador
-|    ├── orientador.html                   # HTML da página de orientador
-|    └── pagina_aluno.html                 # HTML da página de aluno
-├── index.html                             # HTML da página de autenticação
-├── .env                                   # Arquivo com os endpoints do MOCKAPI
-├── .gitignore                             # Arquivos importantes que não sobem para o github
-├── package-lock.json                      # Dependências
-├── package.json                           # Dependências
-├── README.md                              # Documentação do Projeto
-├── vite.config.js                         # Configuração do Vite
+<img width="635" height="707" alt="image" src="https://github.com/user-attachments/assets/2228808c-c154-4b8e-9d6b-197c85a74f6e" />
+
 
 ## 👥 Autores
 - **Diogo Silva** - Desenvolvimento Full Stack - [@diogossdev](https://github.com/diogossdev)
