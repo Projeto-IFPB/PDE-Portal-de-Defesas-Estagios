@@ -6,6 +6,10 @@ injetarCabecalho()
 const URL_ESTAGIOS = import.meta.env.VITE_URL_JSON_ESTAGIOS;
 const URL_USUARIOS = import.meta.env.VITE_URL_JSON_USUARIOS;
 
+// Importando a função do componente para o header
+import { injetarCabecalho } from '../../components/cabecalho.js';
+injetarCabecalho()
+
 const configuracaoCardsInformativos = [
     { titulo: "Total de Alunos",
       icone: "fa-users",
@@ -59,36 +63,75 @@ async function rederizar_card(lista) {
     container.innerHTML = "<p>Nenhum estagio encontrado</p>";
     return;
   }
+  
+    // ... dentro do carregar_pagina ...
   lista.forEach((estagio) => {
-    const aluno = lista_usuarios.find((user) => user["id"] === estagio["id_aluno"]);
-    let nome_aluno = "Não encontrado";
-    let email_aluno = "";
-    if (aluno) {
-        nome_aluno = aluno["nome"];
-        email_aluno = aluno["email"]
-    }
-    const [ano, mes, dia] = estagio.data_inicio.split("-");
-    const data = new Date(ano, mes - 1, dia).toLocaleDateString("pt-BR");
+      const aluno = lista_usuarios.find((user) => user["id"] === estagio["id_aluno"]);
+      let nome_aluno = "Não encontrado";
+      let email_aluno = "";
+      
+      if (aluno) {
+          nome_aluno = aluno["nome"];
+          email_aluno = aluno["email"];
+      }
 
-    const card = document.createElement("div");
-    card.innerHTML = `<div class="grid-alunos">
-  <div class="card-aluno">
-    <div class="header-card">
-      <div class="circulo">
-       <i class="fa-solid fa-graduation-cap"></i>
-      </div>
-      <div id="status">
-       <span class="status">${estagio["status"]}</span>
-      </div>
-    </div>
-    <div class="card-info">
-    <h3>${nome_aluno}</h3>
-    <a href="mailto:${email_aluno}"><i class="fa-regular fa-envelope"></i> ${email_aluno} </a>
-    <p><i class="fa-solid fa-hotel"></i> ${estagio["empresa"]}</p>
-    <p><i class="fa-regular fa-calendar"></i> ${data}</p>
-    </div>
-  </div>`;
-    container.appendChild(card);
+      const [ano, mes, dia] = estagio.data_inicio.split("-");
+      const data = new Date(ano, mes - 1, dia).toLocaleDateString("pt-BR");
+
+      const card = document.createElement("div");
+      card.className = "card-aluno"; 
+      
+      card.innerHTML = `
+          <div class="header-card">
+              <div class="circulo">
+                  <i class="fa-solid fa-graduation-cap"></i>
+              </div>
+              <div id="status">
+                  <span class="status">${estagio["status"]}</span>
+              </div>
+          </div>
+          <div class="card-info">
+              <h3>${nome_aluno}</h3>
+              <a href="mailto:${email_aluno}"><i class="fa-regular fa-envelope"></i> ${email_aluno} </a>
+              <p><i class="fa-solid fa-hotel"></i> ${estagio["empresa"]}</p>
+              <p><i class="fa-regular fa-calendar"></i> ${data}</p>
+          </div>
+      `;
+
+      card.addEventListener('click', () => {
+          abrirModalDetalhes(nome_aluno, email_aluno, estagio.empresa, estagio.curso_aluno, estagio.data_inicio, estagio.status);
+      });
+
+      container.appendChild(card);
+  });
+
+  // Função para abrir e preencher o modal
+  function abrirModalDetalhes(nome, email, empresa, curso, data, status) {
+      const modal = document.getElementById('modal-detalhes');
+      
+      // Preenche os campos
+      document.getElementById('detalhe-nome').textContent = nome;
+      document.getElementById('detalhe-email').textContent = email || "Não informado";
+      document.getElementById('detalhe-empresa').textContent = empresa || "Não informado";
+      document.getElementById('detalhe-curso').textContent = curso || "Não informado"; 
+      document.getElementById('detalhe-data').textContent = data;
+      document.getElementById('detalhe-status').textContent = status;
+      
+      // Mostra o modal
+      modal.classList.add('ativo');
+  }
+
+  // Lógica para fechar o modal
+  document.getElementById('fechar-modal-detalhes').addEventListener('click', () => {
+      document.getElementById('modal-detalhes').classList.remove('ativo');
+  });
+
+  // Fechar ao clicar fora do modal
+  window.addEventListener('click', (event) => {
+      const modal = document.getElementById('modal-detalhes');
+      if (event.target === modal) {
+          modal.classList.remove('ativo');
+      }
   });
 }
 

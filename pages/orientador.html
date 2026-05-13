@@ -5,14 +5,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Orientador</title>
     
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="../assets/css/cabecalho.css">
     <link rel="stylesheet" href="../assets/css/pagina_orientador.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<<<<<<< feature/modal_detalhes_alunos_do_orientador
+=======
     <link rel="stylesheet" href="../assets/css/cabecalho.css">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+>>>>>>> develop
     <script type="module" src="../assets/js/autenticacoes.js" defer></script>
     <script type="module" src="/assets/js/orientador.js" defer></script>
 </head>
 <body>
+<<<<<<< feature/modal_detalhes_alunos_do_orientador
+    <!-- Implementando Header na Página de Aluno -->
+      <div id="conteiner-cabecalho"></div>
+
+    <main>
+        <div class="titulo">
+            <h1>Bem-vindo ao portal de defesas de estágio!</h1>
+            <p>Acompanhe seus alunos orientados</p>
+        </div>
+    
+        <div class="dashboard-informativo"></div>
+    
+        <div class="alunos_orientados">
+            <i class="fa-solid fa-users"></i>
+            <h1>Alunos orientados</h1>
+        </div>
+        <div id="lista-estagios"></div>
+    </main>
+
+
+
+    <div id="modal-detalhes" class="modal-overlay">
+        <div class="modal-conteudo">
+            <div class="modal-header">
+                <h2>Detalhes do Aluno</h2>
+                <button id="fechar-modal-detalhes" class="botao-fechar">&times;</button>
+            </div>
+            <div class="modal-corpo">
+                <div class="detalhe-item">
+                    <strong>Aluno:</strong> <span id="detalhe-nome"></span>
+                </div>
+                <div class="detalhe-item">
+                    <strong>Email:</strong> <span id="detalhe-email"></span>
+                </div>
+                <div class="detalhe-item">
+                    <strong>Empresa:</strong> <span id="detalhe-empresa"></span>
+                </div>
+                <div class="detalhe-item">
+                    <strong>Curso:</strong> <span id="detalhe-curso"></span>
+                </div>
+                <div class="detalhe-item">
+                    <strong>Data de Início:</strong> <span id="detalhe-data"></span>
+                </div>
+                <div class="detalhe-item">
+                    <strong>Status:</strong> <span id="detalhe-status" class="status-pill"></span>
+                </div>
+                <div class="detalhe-item">
+                    <strong>Observações:</strong>
+                    <p id="detalhe-observacoes">O aluno está cumprindo suas atividades conforme o planejado. Demonstra boa evolução técnica e profissional.</p>
+                </div>
+=======
     <!-- Implementando Header na Página de Orientador -->
     <div id="conteiner-cabecalho"></div>
 
@@ -80,6 +136,7 @@
                     <button type="submit" class="botao-agendar">Agendar</button>
                 </div>
                 </form>
+>>>>>>> develop
             </div>
         </div>
     </main>
