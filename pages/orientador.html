@@ -6,7 +6,7 @@
     <title>Dashboard Orientador</title>
     
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <link rel="stylesheet" href="../assets/css/cabecalho.css">
+    <link rel="stylesheet" href="../components/Css/cabecalho.css">
     <link rel="stylesheet" href="../assets/css/pagina_orientador.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script type="module" src="../assets/js/autenticacoes.js" defer></script>
@@ -61,15 +61,17 @@
                     Email do Coordenador do Curso
                     <input type="text" name="emailCoordenador" placeholder="coordenador@ifpb.edu.br">
                     </label>
-                    <label>
-                    Upload da Ata de Defesa de Estágio
-                    <input type="file" name="ataDefesa">
+                    <label class="novo-input" id="label-ata">
+                        Upload da Ata de Defesa de Estágio
+                        <input type="file" id="file-ata" name="ataDefesa">
+                        <span id="span-ata" class="file-name">Selecionar arquivo...</span>
                     </label>
-                    <label>
-                    Upload do Relatório Final de Estágio
-                    <input type="file" name="relatoriofinal">
+                    <label class="novo-input" id="label-relatorio">
+                        Upload do Relatório Final de Estágio
+                        <input type="file" id="file-relatorio" name="relatoriofinal">
+                        <span id="span-relatorio" class="file-name">Selecionar arquivo...</span>
                     </label>
-                    <label>
+                    <label class="span-dobrado">
                     Data da Defesa de Estágio
                     <input type="date" name="dataDefesa">
                     </label>

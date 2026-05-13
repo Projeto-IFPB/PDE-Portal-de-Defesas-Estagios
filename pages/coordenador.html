@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Coordenador</title>
-    
     <link rel="stylesheet" href="../assets/css/pagina_coordenador.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="../assets/css/cabecalho.css">
+    <link rel="stylesheet" href="../components/Css/cabecalho.css">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <script type="module" src="../assets/js/autenticacoes.js" defer></script>
     <script type="module" src="/assets/js/coordenador.js" defer></script>
@@ -23,6 +22,12 @@
         </div>
 
         <div class="dashboard-informativo"></div>
+    
+        <div class="alunos_orientados">
+            <i class="fa-solid fa-users"></i>
+            <h1>Alunos orientados</h1>
+        </div>
+        <div id="lista-estagios"></div>
 
         <div id="modal-overlay" class="modal-overlay">
             <div class="modal-conteudo">
@@ -51,15 +56,17 @@
                         </div>
                         <input type="email" name="emailBanca" placeholder="professor@ifpb.edu.br">
                     </label>
-                    <label>
-                    Upload da Ata de Defesa de Estágio
-                    <input type="file" name="ataDefesa">
+                    <label class="novo-input" id="label-ata">
+                        Upload da Ata de Defesa de Estágio
+                        <input type="file" id="file-ata" name="ataDefesa">
+                        <span id="span-ata" class="file-name">Selecionar arquivo...</span>
                     </label>
-                    <label>
-                    Upload do Relatório Final de Estágio
-                    <input type="file" name="relatoriofinal">
+                    <label class="novo-input" id="label-relatorio">
+                        Upload do Relatório Final de Estágio
+                        <input type="file" id="file-relatorio" name="relatoriofinal">
+                        <span id="span-relatorio" class="file-name">Selecionar arquivo...</span>
                     </label>
-                    <label>
+                    <label class="span-dobrado">
                     Data da Defesa de Estágio
                     <input type="date" name="dataDefesa">
                     </label>
@@ -70,6 +77,40 @@
                     <button type="submit" class="botao-agendar">Agendar</button>
                 </div>
                 </form>
+            </div>
+        </div>
+
+        <!-- Modal de detalhes dos alunos orientados -->
+        <div id="modal-detalhes" class="modal-overlay">
+            <div class="modal-conteudo">
+                <div class="modal-header">
+                    <h2>Detalhes do Aluno</h2>
+                    <button id="fechar-modal-detalhes" class="botao-fechar">&times;</button>
+                </div>
+                <div class="modal-corpo">
+                    <div class="detalhe-item">
+                        <strong>Aluno:</strong> <span id="detalhe-nome"></span>
+                    </div>
+                    <div class="detalhe-item">
+                        <strong>Email:</strong> <span id="detalhe-email"></span>
+                    </div>
+                    <div class="detalhe-item">
+                        <strong>Empresa:</strong> <span id="detalhe-empresa"></span>
+                    </div>
+                    <div class="detalhe-item">
+                        <strong>Curso:</strong> <span id="detalhe-curso"></span>
+                    </div>
+                    <div class="detalhe-item">
+                        <strong>Data de Início:</strong> <span id="detalhe-data"></span>
+                    </div>
+                    <div class="detalhe-item">
+                        <strong>Status:</strong> <span id="detalhe-status" class="status-pill"></span>
+                    </div>
+                    <div class="detalhe-item">
+                        <strong>Observações:</strong>
+                        <p id="detalhe-observacoes">O aluno está cumprindo suas atividades conforme o planejado. Demonstra boa evolução técnica e profissional.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </main>

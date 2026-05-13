@@ -1,6 +1,6 @@
 /* Importa todos os estilos globais do dashboard informativo*/
-@import url('../../components/dashboard-informativo.css');
-@import url('../../components/modal/modal-base.css');
+@import url('../../components/Css/dashboard-informativo.css');
+@import url('../../components/Css/modal-base.css');
 
 main {
     padding: 1rem;
@@ -18,11 +18,6 @@ main {
     .card-agendar-defesa {
         grid-column: 1 / -1; 
     }
-
-    #lista-estagios {
-        grid-template-columns: repeat(auto-fit, minmax(400px, 450px));
-        justify-content: start;
-    }
 }
 
 @media (min-width: 1250px) {
@@ -33,9 +28,79 @@ main {
     .card-agendar-defesa {
         grid-column: 1 / -1; 
     }
+}
+/* Começo da estilização do modal */
+/* Estilo para o Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: none; /* Começa escondido */
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
 
-    #lista-estagios {
-        grid-template-columns: repeat(auto-fit, minmax(400px, 450px));
-        justify-content: start;
-    }
+.modal-overlay.ativo {
+    display: flex;
+}
+
+.modal-conteudo {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.botao-fechar {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #666;
+}
+
+.detalhe-item {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+.detalhe-item strong {
+    color: #1f499b;
+}
+
+/* Deixar o card clicável */
+.card-aluno {
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card-aluno:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Fim da estilização do modal de detalhamento de alunos orientados */
+
+#detalhe-status{
+    background-color: #c8f8c8;
+    border-radius: 8px;
+    color: #5e985e;
+    font-weight: bolder;
+    font-size: 15px;
+    padding: 2px;
 }
