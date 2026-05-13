@@ -9,9 +9,7 @@ export function injetarCabecalho() {
         console.error('Div #conteiner-cabecalho não encontrada na página.');
         return;
     }
-
-    const base = import.meta.env.BASE_URL;
-
+    
     // O HTML do nosso cabeçalho
     conteiner.innerHTML = `
         <header class="cabecalho-principal">
