@@ -4,71 +4,116 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Coordenador</title>
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-  <script type="module" crossorigin src="/PDE-Portal-de-Defesas-Estagios/assets/coordenador-SlEOVjOo.js"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <script type="module" crossorigin src="/PDE-Portal-de-Defesas-Estagios/assets/coordenador-RKrFA8pS.js"></script>
   <link rel="modulepreload" crossorigin href="/PDE-Portal-de-Defesas-Estagios/assets/modulepreload-polyfill-DvoRgtBb.js">
-  <link rel="modulepreload" crossorigin href="/PDE-Portal-de-Defesas-Estagios/assets/autenticacoes-DFogqr4f.js">
-  <link rel="modulepreload" crossorigin href="/PDE-Portal-de-Defesas-Estagios/assets/functions-D-b8KWgG.js">
-  <link rel="stylesheet" crossorigin href="/PDE-Portal-de-Defesas-Estagios/assets/coordenador-sz-__rEC.css">
+  <link rel="modulepreload" crossorigin href="/PDE-Portal-de-Defesas-Estagios/assets/cabecalho-ChlFAScb.js">
+  <link rel="stylesheet" crossorigin href="/PDE-Portal-de-Defesas-Estagios/assets/cabecalho-jfg9Ukhv.css">
+  <link rel="stylesheet" crossorigin href="/PDE-Portal-de-Defesas-Estagios/assets/coordenador-6q8nYXMG.css">
 </head>
 <body>
-    <div class="titulo">
-        <h1>Bem-vindo ao portal de defesas de estágio!</h1>
-        <p>Gerencie todos os estágios do curso</p>
-    </div>
-
-    <div class="dashboard-informativo"></div>
-
-    <div id="modal-overlay" class="modal-overlay">
-        <div class="modal-conteudo">
-            <div class="modal-cabecalho">
-            <div>
-                <h2>Agendar Defesa de Estágio</h2>
-                <p>Preencha os dados para agendar</p>
-            </div>
-            <button id="fechar-modal-estagio" type="button" class="fechar-modal" aria-label="Fechar modal">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            </div>
-
-            <form class="modal-formulario" id="formulario-agendamento" autocomplete="off">
-            <div class="modal-grid">
-                <label class="span-dobrado">
-                Email do Estagiário
-                <input type="email" name="emailEstagiario" placeholder="exemplo@ifpb.edu.br">
-                </label>
-                <label class="span-dobrado">
-                    <div class="label-icone">
-                        Email da Banca
-                        <button type="button" class="btn-adicionar">
-                            <i class="fa-solid fa-circle-plus"></i>
-                        </button>
-                    </div>
-                    <input type="email" name="emailBanca" placeholder="professor@ifpb.edu.br">
-                </label>
-                <label>
-                Upload da Ata de Defesa de Estágio
-                <input type="file" name="ataDefesa">
-                </label>
-                <label>
-                Upload do Relatório Final de Estágio
-                <input type="file" name="relatoriofinal">
-                </label>
-                <label>
-                Data da Defesa de Estágio
-                <input type="date" name="dataDefesa">
-                </label>
-            </div>
-
-            <div class="modal-acoes">
-                <button type="button" class="botao-cancelar">Cancelar</button>
-                <button type="submit" class="botao-agendar">Agendar</button>
-            </div>
-            </form>
-        </div>
-    </div>
+    <!-- Implementando Header na Página de Coordenador -->
+    <div id="conteiner-cabecalho"></div>
     
+    <main class="conteudo-principal">
+        <div class="titulo">
+            <h1>Bem-vindo ao portal de defesas de estágio!</h1>
+            <p>Gerencie todos os estágios do curso</p>
+        </div>
+
+        <div class="dashboard-informativo"></div>
+    
+        <div class="alunos_orientados">
+            <i class="fa-solid fa-users"></i>
+            <h1>Alunos orientados</h1>
+        </div>
+        <div id="lista-estagios"></div>
+
+        <div id="modal-overlay" class="modal-overlay">
+            <div class="modal-conteudo">
+                <div class="modal-cabecalho">
+                <div>
+                    <h2>Agendar Defesa de Estágio</h2>
+                    <p>Preencha os dados para agendar</p>
+                </div>
+                <button id="fechar-modal-estagio" type="button" class="fechar-modal" aria-label="Fechar modal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                </div>
+
+                <form class="modal-formulario" id="formulario-agendamento" autocomplete="off">
+                <div class="modal-grid">
+                    <label class="span-dobrado">
+                    Email do Estagiário
+                    <input type="email" name="emailEstagiario" placeholder="exemplo@ifpb.edu.br">
+                    </label>
+                    <label class="span-dobrado">
+                        <div class="label-icone">
+                            Email da Banca
+                            <button type="button" class="btn-adicionar">
+                                <i class="fa-solid fa-circle-plus"></i>
+                            </button>
+                        </div>
+                        <input type="email" name="emailBanca" placeholder="professor@ifpb.edu.br">
+                    </label>
+                    <label class="novo-input" id="label-ata">
+                        Upload da Ata de Defesa de Estágio
+                        <input type="file" id="file-ata" name="ataDefesa">
+                        <span id="span-ata" class="file-name">Selecionar arquivo...</span>
+                    </label>
+                    <label class="novo-input" id="label-relatorio">
+                        Upload do Relatório Final de Estágio
+                        <input type="file" id="file-relatorio" name="relatoriofinal">
+                        <span id="span-relatorio" class="file-name">Selecionar arquivo...</span>
+                    </label>
+                    <label class="span-dobrado">
+                    Data da Defesa de Estágio
+                    <input type="date" name="dataDefesa">
+                    </label>
+                </div>
+
+                <div class="modal-acoes">
+                    <button type="button" class="botao-cancelar">Cancelar</button>
+                    <button type="submit" class="botao-agendar">Agendar</button>
+                </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal de detalhes dos alunos orientados -->
+        <div id="modal-detalhes" class="modal-overlay">
+            <div class="modal-conteudo">
+                <div class="modal-header">
+                    <h2>Detalhes do Aluno</h2>
+                    <button id="fechar-modal-detalhes" class="botao-fechar">&times;</button>
+                </div>
+                <div class="modal-corpo">
+                    <div class="detalhe-item">
+                        <strong>Aluno:</strong> <span id="detalhe-nome"></span>
+                    </div>
+                    <div class="detalhe-item">
+                        <strong>Email:</strong> <span id="detalhe-email"></span>
+                    </div>
+                    <div class="detalhe-item">
+                        <strong>Empresa:</strong> <span id="detalhe-empresa"></span>
+                    </div>
+                    <div class="detalhe-item">
+                        <strong>Curso:</strong> <span id="detalhe-curso"></span>
+                    </div>
+                    <div class="detalhe-item">
+                        <strong>Data de Início:</strong> <span id="detalhe-data"></span>
+                    </div>
+                    <div class="detalhe-item">
+                        <strong>Status:</strong> <span id="detalhe-status" class="status-pill"></span>
+                    </div>
+                    <div class="detalhe-item">
+                        <strong>Observações:</strong>
+                        <p id="detalhe-observacoes">O aluno está cumprindo suas atividades conforme o planejado. Demonstra boa evolução técnica e profissional.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 </body>
 </html>

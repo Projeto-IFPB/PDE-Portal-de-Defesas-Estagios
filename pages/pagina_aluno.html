@@ -7,10 +7,11 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-  <script type="module" crossorigin src="/PDE-Portal-de-Defesas-Estagios/assets/pagina_aluno-BKYXDVP2.js"></script>
+  <script type="module" crossorigin src="/PDE-Portal-de-Defesas-Estagios/assets/pagina_aluno-QAzSJcWX.js"></script>
   <link rel="modulepreload" crossorigin href="/PDE-Portal-de-Defesas-Estagios/assets/modulepreload-polyfill-DvoRgtBb.js">
-  <link rel="modulepreload" crossorigin href="/PDE-Portal-de-Defesas-Estagios/assets/autenticacoes-DFogqr4f.js">
-  <link rel="stylesheet" crossorigin href="/PDE-Portal-de-Defesas-Estagios/assets/pagina_aluno-Cb1ExUoe.css">
+  <link rel="modulepreload" crossorigin href="/PDE-Portal-de-Defesas-Estagios/assets/cabecalho-ChlFAScb.js">
+  <link rel="stylesheet" crossorigin href="/PDE-Portal-de-Defesas-Estagios/assets/cabecalho-jfg9Ukhv.css">
+  <link rel="stylesheet" crossorigin href="/PDE-Portal-de-Defesas-Estagios/assets/pagina_aluno-CyQIigWK.css">
 </head>
 <body>
     <!-- Implementando Header na Página de Aluno -->
@@ -89,34 +90,36 @@
           <form class="modal-formulario" id="formulario-estagio" autocomplete="off">
             <div class="modal-grid">
               <label>
-                Empresa
+                Empresa*
                 <input type="text" name="empresa" placeholder="Nome da empresa">
               </label>
               <label>
-                Data de Início
+                Data de Início*
                 <input type="date" name="dataInicio">
               </label>
               <label>
-                Nome do Orientador
+                Nome do Orientador*
                 <input type="text" name="nomeOrientador" placeholder="Nome do orientador" list="lista-orientadores">
                 <datalist id="lista-orientadores"></datalist>
               </label>
               <label>
-                Curso do Estagiário
+                Curso do Estagiário*
                 <input type="text" name="cursoEstagiario" placeholder="Engenharia de Software">
               </label>
-              <label>
-                Email do Coordenador de Curso
-                <input type="email" name="emailCoordenador" placeholder="coordenador@ifpb.edu.br" list="lista-coordenadores">
+              <label class="span-dobrado">
+                Nome do Coordenador de Curso*
+                <input type="text" name="nomeCoordenador" placeholder="Nome do Coordenador" list="lista-coordenadores">
                 <datalist id="lista-coordenadores"></datalist>
               </label>
-              <label class="span-dobrado">
+              <label class="span-dobrado novo-input" id="label-compromisso">
                 Upload do Termo de Compromisso
-                <input type="file" name="termoCompromisso">
+                <input type="file" id="file-compromisso" name="termoCompromisso">
+                <span id="span-compromisso" class="file-name">Selecionar arquivo (máx. 25KB) ...</span>
               </label>
-              <label class="span-dobrado">
+              <label class="span-dobrado novo-input" id="label-orientacao">
                 Upload do Termo de Orientação
-                <input type="file" name="termoOrientacao">
+                <input type="file" id="file-orientacao" name="termoOrientacao">
+                <span id="span-orientacao" class="file-name">Selecionar arquivo (máx. 25KB) ...</span>
               </label>
             </div>
 
