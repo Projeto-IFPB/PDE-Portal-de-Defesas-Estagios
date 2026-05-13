@@ -114,7 +114,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (orientador) {
           id_orientador = orientador["id"];
         } else {
-          mostrarMensagem("Não foi possivel encontrar esse orientador.","erro");
+          mostrarMensagem("Não foi possivel encontrar o orientador informado.","erro");
+          return;
         }
         const aluno = lista_usuarios.find(
           (user) => user["email"] === localStorage.getItem("EmailUsuario"));
@@ -130,7 +131,8 @@ document.addEventListener("DOMContentLoaded", () => {
           id_banca_examinadora = [];
           id_banca_examinadora.push(id_coordenador);
         } else{
-          mostrarMensagem("Não foi possivel o coordenador.","erro");
+          mostrarMensagem("Não foi possivel encontrar o coordenador informado.","erro");
+          return;
         }
 
         const status = "em andamento";
