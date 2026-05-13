@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const perfilLogado = sessionStorage.getItem("perfilUsuario");
+    const perfilLogado = localStorage.getItem("PerfilUsuario");
     const paginaAtual = window.location.pathname;
 
     if (!perfilLogado) {

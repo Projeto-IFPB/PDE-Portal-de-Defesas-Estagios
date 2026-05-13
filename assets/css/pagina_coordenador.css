@@ -2,6 +2,10 @@
 @import url('../../components/dashboard-informativo.css');
 @import url('../../components/modal/modal-base.css');
 
+main {
+    padding: 1rem;
+}
+
 @media (min-width: 900px) {
     .dashboard-informativo {
         grid-template-columns: repeat(2, 1fr); 

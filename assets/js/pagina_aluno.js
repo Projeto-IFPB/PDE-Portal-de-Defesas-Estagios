@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
           mostrarMensagem("Não foi possivel encontrar esse orientador.","erro");
         }
         const aluno = lista_usuarios.find(
-          (user) => user["email"] === sessionStorage.getItem("EmailUsuario"));
+          (user) => user["email"] === localStorage.getItem("EmailUsuario"));
         const id_aluno = aluno["id"];
 
         const coordenador = lista_usuarios.find((user) => user["nome"] === nomeCoordenador);
@@ -229,7 +229,7 @@ async function renderizarEstagios(dados) {
   const busca = await fetch(URL_USUARIOS);
   const lista_usuarios = await busca.json();
 
-  const emailLogado = sessionStorage.getItem("EmailUsuario");
+  const emailLogado = localStorage.getItem("EmailUsuario");
 
   const usuarioLogado = lista_usuarios.find((user) => user["email"] === emailLogado);
   const meuId = usuarioLogado ? usuarioLogado.id : null;
