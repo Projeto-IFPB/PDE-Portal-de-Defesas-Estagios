@@ -6,8 +6,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig({
 
-  base: './',
-
+  base: '/PDE-Portal-de-Defesas-Estagios/',
   build: {
     rollupOptions: {
       input: {

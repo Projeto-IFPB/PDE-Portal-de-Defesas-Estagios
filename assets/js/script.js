@@ -392,12 +392,14 @@ async function login(event) {
       password.value = "";
       sessionStorage.setItem("perfilUsuario", email_encontrado["perfil"]);
       sessionStorage.setItem("EmailUsuario", email_encontrado["email"])
+
+      const repoName = "/PDE-Portal-de-Defesas-Estagios/";
       if (email_encontrado["perfil"] === "aluno") {
-        window.location.replace("../pages/pagina_aluno");
+        window.location.replace(`${repoName}pages/pagina_aluno.html`);
     }else if (email_encontrado["perfil"] === "orientador") {
-        window.location.replace("../pages/orientador");
+        window.location.replace(`${repoName}pages/orientador.html`);
     } else if (email_encontrado["perfil"] === "coordenador") {
-        window.location.replace("../pages/coordenador");
+        window.location.replace(`${repoName}pages/coordenador.html`);
     }
     } else {
       mostrarMensagem("mensagem-login", "Senha incorreta!", "erro");
