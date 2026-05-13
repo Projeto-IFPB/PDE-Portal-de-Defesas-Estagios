@@ -216,26 +216,23 @@ main {
 /* Container do Card */
 #lista-estagios {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 383px));
-    gap: 1px;
-    justify-content: center;
-}
-
-.grid-alunos {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6.2rem;
+    justify-content: start;
+    width: 100%;
+    margin-bottom: 2.5rem;
 }
 
 .card-aluno {
     background: #ffffff;
-    border: 1px solid #e0e0e0;
     border-radius: 12px;
     padding: 20px;
-    min-height: 200px;
-    width: 400px;
+    min-height: 50px;
+    width: 33rem;
     box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     transition: 0.3s;
+    border: 2px solid #143280;
+    margin-bottom: -5rem;
 }
 
 .card-aluno:hover {
@@ -339,8 +336,14 @@ main {
     .titulo h1 {
         font-size: 1.6rem;
     }
-
+}
+@media (max-width: 1110px) {
     #lista-estagios {
-        justify-content: center;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    .card-aluno {
+        width: 100%;
     }
 }
