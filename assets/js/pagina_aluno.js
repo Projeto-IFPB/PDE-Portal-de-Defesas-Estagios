@@ -96,9 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
         !dataInicio ||
         !nomeOrientador ||
         !cursoEstagiario ||
-        !nomeCoordenador ||
-        !termoCompromisso ||
-        !termoOrientacao
+        !nomeCoordenador
       ) {
         mostrarMensagem("Preencha todos os campos obrigatórios.", "erro");
         return;
@@ -138,8 +136,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const status = "em andamento";
 
         const [compBase64, oriBase64] = await Promise.all([
-          lerArquivoComoBase64(termoCompromisso),
-          lerArquivoComoBase64(termoOrientacao),
+         termoCompromisso ? lerArquivoComoBase64(termoCompromisso) : termoCompromisso,
+         termoOrientacao ? lerArquivoComoBase64(termoOrientacao) : termoOrientacao,
         ]);
 
         const payload = {
@@ -152,16 +150,16 @@ document.addEventListener("DOMContentLoaded", () => {
           status: status,
           convite_orientacao: convite_orientacao,
           termo_compromisso: {
-            fileName: termoCompromisso.name,
-            fileType: termoCompromisso.type,
-            fileSize: termoCompromisso.size,
+            fileName: termoCompromisso?.name,
+            fileType: termoCompromisso?.type,
+            fileSize: termoCompromisso?.size,
             path: `files/termo-compromisso/${termoCompromisso.name}`,
             content: compBase64,
           },
           termo_orientacao: {
-            fileName: termoOrientacao.name,
-            fileType: termoOrientacao.type,
-            fileSize: termoOrientacao.size,
+            fileName: termoOrientacao?.name,
+            fileType: termoOrientacao?.type,
+            fileSize: termoOrientacao?.size,
             path: `files/termo-orientacao/${termoOrientacao.name}`,
             content: oriBase64,
           },
