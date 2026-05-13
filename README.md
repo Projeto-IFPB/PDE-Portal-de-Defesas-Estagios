@@ -68,6 +68,8 @@ PDE-Portal-de-Defesa-Estagios
 |    ├── coordenador.html                  # HTML da página de coordenador
 |    ├── orientador.html                   # HTML da página de orientador
 |    └── pagina_aluno.html                 # HTML da página de aluno
+├── public/                                # Pasta que contem os arquivos que não devem ser mimificados pelo Vite
+|    └── Logo_PDE_Isolada.png              # Logo da aplicação que fica no header     
 ├── index.html                             # HTML da página de autenticação
 ├── .env                                   # Arquivo com os endpoints do MOCKAPI
 ├── .gitignore                             # Arquivos importantes que não sobem para o github
