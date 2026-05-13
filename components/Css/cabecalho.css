@@ -22,6 +22,15 @@ body, html {
 }
 
 /* Logo */
+
+.cabecalho-logo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    font-family: "Cinzel", "Times New Roman", serif;
+}
+
 .cabecalho-logo img {
     height: 65px; 
     width: auto;
@@ -41,24 +50,8 @@ body, html {
     transition: opacity 0.2s;
 }
 
-.botao-icone:hover, .botao-menu-mobile:hover {
-    opacity: 0.7;
-}
-
 /* --- MOBILE FIRST (Escondendo a nav por padrão) --- */
-.cabecalho-navegacao {
-    display: none; /* Escondido no celular até clicar no menu */
-    flex-direction: column;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background-color: var(--azul-pde);
-    padding: 20px;
-    gap: 20px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    z-index: 1000;
-}
+
 
 /* Classe adicionada pelo JS quando clica no sanduíche */
 .cabecalho-navegacao.menu-aberto {
@@ -77,42 +70,136 @@ body, html {
     text-decoration: none;
     display: flex;
     align-items: center;
-    gap: 8px;
+    justify-content: center;
+    gap: 3px;
     font-size: 16px;
     padding: 8px 16px;
     border-radius: 20px; /* Borda arredondada tipo pílula */
     transition: background-color 0.3s;
 }
 
+/* O item que está selecionado no momento */
 .item-nav:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: var(--azul-pde-escuro);
+    color: #ffffff;
 }
 
-/* O item que está selecionado no momento */
-.item-nav.ativo {
+.item-nav.ativo:hover {
     background-color: var(--azul-pde-escuro);
+    color: #ffffff;
+}
+
+.botao-icone:hover, .botao-menu-mobile:hover {
+    opacity: 0.7;
+    background-color: rgb(57, 57, 137);
+    color: #ffffff;
+    border-radius: 20px;
+    transition: background-color 0.8s;
+    padding: 1px;
+    }
+
+/* --- ESTILIZAÇÃO DO MENU MOBILE --- */
+@media (max-width: 767px) {
+    .cabecalho-navegacao {
+        /* Mudamos de display: none para um estado "escondido" mas animável */
+        display: flex; 
+        flex-direction: column;
+        position: absolute;
+        top: 85%; /* Começa um pouco acima para o efeito de slide */
+        left: 15px; 
+        right: 15px;
+        
+        /* CORES: Fundo branco/claro para quebrar o azul excessivo */
+        background-color: #ffffff; 
+        padding: 20px;
+        gap: 15px;
+        border-radius: 15px; /* Bordas arredondadas para o look "clean" */
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15); /* Sombra para dar profundidade */
+        z-index: 1000;
+
+        /* ANIMAÇÃO: Estado inicial */
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-20px); 
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Transição suave */
+        pointer-events: none;
+    }
+
+    /* Quando o menu está aberto */
+    .cabecalho-navegacao.menu-aberto {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(10px); /* Desce suavemente */
+        pointer-events: all;
+    }
+
+    /* Itens de navegação no Mobile (Texto azul no fundo branco) */
+    .item-nav {
+        color: var(--azul-pde);
+        font-weight: 500;
+        padding: 12px 15px;
+        background-color: #eef2ff;
+    }
+
+    .item-nav.ativo {
+        background-color: #eef2ff; 
+    }
+
+    /* Divisor bonitinho entre links e ícones */
+    .icones-acao {
+        border-top: 1px solid #eee;
+        padding-top: 15px;
+        flex-direction: row;
+        justify-content: center;
+        gap: 30px;
+    }
+
+    .icones-acao .botao-icone {
+        color: var(--azul-pde);
+    }
+
+    .botao-icone:hover, .botao-menu-mobile:hover {
+    opacity: 0.7;
+    background-color: rgb(57, 57, 137);
+    color: #ffffff;
+    border-radius: 20px;
+    transition: background-color 0.8s;
+    padding: 1px;
+    }
 }
 
 /* --- DESKTOP (Telas maiores que 768px) --- */
 @media (min-width: 768px) {
     .botao-menu-mobile {
-        display: none; /* Some com o sanduíche no PC */
+        display: none;
     }
 
     .cabecalho-navegacao {
-        display: flex;
-        flex-direction: row;
+        /* Resetamos todas as propriedades de animação do mobile para o PC */
+        display: flex !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+        pointer-events: all !important;
         position: static;
         width: auto;
+        background-color: transparent; /* No PC volta a ser transparente */
         padding: 0;
         box-shadow: none;
-        align-items: center;
+        flex-direction: row;
         gap: 30px;
+    }
+
+    /* Mantém as cores originais do PC que você gostou */
+    .item-nav {
+        color: var(--cor-texto-cabecalho) !important;
     }
 
     .links-navegacao, .icones-acao {
         flex-direction: row;
         align-items: center;
         gap: 20px;
+        border: none;
+        padding: 0;
     }
 }
