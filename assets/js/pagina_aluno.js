@@ -155,14 +155,14 @@ document.addEventListener("DOMContentLoaded", () => {
             fileName: termoCompromisso?.name,
             fileType: termoCompromisso?.type,
             fileSize: termoCompromisso?.size,
-            path: `files/termo-compromisso/${termoCompromisso.name}`,
+            path: `files/termo-compromisso/${termoCompromisso?.name}`,
             content: compBase64,
           },
           termo_orientacao: {
             fileName: termoOrientacao?.name,
             fileType: termoOrientacao?.type,
             fileSize: termoOrientacao?.size,
-            path: `files/termo-orientacao/${termoOrientacao.name}`,
+            path: `files/termo-orientacao/${termoOrientacao?.name}`,
             content: oriBase64,
           },
         };
