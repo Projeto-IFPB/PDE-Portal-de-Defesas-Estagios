@@ -1,3 +1,5 @@
+import logoUrl from '../assets/img/preview-pde-transparente.png';
+
 // components/cabecalho.js
 
 export function injetarCabecalho() {
@@ -7,12 +9,12 @@ export function injetarCabecalho() {
         console.error('Div #conteiner-cabecalho não encontrada na página.');
         return;
     }
-
+    
     // O HTML do nosso cabeçalho
     conteiner.innerHTML = `
         <header class="cabecalho-principal">
             <div class="cabecalho-logo">
-                <img src="../assets/img/preview-pde-transparente.png" alt="Logo PDE">
+                <img src="${logoUrl}" alt="Logo PDE">
             </div>
             
             <button class="botao-menu-mobile" id="botao-menu" aria-label="Abrir menu">
