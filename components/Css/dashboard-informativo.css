@@ -1,21 +1,22 @@
 @import url("https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
 
-body {
-    background-color: #d2d3df;
-    font-family: "Inter", Arial, sans-serif;
-    padding: 1rem;
-}
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Título da página */
-.titulo {
-    margin-top: 2.5rem;
-    margin-bottom: 2rem;
+body {
+  font-family: "Inter", Arial, sans-serif;
+  background-color: #d2d3df;
+  color: #333;
+  visibility: hidden;
+}
+
+main {
+  padding: 1rem; 
+  display: block;
+  width: 100%;
 }
 
 .titulo h1 {
@@ -215,26 +216,23 @@ body {
 /* Container do Card */
 #lista-estagios {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 383px));
-    gap: 1px;
-    justify-content: center;
-}
-
-.grid-alunos {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6.2rem;
+    justify-content: start;
+    width: 100%;
+    margin-bottom: 2.5rem;
 }
 
 .card-aluno {
     background: #ffffff;
-    border: 1px solid #e0e0e0;
     border-radius: 12px;
     padding: 20px;
-    min-height: 200px;
-    width: 400px;
+    min-height: 50px;
+    width: 33rem;
     box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     transition: 0.3s;
+    border: 2px solid #143280;
+    margin-bottom: -5rem;
 }
 
 .card-aluno:hover {
@@ -338,8 +336,14 @@ body {
     .titulo h1 {
         font-size: 1.6rem;
     }
-
+}
+@media (max-width: 1110px) {
     #lista-estagios {
-        justify-content: center;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    .card-aluno {
+        width: 100%;
     }
 }

@@ -2,8 +2,9 @@ const URL_ESTAGIOS = import.meta.env.VITE_URL_JSON_ESTAGIOS;
 const URL_USUARIOS = import.meta.env.VITE_URL_JSON_USUARIOS;
 
 // Importando a função do componente para o header
-import { injetarCabecalho } from '../../components/cabecalho.js';
-injetarCabecalho()
+import {configurarUpload,resetarBotaoUpload} from "../../components/Js/functions.js";
+import { injetarCabecalho } from "../../components/Js/cabecalho.js";
+injetarCabecalho();
 
 const mostrarMensagem = (texto, tipo = "erro") => {
   const mensagem = document.getElementById("mensagem-estagio");
@@ -52,6 +53,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const fechar = () => {
     overlay.classList.remove("ativo");
     document.body.style.overflow = "";
+    formulario.reset();
+    resetarBotaoUpload();
   };
 
   if (abrirModal) {
@@ -80,22 +83,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const empresa = formulario.querySelector("[name=empresa]").value.trim();
       const dataInicio = formulario.querySelector("[name=dataInicio]").value;
-      const nomeOrientador = formulario.querySelector("[name=nomeOrientador]").value.trim();
-      const cursoEstagiario = formulario.querySelector("[name=cursoEstagiario]").value.trim();
-      const emailCoordenador = formulario.querySelector("[name=emailCoordenador]").value.trim();
-      const termoCompromisso = formulario.querySelector("[name=termoCompromisso]").files[0];
-      const termoOrientacao = formulario.querySelector("[name=termoOrientacao]").files[0];
+      const nomeOrientador = formulario
+        .querySelector("[name=nomeOrientador]")
+        .value.trim();
+      const cursoEstagiario = formulario
+        .querySelector("[name=cursoEstagiario]")
+        .value.trim();
+      const nomeCoordenador = formulario
+        .querySelector("[name=nomeCoordenador]")
+        .value.trim();
+      const termoCompromisso = formulario.querySelector(
+        "[name=termoCompromisso]"
+      ).files[0];
+      const termoOrientacao = formulario.querySelector("[name=termoOrientacao]")
+        .files[0];
       const botaoEnviar = formulario.querySelector("button[type=submit]");
-      const convite_orientacao = "aceito"
+      const convite_orientacao = "aceito";
 
       if (
         !empresa ||
         !dataInicio ||
         !nomeOrientador ||
         !cursoEstagiario ||
-        !emailCoordenador ||
-        !termoCompromisso ||
-        !termoOrientacao
+        !nomeCoordenador
       ) {
         mostrarMensagem("Preencha todos os campos obrigatórios.", "erro");
         return;
@@ -108,35 +118,44 @@ document.addEventListener("DOMContentLoaded", () => {
       try {
         const busca = await fetch(URL_USUARIOS);
         const lista_usuarios = await busca.json();
-        const orientador = lista_usuarios.find((user) => user["nome"] === nomeOrientador);
-        let id_orientador = null
+        const orientador = lista_usuarios.find(
+          (user) => user["nome"] === nomeOrientador
+        );
+        let id_orientador = null;
         if (orientador) {
           id_orientador = orientador["id"];
         } else {
-          mostrarMensagem("Não foi possivel encontrar esse orientador.","erro");
+          mostrarMensagem("Não foi possivel encontrar o orientador informado.", "erro");
+          return;
         }
         const aluno = lista_usuarios.find(
-          (user) => user["email"] === sessionStorage.getItem("EmailUsuario"));
+          (user) => user["email"] === localStorage.getItem("EmailUsuario")
+        );
         const id_aluno = aluno["id"];
 
-        const coordenador = lista_usuarios.find((user) => user["email"] === emailCoordenador);
-        let id_coordenador = null
-        let id_banca_examinadora = null
+        const coordenador = lista_usuarios.find(
+          (user) => user["nome"] === nomeCoordenador
+        );
+        let id_coordenador = null;
+        let id_banca_examinadora = null;
         if (coordenador) {
           id_coordenador = {
             id_coordenador: coordenador["id"],
           };
           id_banca_examinadora = [];
           id_banca_examinadora.push(id_coordenador);
-        } else{
-          mostrarMensagem("Não foi possivel o coordenador.","erro");
+        } else {
+          mostrarMensagem(
+            "Não foi possivel encontrar o coordenador informado.",
+            "erro"
+          );
+          return;
         }
-
         const status = "em andamento";
 
         const [compBase64, oriBase64] = await Promise.all([
-          lerArquivoComoBase64(termoCompromisso),
-          lerArquivoComoBase64(termoOrientacao),
+         termoCompromisso ? lerArquivoComoBase64(termoCompromisso) : termoCompromisso,
+         termoOrientacao ? lerArquivoComoBase64(termoOrientacao) : termoOrientacao,
         ]);
 
         const payload = {
@@ -149,17 +168,17 @@ document.addEventListener("DOMContentLoaded", () => {
           status: status,
           convite_orientacao: convite_orientacao,
           termo_compromisso: {
-            fileName: termoCompromisso.name,
-            fileType: termoCompromisso.type,
-            fileSize: termoCompromisso.size,
-            path: `files/termo-compromisso/${termoCompromisso.name}`,
+            fileName: termoCompromisso?.name,
+            fileType: termoCompromisso?.type,
+            fileSize: termoCompromisso?.size,
+            path: `files/termo-compromisso/${termoCompromisso?.name}`,
             content: compBase64,
           },
           termo_orientacao: {
-            fileName: termoOrientacao.name,
-            fileType: termoOrientacao.type,
-            fileSize: termoOrientacao.size,
-            path: `files/termo-orientacao/${termoOrientacao.name}`,
+            fileName: termoOrientacao?.name,
+            fileType: termoOrientacao?.type,
+            fileSize: termoOrientacao?.size,
+            path: `files/termo-orientacao/${termoOrientacao?.name}`,
             content: oriBase64,
           },
         };
@@ -175,8 +194,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (resposta.ok) {
           mostrarMensagem("Estágio cadastrado com sucesso!", "sucesso");
           await carregarEstagiosCadastrados();
-          await Sugestoes()
-          formulario.reset();
+          await Sugestoes();
           fechar();
         } else {
           mostrarMensagem("Não foi possível cadastrar o estágio.", "erro");
@@ -203,18 +221,16 @@ async function Sugestoes() {
     listaOrientadores.innerHTML = "";
     listaCoordenadores.innerHTML = "";
 
-    usuarios.forEach(user => {
+    usuarios.forEach((user) => {
       const option = document.createElement("option");
-      
-      // Se for orientador, adiciona na lista de nomes
-      if (user.perfil === "orientador") { // Ajuste "perfil" para o nome da chave no seu JSON
-        option.value = user.nome;
+
+      if (user["perfil"] === "orientador" || user["perfil"] === "coordenador") {
+        option.value = user["nome"];
         listaOrientadores.appendChild(option.cloneNode(true));
       }
-      
-      // Se for coordenador, adiciona na lista de emails
-      if (user.perfil === "coordenador") {
-        option.value = user.email;
+
+      if (user["perfil"] === "coordenador") {
+        option.value = user["nome"];
         listaCoordenadores.appendChild(option);
       }
     });
@@ -222,21 +238,21 @@ async function Sugestoes() {
     console.error("Erro ao carregar sugestões:", error);
   }
 }
-const containerEstagios = document.getElementById('container-meus-estagios');
+const containerEstagios = document.getElementById("container-meus-estagios");
 
 async function renderizarEstagios(dados) {
   const busca = await fetch(URL_USUARIOS);
   const lista_usuarios = await busca.json();
 
-  const emailLogado = sessionStorage.getItem("EmailUsuario");
+  const emailLogado = localStorage.getItem("EmailUsuario");
 
-  const usuarioLogado = lista_usuarios.find((user) => user["email"] === emailLogado);
+  const usuarioLogado = lista_usuarios.find(
+    (user) => user["email"] === emailLogado
+  );
   const meuId = usuarioLogado ? usuarioLogado.id : null;
 
-
   const estagiosDoAluno = dados.filter((estagio) => estagio.id_aluno == meuId);
-  
-  
+
   //se não houver nenhum estágio ainda exibe isso
   if (estagiosDoAluno.length === 0) {
     containerEstagios.innerHTML = `
@@ -249,9 +265,12 @@ async function renderizarEstagios(dados) {
   //percorre os dados salvos na API e retorna estrutura completa html com os dados da API
   containerEstagios.innerHTML = estagiosDoAluno
     .map((estagio) => {
-
-      const orientador = lista_usuarios.find((user) => user["id"] === estagio.id_orientador);
-      const nome_orientador = orientador ? orientador["nome"] : "Não Cadastrado";
+      const orientador = lista_usuarios.find(
+        (user) => user["id"] === estagio.id_orientador
+      );
+      const nome_orientador = orientador
+        ? orientador["nome"]
+        : "Não Cadastrado";
       //formatação da data
       const [ano, mes, dia] = estagio.data_inicio.split("-");
       const data = new Date(ano, mes - 1, dia).toLocaleDateString("pt-BR");
@@ -293,7 +312,8 @@ async function carregarEstagiosCadastrados() {
 }
 //chama a função apenas depois que o DOM estiver totalmente carregado
 document.addEventListener("DOMContentLoaded", () => {
-  carregarEstagiosCadastrados()
-  Sugestoes()
-  
+  carregarEstagiosCadastrados();
+  Sugestoes();
 });
+configurarUpload("file-compromisso", "label-compromisso", "span-compromisso");
+configurarUpload("file-orientacao", "label-orientacao", "span-orientacao");

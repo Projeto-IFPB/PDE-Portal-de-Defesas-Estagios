@@ -390,8 +390,8 @@ async function login(event) {
       mostrarMensagem("mensagem-login", "Login bem-sucedido!", "sucesso");
       email.value = "";
       password.value = "";
-      sessionStorage.setItem("perfilUsuario", email_encontrado["perfil"]);
-      sessionStorage.setItem("EmailUsuario", email_encontrado["email"])
+      localStorage.setItem("PerfilUsuario", email_encontrado["perfil"]);
+      localStorage.setItem("EmailUsuario", email_encontrado["email"])
 
       const repoName = "/PDE-Portal-de-Defesas-Estagios/";
       if (email_encontrado["perfil"] === "aluno") {

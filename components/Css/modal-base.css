@@ -179,3 +179,49 @@
     padding: 1.25rem;
   }
 }
+
+/* botao upload Modais */
+.novo-input input[type="file"] {
+    display: none;
+}
+
+
+.novo-input {
+    display: block;
+    background-color: #f8f9fa; 
+    border: 2px dashed #143280;
+    color: #143280;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    margin-top: 8px;
+}
+
+
+.novo-input:hover {
+    background-color: #e9ecef;
+    border-color: #1900ff;
+    color: #1900ff;
+}
+
+
+.file-name {
+    display: block;
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: 5px;
+}
+
+.novo-input.envio-sucesso {
+    background-color: #e6ffed; 
+    border: 2px solid #28a745;
+    color: #28a745;
+}
+
+.envio-sucesso .file-name {
+    color: #28a745;
+    font-weight: bold;
+}
