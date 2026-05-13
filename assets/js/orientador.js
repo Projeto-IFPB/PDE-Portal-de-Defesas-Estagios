@@ -1,4 +1,7 @@
 import { renderizarDashboardInformativo, dados_estatisticos_orientador } from '../../components/functions.js';
+import { injetarCabecalho } from '../../components/cabecalho.js';
+
+injetarCabecalho()
 
 const URL_ESTAGIOS = import.meta.env.VITE_URL_JSON_ESTAGIOS;
 const URL_USUARIOS = import.meta.env.VITE_URL_JSON_USUARIOS;
@@ -22,7 +25,7 @@ async function carregar_pagina() {
 
   const busca = await fetch(URL_USUARIOS);
   const lista_usuarios = await busca.json();
-  const usuario_logado = lista_usuarios.find((user) => user["email"] === sessionStorage.getItem("EmailUsuario"));
+  const usuario_logado = lista_usuarios.find((user) => user["email"] === localStorage.getItem("EmailUsuario"));
   const meu_id = usuario_logado ? usuario_logado["id"] : null;
 
   if (meu_id) {

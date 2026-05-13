@@ -1,4 +1,7 @@
 import { renderizarDashboardInformativo } from '../../components/functions.js';
+import { injetarCabecalho } from '../../components/cabecalho.js';
+
+injetarCabecalho()
 
 const configuracaoCardsInformativos = [
     { titulo: "Total de Estágios",
