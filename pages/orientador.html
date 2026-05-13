@@ -7,76 +7,81 @@
     
     <link rel="stylesheet" href="../assets/css/pagina_orientador.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
+    <link rel="stylesheet" href="../assets/css/cabecalho.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <script type="module" src="../assets/js/autenticacoes.js" defer></script>
     <script type="module" src="/assets/js/orientador.js" defer></script>
 </head>
 <body>
-    <div class="titulo">
-        <h1>Bem-vindo ao portal de defesas de estágio!</h1>
-        <p>Acompanhe seus alunos orientados</p>
-    </div>
+    <!-- Implementando Header na Página de Orientador -->
+    <div id="conteiner-cabecalho"></div>
 
-    <div class="dashboard-informativo"></div>
-
-    <div class="alunos_orientados">
-        <i class="fa-solid fa-users"></i>
-        <h1>Alunos orientados</h1>
-    </div>
-    <div id="lista-estagios"></div>
-
-    <div id="modal-overlay" class="modal-overlay">
-        <div class="modal-conteudo">
-            <div class="modal-cabecalho">
-            <div>
-                <h2>Agendar Defesa de Estágio</h2>
-                <p>Preencha os dados para agendar</p>
-            </div>
-            <button id="fechar-modal-estagio" type="button" class="fechar-modal" aria-label="Fechar modal">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            </div>
-
-            <form class="modal-formulario" id="formulario-agendamento" autocomplete="off">
-            <div class="modal-grid">
-                <label class="span-dobrado">
-                Email do Estagiário
-                <input type="email" name="emailEstagiario" placeholder="exemplo@ifpb.edu.br">
-                </label>
-                <label class="span-dobrado">
-                    <div class="label-icone">
-                        Email da Banca
-                        <button type="button" class="btn-adicionar">
-                            <i class="fa-solid fa-circle-plus"></i>
-                        </button>
-                    </div>
-                    <input type="email" name="emailBanca" placeholder="professor@ifpb.edu.br">
-                </label>
-                <label class="span-dobrado">
-                Email do Coordenador do Curso
-                <input type="text" name="emailCoordenador" placeholder="coordenador@ifpb.edu.br">
-                </label>
-                <label>
-                Upload da Ata de Defesa de Estágio
-                <input type="file" name="ataDefesa">
-                </label>
-                <label>
-                Upload do Relatório Final de Estágio
-                <input type="file" name="relatoriofinal">
-                </label>
-                <label>
-                Data da Defesa de Estágio
-                <input type="date" name="dataDefesa">
-                </label>
-            </div>
-
-            <div class="modal-acoes">
-                <button type="button" class="botao-cancelar">Cancelar</button>
-                <button type="submit" class="botao-agendar">Agendar</button>
-            </div>
-            </form>
+    <main class="conteudo-principal">
+        <div class="titulo">
+            <h1>Bem-vindo ao portal de defesas de estágio!</h1>
+            <p>Acompanhe seus alunos orientados</p>
         </div>
-    </div>
 
+        <div class="dashboard-informativo"></div>
+
+        <div class="alunos_orientados">
+            <i class="fa-solid fa-users"></i>
+            <h1>Alunos orientados</h1>
+        </div>
+        <div id="lista-estagios"></div>
+
+        <div id="modal-overlay" class="modal-overlay">
+            <div class="modal-conteudo">
+                <div class="modal-cabecalho">
+                <div>
+                    <h2>Agendar Defesa de Estágio</h2>
+                    <p>Preencha os dados para agendar</p>
+                </div>
+                <button id="fechar-modal-estagio" type="button" class="fechar-modal" aria-label="Fechar modal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                </div>
+
+                <form class="modal-formulario" id="formulario-agendamento" autocomplete="off">
+                <div class="modal-grid">
+                    <label class="span-dobrado">
+                    Email do Estagiário
+                    <input type="email" name="emailEstagiario" placeholder="exemplo@ifpb.edu.br">
+                    </label>
+                    <label class="span-dobrado">
+                        <div class="label-icone">
+                            Email da Banca
+                            <button type="button" class="btn-adicionar">
+                                <i class="fa-solid fa-circle-plus"></i>
+                            </button>
+                        </div>
+                        <input type="email" name="emailBanca" placeholder="professor@ifpb.edu.br">
+                    </label>
+                    <label class="span-dobrado">
+                    Email do Coordenador do Curso
+                    <input type="text" name="emailCoordenador" placeholder="coordenador@ifpb.edu.br">
+                    </label>
+                    <label>
+                    Upload da Ata de Defesa de Estágio
+                    <input type="file" name="ataDefesa">
+                    </label>
+                    <label>
+                    Upload do Relatório Final de Estágio
+                    <input type="file" name="relatoriofinal">
+                    </label>
+                    <label>
+                    Data da Defesa de Estágio
+                    <input type="date" name="dataDefesa">
+                    </label>
+                </div>
+
+                <div class="modal-acoes">
+                    <button type="button" class="botao-cancelar">Cancelar</button>
+                    <button type="submit" class="botao-agendar">Agendar</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </main>
 </body>
 </html>
