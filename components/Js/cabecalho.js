@@ -1,3 +1,5 @@
+import logoUrl from '../assets/img/preview-pde-transparente.png';
+
 // components/cabecalho.js
 
 export function injetarCabecalho() {
@@ -7,7 +9,7 @@ export function injetarCabecalho() {
         console.error('Div #conteiner-cabecalho não encontrada na página.');
         return;
     }
-
+    
     // O HTML do nosso cabeçalho
     conteiner.innerHTML = `
         <header class="cabecalho-principal">
@@ -58,5 +60,5 @@ export function injetarCabecalho() {
         window.location.replace('/PDE-Portal-de-Defesas-Estagios/index.html');
         localStorage.removeItem("PerfilUsuario")
         localStorage.removeItem("EmailUsuario")
-    })
+    });
 }
