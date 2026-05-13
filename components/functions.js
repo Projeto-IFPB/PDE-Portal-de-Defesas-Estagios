@@ -144,14 +144,14 @@ export function configurarUpload(inputId, labelId, spanId) {
     const span = document.getElementById(spanId);
 
     input.addEventListener('change', function() {
-        const fileName = this.files[0] ? this.files[0].name : "Selecionar arquivo...";
+        const fileName = this.files[0] ? this.files[0].name : "Selecionar arquivo (máx. 25KB) ...";
         
         if (this.files[0]) {
             label.classList.add('envio-sucesso');
             span.innerHTML = `<i class="fa-solid fa-check"></i> ${fileName}`;
         } else {
             label.classList.remove('envio-sucesso');
-            span.textContent = "Selecionar arquivo...";
+            span.textContent = "Selecionar arquivo (máx. 25KB) ...";
         }
     });
 }
@@ -167,7 +167,7 @@ export const resetarBotaoUpload = () => {
     
     if (label && span) {
       label.classList.remove('envio-sucesso');
-      span.textContent = "Selecionar arquivo...";
+      span.textContent = "Selecionar arquivo (máx. 25KB) ...";
     }
   });
 };
