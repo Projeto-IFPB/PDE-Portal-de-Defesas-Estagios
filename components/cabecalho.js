@@ -12,7 +12,7 @@ export function injetarCabecalho() {
     conteiner.innerHTML = `
         <header class="cabecalho-principal">
             <div class="cabecalho-logo">
-                <img src="/assets/img/preview-pde-transparente.png" alt="Logo PDE">
+                <img src="../assets/img/preview-pde-transparente.png" alt="Logo PDE">
             </div>
             
             <button class="botao-menu-mobile" id="botao-menu" aria-label="Abrir menu">
