@@ -1,21 +1,22 @@
 @import url("https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
 
-body {
-    background-color: #d2d3df;
-    font-family: "Inter", Arial, sans-serif;
-    padding: 1rem;
-}
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Título da página */
-.titulo {
-    margin-top: 2.5rem;
-    margin-bottom: 2rem;
+body {
+  font-family: "Inter", Arial, sans-serif;
+  background-color: #d2d3df;
+  color: #333;
+  visibility: hidden;
+}
+
+main {
+  padding: 1rem; 
+  display: block;
+  width: 100%;
 }
 
 .titulo h1 {
