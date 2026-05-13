@@ -1,4 +1,4 @@
-import { renderizarDashboardInformativo, total_alunos, estagios_em_orientacao, pedidos_pendentes } from '../../components/functions.js';
+import { renderizarDashboardInformativo, dados_estatisticos_orientador } from '../../components/functions.js';
 
 const URL_ESTAGIOS = import.meta.env.VITE_URL_JSON_ESTAGIOS;
 const URL_USUARIOS = import.meta.env.VITE_URL_JSON_USUARIOS;
@@ -26,9 +26,9 @@ async function carregar_pagina() {
   const meu_id = usuario_logado ? usuario_logado["id"] : null;
 
   if (meu_id) {
-    const qtd_alunos = await total_alunos(meu_id);
-    const qtd_estagios_ativos = await estagios_em_orientacao(meu_id);
-    const qtd_pendencias = await pedidos_pendentes(meu_id);
+    const qtd_alunos = await dados_estatisticos_orientador(meu_id, 'total_alunos_orientador');
+    const qtd_estagios_ativos = await dados_estatisticos_orientador(meu_id, 'estagios_ativos_orientador');
+    const qtd_pendencias = await dados_estatisticos_orientador(meu_id, 'estagios_pendentes_orientador');
 
     document.querySelector('.card-alunos .card-valor').textContent = qtd_alunos;
     document.querySelector('.card-estagios-ativos .card-valor').textContent = qtd_estagios_ativos;
