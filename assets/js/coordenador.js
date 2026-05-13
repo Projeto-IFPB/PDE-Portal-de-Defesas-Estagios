@@ -1,4 +1,4 @@
-import {renderizarDashboardInformativo,carregar_alunos} from "../../components/Js/functions.js";
+import {renderizarDashboardInformativo,carregar_alunos, configurarUpload} from "../../components/Js/functions.js";
 import { injetarCabecalho } from "../../components/Js/cabecalho.js";
 
 injetarCabecalho();
@@ -33,3 +33,5 @@ document.addEventListener("DOMContentLoaded", () => {
   renderizarDashboardInformativo(configuracaoCardsInformativos);
   carregar_alunos();
 });
+configurarUpload("file-ata", "label-ata", "span-ata");
+configurarUpload("file-relatorio", "label-relatorio", "span-relatorio");

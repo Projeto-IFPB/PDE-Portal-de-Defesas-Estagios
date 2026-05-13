@@ -1,4 +1,4 @@
-import {renderizarDashboardInformativo,dados_estatisticos_orientador,carregar_alunos} from "../../components/Js/functions.js";
+import {renderizarDashboardInformativo,dados_estatisticos_orientador,carregar_alunos, configurarUpload} from "../../components/Js/functions.js";
 import { injetarCabecalho } from "../../components/Js/cabecalho.js";
 
 const URL_ESTAGIOS = import.meta.env.VITE_URL_JSON_ESTAGIOS;
@@ -62,3 +62,5 @@ document.addEventListener("DOMContentLoaded", () => {
   carregar_pagina();
   carregar_alunos();
 });
+configurarUpload("file-ata", "label-ata", "span-ata");
+configurarUpload("file-relatorio", "label-relatorio", "span-relatorio");

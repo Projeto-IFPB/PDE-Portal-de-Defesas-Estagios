@@ -367,51 +367,7 @@ body {
     margin: 1rem 0;
     width: 100%;
 }
-/* Esconde o input feio padrão */
-.novo-input input[type="file"] {
-    display: none;
-}
 
-/* Transforma a label em um botão bonito */
-.novo-input {
-    display: block;
-    background-color: #f8f9fa; /* Cor de fundo suave */
-    border: 2px dashed #143280; /* Borda tracejada moderna */
-    color: #143280;
-    padding: 12px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    text-align: center;
-    transition: all 0.3s ease;
-    font-weight: 500;
-    margin-top: 8px;
-}
-
-/* Efeito ao passar o mouse */
-.novo-input:hover {
-    background-color: #e9ecef;
-    border-color: #1900ff;
-    color: #1900ff;
-}
-
-/* Estilo para o texto interno (opcional) */
-.file-name {
-    display: block;
-    font-size: 0.85rem;
-    color: #666;
-    margin-top: 5px;
-}
-/* Quando o upload for detectado pelo JS */
-.novo-input.envio-sucesso {
-    background-color: #e6ffed; /* Verde bem clarinho */
-    border: 2px solid #28a745; /* Borda sólida verde */
-    color: #28a745;
-}
-
-.envio-sucesso .file-name {
-    color: #28a745;
-    font-weight: bold;
-}
 
 /* Responsividade: Desktop */
 @media (min-width: 1024px) {
