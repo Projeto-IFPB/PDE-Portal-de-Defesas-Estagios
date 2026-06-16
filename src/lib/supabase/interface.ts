@@ -2,9 +2,9 @@
 // --- INTERFACES PARA TIPAGEM
 export interface Usuario {
   id: string; 
-  email: string; 
-  nome: string; 
-  perfil: 'aluno' | 'orientador' | 'coordenador' | 'pendente'; 
+  Email: string; 
+  'Nome-Completo': string; 
+  'tipo-de-perfil': 'aluno' | 'orientador' | 'coordenador' | 'pendente'; 
 }
 
 export interface Estagio {
@@ -16,3 +16,19 @@ export interface Estagio {
   data_inicio: string; 
 }
 
+export interface UsuarioEspelho {
+  id: string; 
+  nome: string;
+  email: string;
+  perfil: 'estagiario' | 'orientador' | 'coordenador' | 'pendente';
+  created_at: string;
+}
+
+export interface AgendaDefesa {
+  id?: string;
+  estagio_id: string; 
+  data_defesa: string; 
+  banca_examinadora: string[];
+  status: 'agendado' | 'realizado' | 'cancelado';
+  created_at?: string;
+}

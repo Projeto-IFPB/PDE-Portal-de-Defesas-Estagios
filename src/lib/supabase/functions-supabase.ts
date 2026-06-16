@@ -8,8 +8,8 @@ import { Usuario, Estagio } from "./interface";
 export async function listarTodosUsuarios(): Promise<Usuario[] | null> {
   try {
     const { data, error } = await supabase
-      .from('usuarios')
-      .select('id, email, nome, perfil'); 
+      .from('Usuarios')
+      .select('id, Email, "Nome-Completo", "tipo-de-perfil"'); 
 
     if (error) {
       console.error("Erro ao listar todos os usuários:", error.message);
@@ -27,7 +27,7 @@ export async function listarTodosUsuarios(): Promise<Usuario[] | null> {
 export async function buscarUsuarioPorId(id: string): Promise<Usuario | null> {
   try {
     const { data, error } = await supabase
-      .from('usuarios')
+      .from('Usuarios')
       .select('*')
       .eq('id', id) 
       .single();   
@@ -51,9 +51,9 @@ export async function buscarUsuarioPorId(id: string): Promise<Usuario | null> {
 export async function listarEstagiosPorEstagiarioId(estagiarioId: string): Promise<Estagio[] | null> {
   try {
     const { data, error } = await supabase
-      .from('estagios')
+      .from('Estagios')
       .select('*')
-      .eq('aluno_id', estagiarioId); 
+      .eq('Id_estagiario', estagiarioId); 
 
     if (error) {
       console.error(`Erro ao listar estágios do aluno ${estagiarioId}:`, error.message);
@@ -71,9 +71,9 @@ export async function listarEstagiosPorEstagiarioId(estagiarioId: string): Promi
 export async function listarEstagiosPorOrientadorId(orientadorId: string): Promise<Estagio[] | null> {
   try {
     const { data, error } = await supabase
-      .from('estagios')
+      .from('Estagios')
       .select('*')
-      .eq('orientador_id', orientadorId);  
+      .eq('Id_orientador', orientadorId);  
 
     if (error) {
       console.error(`Erro ao listar estágios do orientador ${orientadorId}:`, error.message);
@@ -90,9 +90,9 @@ export async function listarEstagiosPorOrientadorId(orientadorId: string): Promi
 export async function listarEstagiosPorCoordenadorId(coordenadorId: string): Promise<Estagio[] | null> {
   try {
     const { data, error } = await supabase
-      .from('estagios')
+      .from('Estagios')
       .select('*')
-      .eq('id_coordenador', coordenadorId);
+      .eq('Id_coordenador', coordenadorId);
 
     if (error) {
       console.error(`Erro ao listar estágios do coordenador ${coordenadorId}:`, error.message);
@@ -107,16 +107,18 @@ export async function listarEstagiosPorCoordenadorId(coordenadorId: string): Pro
 }
 
 //6. Puxar documentos do Bucket (Gerar URL de visualização/download)
-//O caminho completo guardado no banco (ex: 'documentos/termo_compromisso_Assert_Lemuel_Duarte.pdf') 
+//O caminho completo guardado no banco (ex: 'Documentos/termo_compromisso_Assert_Lemuel_Duarte.pdf ou se tiver no root que acho que é o nosso caso so o nome do arquivo') 
 
 export async function obterUrlDocumentoBucket(caminhoArquivo: string): Promise<string | null> {
   try {
+    console.log("Tentando acessar arquivo no bucket:", caminhoArquivo);
+    
     const { data, error } = await supabase.storage
-      .from('documentos') 
-      .createSignedUrl(caminhoArquivo, 120);
+      .from('Documentos') 
+      .createSignedUrl(caminhoArquivo, 180);
 
     if (error) {
-      console.error("Erro ao gerar link assinado do bucket:", error.message);
+      console.error("Erro detalhado do Bucket:", error);
       return null;
     }
 
@@ -129,4 +131,3 @@ export async function obterUrlDocumentoBucket(caminhoArquivo: string): Promise<s
 // Funcoes de inserir dados (Insert/Post)
 
 //* Cadastra um novo usuário no Supabase Auth enviando o perfil junto.
-
