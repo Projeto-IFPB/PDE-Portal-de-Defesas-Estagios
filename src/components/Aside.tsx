@@ -1,39 +1,100 @@
-'use client';
+"use client";
 
-import DashboardOutlineIcon from '@iconify-react/material-symbols/dashboard-outline';
-import CalendarMonthOutlineIcon from '@iconify-react/material-symbols/calendar-month-outline';
-import PeoplesIcon from '@iconify-react/icon-park-outline/peoples';
-import PeopleIcon from '@iconify-react/icon-park-outline/people';
+import DashboardOutlineIcon from "@iconify-react/material-symbols/dashboard-outline";
+import CalendarMonthOutlineIcon from "@iconify-react/material-symbols/calendar-month-outline";
+import PeoplesIcon from "@iconify-react/icon-park-outline/peoples";
+import PeopleIcon from "@iconify-react/icon-park-outline/people";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-export default function Aside(props: Readonly<{ perfil: 'aluno' | 'orientador' | 'coordenador' }>) {
+function NavLinkItem({
+    href,
+    icon,
+    label,
+    isActive,
+  }: {
+    href: string;
+    icon: React.ReactNode;
+    label: string;
+    isActive: boolean;
+  }) {
     return (
-        <aside className="hidden md:block lg:block col-span-1 h-screen bg-gray-50 px-4 pt-3 shadow-sm">
-            <h1 className="text-blue-700 font-bold -mb-1">PDE</h1>
-            <p className="text-[0.7rem] font-medium text-gray-600 mb-6">
-                Portal do {props.perfil === 'aluno' ? 'Aluno' : props.perfil === 'orientador' ? 'Orientador' : 'Coordenador'}
-            </p>
+      <Link
+        href={href}
+        className={`flex items-center gap-2 p-2 hover:bg-gray-200 hover:text-blue-700 rounded-md ${isActive ? "bg-gray-200 text-blue-700" : ""}`}
+      >
+        {icon}
+        <h3>{label}</h3>
+      </Link>
+    );
+  }
 
-            <div className="text-gray-700 font-medium text-sm mx-1 space-y-2">
-                <div className="flex items-center gap-2 p-2 hover:bg-gray-200 hover:text-blue-700 rounded-md">
-                    <DashboardOutlineIcon className="w-4 h-4" />
-                    <h3>Início</h3>
-                </div>
-                
-                <div className="flex items-center gap-2 p-2 hover:bg-gray-200 hover:text-blue-700 rounded-md">
-                        <PeoplesIcon height="1em" className="w-4 h-4" />
-                        <h3>{props.perfil === 'aluno' ? 'Bancas' : 'Alunos'}</h3>
-                </div>
 
-                <div className="flex items-center gap-2 p-2 hover:bg-gray-200 hover:text-blue-700 rounded-md">
-                    <CalendarMonthOutlineIcon className="w-4 h-4" />
-                    <h3>Calendário</h3>
-                </div>
-                <div className="flex items-center gap-2 p-2 hover:bg-gray-200 hover:text-blue-700 rounded-md">
-                    <PeopleIcon className="w-4 h-4" />
-                    <h3>Perfil</h3>
-                </div>
+export default function Aside(
+  props: Readonly<{ perfil: "aluno" | "orientador" | "coordenador" }>,
+) {
 
-            </div>
-        </aside>
-    )
+    const pathname = usePathname();
+
+        const isActive = (path: string) => {
+        if (!pathname) return false;
+
+        if (path === "/dashboard") {
+            return pathname === "/dashboard";
+        }
+
+        return pathname.startsWith(path);
+        };
+
+return (
+    <aside className="hidden md:block col-span-1 h-screen bg-gray-50 px-4 pt-3 shadow-sm">
+      <h1 className="text-blue-700 font-bold -mb-1">PDE</h1>
+      <p className="text-[0.7rem] font-medium text-gray-600 mb-6">
+        Portal do{" "}
+        {props.perfil === "aluno"
+          ? "Aluno"
+          : props.perfil === "orientador"
+            ? "Orientador"
+            : "Coordenador"}
+      </p>
+
+      <nav className="font-medium text-sm mx-1 space-y-2">
+        <NavLinkItem
+          href={"/dashboard"}
+          icon={<DashboardOutlineIcon className="w-4 h-4" />}
+          label={"Início"}
+          isActive={isActive("/dashboard")}
+        />
+
+        <NavLinkItem
+          href={props.perfil === 'aluno' ? "/dashboard/bancas": "/dashboard/alunos"}
+          icon={<PeoplesIcon className="w-4 h-4" />}
+          label={props.perfil === "aluno" ? "Bancas" : "Alunos"}
+          isActive={
+            isActive("/dashboard/bancas") || isActive("/dashboard/alunos")
+          }
+        />
+
+        <NavLinkItem
+          href={"/dashboard/calendario"}
+          icon={<CalendarMonthOutlineIcon className="w-4 h-4" />}
+          label={"Calendário"}
+          isActive={
+            isActive("/dashboard/calendario")
+          }
+        />
+
+        <NavLinkItem
+        href={"/dashboard/perfil"}
+        icon={<PeopleIcon className="w-4 h-4" />}
+        label={"Perfil"}
+        isActive={
+        isActive("/dashboard/perfil")
+        }
+    />
+
+      </nav>
+
+    </aside>
+  );
 }
