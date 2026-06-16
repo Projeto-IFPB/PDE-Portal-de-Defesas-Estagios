@@ -1,0 +1,133 @@
+import { supabase } from "./supabaseClient";
+import { Usuario, Estagio } from "./interface";
+
+
+// Funcoes de Puxar Dados(Select/Get)
+
+// 1. Listar todos os usuários 
+export async function listarTodosUsuarios(): Promise<Usuario[] | null> {
+  try {
+    const { data, error } = await supabase
+      .from('Usuarios')
+      .select('id, Email, "Nome-Completo", "tipo-de-perfil"'); 
+
+    if (error) {
+      console.error("Erro ao listar todos os usuários:", error.message);
+      return null;
+    }
+
+    return data as Usuario[];
+  } catch (error) {
+    console.error("Erro inesperado em listarTodosUsuarios:", error);
+    return null;
+  }
+}
+
+// 2. Buscar usuário pelo ID
+export async function buscarUsuarioPorId(id: string): Promise<Usuario | null> {
+  try {
+    const { data, error } = await supabase
+      .from('Usuarios')
+      .select('*')
+      .eq('id', id) 
+      .single();   
+
+    if (error) {
+      console.error(`Erro ao buscar usuário com ID ${id}:`, error.message);
+      return null;
+    }
+
+    return data as Usuario;
+  } catch (error) {
+    console.error("Erro inesperado em buscarUsuarioPorId:", error);
+    return null;
+  }
+}
+
+
+
+// 3. Listar estágios de um Estagiario específico
+
+export async function listarEstagiosPorEstagiarioId(estagiarioId: string): Promise<Estagio[] | null> {
+  try {
+    const { data, error } = await supabase
+      .from('Estagios')
+      .select('*')
+      .eq('Id_estagiario', estagiarioId); 
+
+    if (error) {
+      console.error(`Erro ao listar estágios do aluno ${estagiarioId}:`, error.message);
+      return null;
+    }
+
+    return data as Estagio[];
+  } catch (error) {
+    console.error("Erro inesperado em listarEstagiosPorEstagiarioId:", error);
+    return null;
+  }
+}
+
+// 4. Listar estágios sob a supervisão de um Orientador específico
+export async function listarEstagiosPorOrientadorId(orientadorId: string): Promise<Estagio[] | null> {
+  try {
+    const { data, error } = await supabase
+      .from('Estagios')
+      .select('*')
+      .eq('Id_orientador', orientadorId);  
+
+    if (error) {
+      console.error(`Erro ao listar estágios do orientador ${orientadorId}:`, error.message);
+      return null;
+    }
+
+    return data as Estagio[];
+  } catch (error) {
+    console.error("Erro inesperado em listarEstagiosPorOrientadorId:", error);
+    return null;
+  }
+}
+// 5. Listar estágios vinculados a um Coordenador específico
+export async function listarEstagiosPorCoordenadorId(coordenadorId: string): Promise<Estagio[] | null> {
+  try {
+    const { data, error } = await supabase
+      .from('Estagios')
+      .select('*')
+      .eq('Id_coordenador', coordenadorId);
+
+    if (error) {
+      console.error(`Erro ao listar estágios do coordenador ${coordenadorId}:`, error.message);
+      return null;
+    }
+
+    return data as Estagio[];
+  } catch (error) {
+    console.error("Erro inesperado em listarEstagiosPorCoordenadorId:", error);
+    return null;
+  }
+}
+
+//6. Puxar documentos do Bucket (Gerar URL de visualização/download)
+//O caminho completo guardado no banco (ex: 'Documentos/termo_compromisso_Assert_Lemuel_Duarte.pdf ou se tiver no root que acho que é o nosso caso so o nome do arquivo') 
+
+export async function obterUrlDocumentoBucket(caminhoArquivo: string): Promise<string | null> {
+  try {
+    console.log("Tentando acessar arquivo no bucket:", caminhoArquivo);
+    
+    const { data, error } = await supabase.storage
+      .from('Documentos') 
+      .createSignedUrl(caminhoArquivo, 180);
+
+    if (error) {
+      console.error("Erro detalhado do Bucket:", error);
+      return null;
+    }
+
+    return data.signedUrl; 
+  } catch (error) {
+    console.error("Erro inesperado em obterUrlDocumentoBucket:", error);
+    return null;
+  }
+}
+// Funcoes de inserir dados (Insert/Post)
+
+//* Cadastra um novo usuário no Supabase Auth enviando o perfil junto.
