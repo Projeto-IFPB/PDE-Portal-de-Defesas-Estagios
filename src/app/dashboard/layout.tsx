@@ -4,7 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Aside from "@/components/Aside";
 import NavMobile from "@/components/NavMobile";
 import Header from "@/components/Header";
-
+import { AuthProvider } from "@/contexts/AuthContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,16 +27,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-[220px_1fr] min-h-screen">
+    <AuthProvider>
+      <div className="grid grid-cols-1 md:grid-cols-[220px_1fr] min-h-screen">
+        <Aside />
+        <NavMobile />
 
-    {/* Todo o conteúdo compartilhado fixo entre as telas da dashboard devem ficar aqui*/}
-    <Aside perfil="orientador" />
-    <NavMobile perfil="aluno" />
-
-    <div>
-      <Header nome="Dr. Ricardo Silva" perfil="orientador"/>
-      <main>{children}</main>
-    </div>
-    </div>
+        <div>
+          <Header />
+          <main>{children}</main>
+        </div>
+      </div>
+    </AuthProvider>
   );
 }

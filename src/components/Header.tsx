@@ -2,13 +2,11 @@
 
 import NotificationsOutlineIcon from '@iconify-react/material-symbols/notifications-outline';
 import DarkModeOutlineIcon from '@iconify-react/material-symbols/dark-mode-outline';
+import { useAuth } from '@/contexts/AuthContext';
 
-type HeaderProps = Readonly<{
-    nome: string;
-    perfil: 'aluno' | 'orientador' | 'coordenador';
-}>;
+export default function Header() {
+    const { usuario } = useAuth();
 
-export default function Header(props: HeaderProps) {
     return (
         <header className='hidden md:flex items-center justify-end gap-4 h-16 px-6 bg-white w-full'>
             <button className='p-2 rounded-md hover:bg-gray-100 transition-colors cursor-pointer' aria-label='Notificações'>
@@ -20,14 +18,13 @@ export default function Header(props: HeaderProps) {
             </button>
 
             <div className='text-right border-l border-gray-300 pl-4'>
-              <p className='font-semibold text-sm whitespace-nowrap'> {props.nome}</p>
-              <p className='text-xs text-gray-500'>
-                {props.perfil === 'aluno' ? 'Aluno' : props.perfil === 'orientador' ? 'Orientador' : 'Coordenador'}
+              <p className='font-semibold text-sm whitespace-nowrap'> {usuario.nome}</p>
+              <p className='text-xs text-gray-500 capitalize'>
+                {usuario.perfil}
               </p>
             </div>
 
-            <div className='w-10 h-10 rounded-full bg-gray-300 flex-shrin-0'>
-            
+            <div className='w-10 h-10 rounded-full bg-gray-300 flex-shrink-0'>
             </div>
         </header>
     );
