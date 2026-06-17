@@ -6,54 +6,52 @@ import PeoplesIcon from "@iconify-react/icon-park-outline/peoples";
 import PeopleIcon from "@iconify-react/icon-park-outline/people";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
 
 function NavLinkItem({
-    href,
-    icon,
-    label,
-    isActive,
-  }: {
-    href: string;
-    icon: React.ReactNode;
-    label: string;
-    isActive: boolean;
-  }) {
-    return (
-      <Link
-        href={href}
-        className={`flex items-center gap-2 p-2 hover:bg-gray-200 hover:text-blue-700 rounded-md ${isActive ? "bg-gray-200 text-blue-700" : ""}`}
-      >
-        {icon}
-        <h3>{label}</h3>
-      </Link>
-    );
-  }
+  href,
+  icon,
+  label,
+  isActive,
+}: {
+  href: string;
+  icon: React.ReactNode;
+  label: string;
+  isActive: boolean;
+}) {
+  return (
+    <Link
+      href={href}
+      className={`flex items-center gap-2 p-2 hover:bg-gray-200 hover:text-blue-700 rounded-md ${isActive ? "bg-gray-200 text-blue-700" : ""}`}
+    >
+      {icon}
+      <h3>{label}</h3>
+    </Link>
+  );
+}
 
+export default function Aside() {
+  const { usuario } = useAuth();
+  const pathname = usePathname();
 
-export default function Aside(
-  props: Readonly<{ perfil: "aluno" | "orientador" | "coordenador" }>,
-) {
+  const isActive = (path: string) => {
+    if (!pathname) return false;
 
-    const pathname = usePathname();
+    if (path === "/dashboard") {
+      return pathname === "/dashboard";
+    }
 
-        const isActive = (path: string) => {
-        if (!pathname) return false;
+    return pathname.startsWith(path);
+  };
 
-        if (path === "/dashboard") {
-            return pathname === "/dashboard";
-        }
-
-        return pathname.startsWith(path);
-        };
-
-return (
+  return (
     <aside className="hidden md:block col-span-1 h-screen bg-gray-50 px-4 pt-3 shadow-sm">
       <h1 className="text-blue-700 font-bold -mb-1">PDE</h1>
       <p className="text-[0.7rem] font-medium text-gray-600 mb-6">
         Portal do{" "}
-        {props.perfil === "aluno"
+        {usuario.perfil === "aluno"
           ? "Aluno"
-          : props.perfil === "orientador"
+          : usuario.perfil === "orientador"
             ? "Orientador"
             : "Coordenador"}
       </p>
@@ -67,9 +65,9 @@ return (
         />
 
         <NavLinkItem
-          href={props.perfil === 'aluno' ? "/dashboard/bancas": "/dashboard/alunos"}
+          href={usuario.perfil === "aluno" ? "/dashboard/bancas" : "/dashboard/alunos"}
           icon={<PeoplesIcon className="w-4 h-4" />}
-          label={props.perfil === "aluno" ? "Bancas" : "Alunos"}
+          label={usuario.perfil === "aluno" ? "Bancas" : "Alunos"}
           isActive={
             isActive("/dashboard/bancas") || isActive("/dashboard/alunos")
           }
@@ -79,22 +77,16 @@ return (
           href={"/dashboard/calendario"}
           icon={<CalendarMonthOutlineIcon className="w-4 h-4" />}
           label={"Calendário"}
-          isActive={
-            isActive("/dashboard/calendario")
-          }
+          isActive={isActive("/dashboard/calendario")}
         />
 
         <NavLinkItem
-        href={"/dashboard/perfil"}
-        icon={<PeopleIcon className="w-4 h-4" />}
-        label={"Perfil"}
-        isActive={
-        isActive("/dashboard/perfil")
-        }
-    />
-
+          href={"/dashboard/perfil"}
+          icon={<PeopleIcon className="w-4 h-4" />}
+          label={"Perfil"}
+          isActive={isActive("/dashboard/perfil")}
+        />
       </nav>
-
     </aside>
   );
 }
