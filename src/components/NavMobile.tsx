@@ -6,8 +6,19 @@ import PeoplesIcon from "@iconify-react/icon-park-outline/peoples";
 import PeopleIcon from "@iconify-react/icon-park-outline/people";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
 
-function NavLinkItem({ href, icon, label, isActive }: {href:string, icon:React.ReactNode, label:string, isActive:boolean}) {
+function NavLinkItem({
+  href,
+  icon,
+  label,
+  isActive,
+}: {
+  href: string;
+  icon: React.ReactNode;
+  label: string;
+  isActive: boolean;
+}) {
   return (
     <Link
       href={href}
@@ -21,10 +32,8 @@ function NavLinkItem({ href, icon, label, isActive }: {href:string, icon:React.R
   );
 }
 
-export default function NavMobile(
-  props: Readonly<{ perfil: "aluno" | "orientador" | "coordenador" }>,
-) {
-    
+export default function NavMobile() {
+  const { usuario } = useAuth();
   const pathname = usePathname();
 
   const isActive = (path: string) => {
@@ -48,10 +57,10 @@ export default function NavMobile(
 
       <NavLinkItem
         href={
-          props.perfil === "aluno" ? "/dashboard/bancas" : "/dashboard/alunos"
+          usuario.perfil === "aluno" ? "/dashboard/bancas" : "/dashboard/alunos"
         }
         icon={<PeoplesIcon className="w-4 h-4" />}
-        label={props.perfil === "aluno" ? "Bancas" : "Alunos"}
+        label={usuario.perfil === "aluno" ? "Bancas" : "Alunos"}
         isActive={
           isActive("/dashboard/bancas") || isActive("/dashboard/alunos")
         }
