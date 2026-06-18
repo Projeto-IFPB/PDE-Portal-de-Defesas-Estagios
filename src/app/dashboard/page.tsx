@@ -4,6 +4,9 @@ import CabecalhoBoasVindas from "@/components/CabecalhoBoasVindas";
 import CardInformativo from "@/components/CardInformativo";
 import { cardsAluno, cardsOrientador, cardsCoordenador } from "@/data/cards-dashboard";
 import { useAuth } from "@/contexts/AuthContext";
+import { listarEstagiosRecomendados } from "@/lib/supabase/functions-supabase";
+import { useEffect, useState } from "react";
+import { EstagioRecomendado } from "@/lib/supabase/interface";
 
 export default function Dashboard() {
   const { usuario, setUsuario } = useAuth();
@@ -32,6 +35,21 @@ export default function Dashboard() {
     ? 'lg:grid-cols-2 xl:grid-cols-4' 
     : 'lg:grid-cols-3';
 
+  // Puxando os estágios recomendados pela universidade
+  const [estagiosDisponiveis, setEstagiosDisponiveis] = useState<EstagioRecomendado[]>([])
+
+  useEffect(() => {
+    async function carregarEstagios() {
+      const dados = await listarEstagiosRecomendados();
+      if (dados) {
+        setEstagiosDisponiveis(dados);
+      }
+    }
+    carregarEstagios();
+  }, []);
+
+
+
   return (
     <main className="col-span-1 p-4 md:p-8 lg:col-span-4 lg:p-10">
       
@@ -59,6 +77,8 @@ export default function Dashboard() {
           />
         ))}
       </section>
+
+      
 
     </main>
   );

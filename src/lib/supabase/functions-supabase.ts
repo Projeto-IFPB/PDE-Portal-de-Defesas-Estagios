@@ -1,5 +1,5 @@
 import { supabase } from "./supabaseClient";
-import { Usuario, Estagio } from "./interface";
+import { Usuario, Estagio, EstagioRecomendado } from "./interface";
 
 
 // Funcoes de Puxar Dados(Select/Get)
@@ -128,6 +128,27 @@ export async function obterUrlDocumentoBucket(caminhoArquivo: string): Promise<s
     return null;
   }
 }
+
+export async function listarEstagiosRecomendados(): Promise<EstagioRecomendado[] | null> {
+  try {
+    const { data, error } = await supabase
+      .from('Estagios_Recomendados')
+      .select('*'); 
+
+    if (error) {
+      console.error("Erro ao listar todos os Estágios Disponíveis:", error.message);
+      return null;
+    }
+
+    console.log(data)
+
+    return data as EstagioRecomendado[];
+  } catch (error) {
+    console.error("Erro inesperado em listarEstagiosRecomendados:", error);
+    return null;
+  }
+}
+
 // Funcoes de inserir dados (Insert/Post)
 
 //* Cadastra um novo usuário no Supabase Auth enviando o perfil junto.
