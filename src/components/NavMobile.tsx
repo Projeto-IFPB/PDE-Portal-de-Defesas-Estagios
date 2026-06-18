@@ -47,7 +47,7 @@ export default function NavMobile() {
   };
 
   return (
-    <nav className="flex fixed md:hidden bottom-0 left-0 right-0 justify-around items-center w-screen bg-gray-50 z-50 h-16 border-t border-gray-200 shadow-l">
+    <nav className="flex fixed md:hidden bottom-0 left-0 right-0 justify-around items-center w-screen bg-gray-50 z-50 h-16 border-t border-gray-200 shadow-l pb-[env(safe-area-inset-bottom)]">
       <NavLinkItem
         href={"/dashboard"}
         icon={<DashboardOutlineIcon className="w-4 h-4" />}
