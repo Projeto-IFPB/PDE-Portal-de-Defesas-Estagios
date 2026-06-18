@@ -40,4 +40,5 @@ export interface EstagioRecomendado {
   descricao?: string;
   empresa: string;
   competencia?: string;
+  vagas?: number | null;
 }
