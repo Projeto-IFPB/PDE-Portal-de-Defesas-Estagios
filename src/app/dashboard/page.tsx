@@ -8,6 +8,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { listarEstagiosRecomendados } from "@/lib/supabase/functions-select";
 import { useEffect, useState } from "react";
 import { EstagioRecomendado } from "@/lib/supabase/interfaces";
+import  CardOrientacoes  from "@/components/CardOrientacoes"
 
 export default function Dashboard() {
   const { usuario, setUsuario } = useAuth();
@@ -96,7 +97,15 @@ export default function Dashboard() {
           )}
       </section>
       </div>
-
+          {(usuario.perfil === 'orientador' || usuario.perfil === 'coordenador') && (
+        <section className="my-6">
+          <CardOrientacoes 
+            titulo="Alunos Orientados" 
+            descricao="Inicio da logica." 
+          
+          />
+        </section>
+      )}
       
 
     </main>
