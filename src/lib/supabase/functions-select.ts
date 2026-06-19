@@ -150,3 +150,31 @@ export async function obterDocumentoDoEstagio(
     return null;
   }
 }
+//8. buscar imagem
+export async function obterUrlPublicaFotoPerfil(caminhoArquivo: string): Promise<string> {
+  const { data } = supabase.storage
+    .from('Fotos_perfil') 
+    .getPublicUrl(caminhoArquivo);
+
+  return data.publicUrl;
+}
+//9. Obter caminho da imagem de perfil
+export async function obterCaminhoFotoPerfil(idUsuario: string): Promise<string | null> {
+  try {
+    const { data, error } = await supabase
+      .from('Fotos_perfil')
+      .select('caminho_arquivo')
+      .eq('id_usuario', idUsuario)
+      .single();
+
+    if (error || !data) {
+      console.error("Erro ao buscar caminho da foto:", error);
+      return null;
+    }
+
+    return data.caminho_arquivo;
+  } catch (error) {
+    console.error("Erro inesperado ao buscar caminho da foto:", error);
+    return null;
+  }
+}
