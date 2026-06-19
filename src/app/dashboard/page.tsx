@@ -8,7 +8,29 @@ import { useAuth } from "@/contexts/AuthContext";
 import { listarEstagiosRecomendados } from "@/lib/supabase/functions-select";
 import { useEffect, useState } from "react";
 import { EstagioRecomendado } from "@/lib/supabase/interfaces";
-import  CardOrientacoes  from "@/components/CardOrientacoes"
+import EstagioCard, { StatusEstagio, handleVerDetalhes } from '@/components/CardOrientacoes';
+
+const estagiosMock = [
+  {
+    id: '1',
+    empresa: 'Tech Solutions LTDA',
+    data_inicio: "01/02/2025",
+    status: 'em_andamento' as StatusEstagio,
+  },
+  {
+    id: '2',
+    empresa: 'Agência Criativa',
+    data_inicio: '21/05/2016',
+    status: 'pendente' as StatusEstagio,
+  },
+  {
+    id: '3',
+    empresa: 'DataCorp',
+    data_inicio: '07/05/2026',
+    status: 'concluido' as StatusEstagio,
+  },
+]
+
 
 export default function Dashboard() {
   const { usuario, setUsuario } = useAuth();
@@ -80,9 +102,8 @@ export default function Dashboard() {
         ))}
       </section>
 
-      <div className="grid grid-col-1 lg:grid-cols-3 estagios">
+    <div className="grid grid-col-1 lg:grid-cols-3 estagios">
         <section className="lg:col-span-2">
-          <h1 className="mt-10">Meus Estágios</h1>
         </section>
 
       <section className={`lg:col-span-1 space-y-3 ${usuario.perfil !== 'aluno' ? 'hidden' : 'mt-10'}`}>
@@ -99,11 +120,21 @@ export default function Dashboard() {
       </div>
           {(usuario.perfil === 'orientador' || usuario.perfil === 'coordenador') && (
         <section className="my-6">
-          <CardOrientacoes 
-            titulo="Alunos Orientados" 
-            descricao="Inicio da logica." 
-          
+      <h2 className="text-2xl font-bold text-gray-800 mb-6">Minhas Orientações</h2>
+      
+      {/* Grid responsivo: 1 coluna no celular, 2 no tablet, 3 no desktop */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {estagiosMock.map((estagio) => (
+          <EstagioCard
+            key={estagio.id}
+            id={estagio.id}
+            empresa={estagio.empresa}
+            data={estagio.data_inicio}
+            status={estagio.status}
+            onVerDetalhes={handleVerDetalhes}
           />
+        ))}
+      </div>
         </section>
       )}
       
