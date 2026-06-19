@@ -32,3 +32,13 @@ export interface AgendaDefesa {
   status: 'agendado' | 'realizado' | 'cancelado';
   created_at?: string;
 }
+
+export interface EstagioRecomendado {
+  id: string;
+  created_at?: string;
+  titulo: string;
+  descricao?: string;
+  empresa: string;
+  competencia?: string;
+  vagas?: number | null;
+}
