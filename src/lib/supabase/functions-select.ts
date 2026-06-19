@@ -1,5 +1,5 @@
 import { supabase } from "./supabaseClient";
-import { Usuario, Estagio } from "./interface";
+import { Usuario, Estagio } from "./interfaces";
 
 
 // Funcoes de Puxar Dados(Select/Get)
@@ -107,12 +107,10 @@ export async function listarEstagiosPorCoordenadorId(coordenadorId: string): Pro
 }
 
 //6. Puxar documentos do Bucket (Gerar URL de visualização/download)
-//O caminho completo guardado no banco (ex: 'Documentos/termo_compromisso_Assert_Lemuel_Duarte.pdf ou se tiver no root que acho que é o nosso caso so o nome do arquivo') 
+//O caminho completo guardado no banco (ex: 'termo_compromisso_Assert_Lemuel_Duarte.pdf ou se tiver no root que acho que é o nosso caso so o nome do arquivo') 
 
 export async function obterUrlDocumentoBucket(caminhoArquivo: string): Promise<string | null> {
   try {
-    console.log("Tentando acessar arquivo no bucket:", caminhoArquivo);
-    
     const { data, error } = await supabase.storage
       .from('Documentos') 
       .createSignedUrl(caminhoArquivo, 180);
@@ -128,6 +126,55 @@ export async function obterUrlDocumentoBucket(caminhoArquivo: string): Promise<s
     return null;
   }
 }
-// Funcoes de inserir dados (Insert/Post)
+//7. puxar documento do estagio pelo tipo dele
+export async function obterDocumentoDoEstagio(
+  estagioId: string, 
+  tipoDocumento: string
+): Promise<string | null> {
+  try {
+    const { data, error } = await supabase
+      .from('Documentos')
+      .select('caminho_arquivo')
+      .eq('id_estagio', estagioId)
+      .eq('tipo_documento', tipoDocumento)
+      .single();
 
-//* Cadastra um novo usuário no Supabase Auth enviando o perfil junto.
+    if (error || !data) {
+      console.error(`Erro ao buscar meta-dados:`, error);
+      return null;
+    }
+    return await obterUrlDocumentoBucket(data.caminho_arquivo);
+    
+  } catch (error) {
+    console.error("Erro inesperado em obterDocumentoDoEstagio:", error);
+    return null;
+  }
+}
+//8. buscar imagem
+export async function obterUrlPublicaFotoPerfil(caminhoArquivo: string): Promise<string> {
+  const { data } = supabase.storage
+    .from('Fotos_perfil') 
+    .getPublicUrl(caminhoArquivo);
+
+  return data.publicUrl;
+}
+//9. Obter caminho da imagem de perfil
+export async function obterCaminhoFotoPerfil(idUsuario: string): Promise<string | null> {
+  try {
+    const { data, error } = await supabase
+      .from('Fotos_perfil')
+      .select('caminho_arquivo')
+      .eq('id_usuario', idUsuario)
+      .single();
+
+    if (error || !data) {
+      console.error("Erro ao buscar caminho da foto:", error);
+      return null;
+    }
+
+    return data.caminho_arquivo;
+  } catch (error) {
+    console.error("Erro inesperado ao buscar caminho da foto:", error);
+    return null;
+  }
+}
