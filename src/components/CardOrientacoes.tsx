@@ -9,8 +9,10 @@ export const handleVerDetalhes = (id: string) => {
 // Tipagem alinhada com o que você provavelmente tem no banco de dados
 export type StatusEstagio = "pendente" | "em_andamento" | "concluido";
 
-interface EstagioCardProps {
-  id: string;
+interface OrientacaoCardProps {
+    id: string
+    emailEstagiario: string
+  nomeEstagiario: string;
   empresa: string;
   data: string;
   status: StatusEstagio;
@@ -36,14 +38,19 @@ const statusConfig: Record<
   },
 };
 
-export default function EstagioCard({
-  id,
+export default function OrientacaoCard({
+    id,
+    nomeEstagiario,
+    emailEstagiario,
   empresa,
   data,
   status,
   onVerDetalhes,
-}: EstagioCardProps) {
+}: OrientacaoCardProps) {
   const currentStatus = statusConfig[status];
+  const dataFormatada = new Date(data).toLocaleDateString('pt-BR', {
+  timeZone: 'UTC' // O 'UTC' evita que a data mude de dia por causa do fuso horário
+});
 
   return (
     <div className="flex flex-col justify-between p-5 bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 min-h-70">
@@ -56,11 +63,10 @@ export default function EstagioCard({
           <div className="flex flex-col">
             <h3
               className="text-xl font-semibold text-gray-900 overflow-hidden text-ellipsis"
-              title={empresa}
             >
-              {empresa}
+              {nomeEstagiario}
             </h3>
-            <p className='truncate overflow-hidden text-ellipsis'>email@emailmuitogrande</p>
+            <p className='truncate overflow-hidden text-ellipsis'>{emailEstagiario}</p>
           </div>
           </div>
           <div>
@@ -78,7 +84,7 @@ export default function EstagioCard({
           <p className="text-sm text-gray-600 mb-2 line-clamp-2 font-semibold text-base">{empresa}</p>
           </div>
           <div className="flex gap-2">
-          <CalendarMonthOutlineIcon className="w-4 h-4 ml-2" /> <p  className="text-sm text-gray-600 mb-2 line-clamp-2 font-semibold text-base">Data de Inicio: {data}</p>
+          <CalendarMonthOutlineIcon className="w-4 h-4 ml-2" /> <p  className="text-sm text-gray-600 mb-2 line-clamp-2 font-semibold text-base">Data de Inicio: {dataFormatada}</p>
         </div>
         </div>
       </div>

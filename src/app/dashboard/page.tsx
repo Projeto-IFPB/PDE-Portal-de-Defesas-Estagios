@@ -5,35 +5,34 @@ import CardInformativo from "@/components/CardInformativo";
 import { CardEstagioRecomendado, CardNenhumEstagioDisponivel } from "@/components/CardEstagioRecomendado";
 import { cardsAluno, cardsOrientador, cardsCoordenador } from "@/data/cards-dashboard";
 import { useAuth } from "@/contexts/AuthContext";
-import { listarEstagiosRecomendados } from "@/lib/supabase/functions-select";
+import { listarEstagiosRecomendados,listarEstagiosPorOrientadorId, buscarUsuarioPorId  } from "@/lib/supabase/functions-select";
 import { useEffect, useState } from "react";
-import { EstagioRecomendado } from "@/lib/supabase/interfaces";
-import EstagioCard, { StatusEstagio, handleVerDetalhes } from '@/components/CardOrientacoes';
-
-const estagiosMock = [
-  {
-    id: '1',
-    empresa: 'Tech Solutions LTDA',
-    data_inicio: "01/02/2025",
-    status: 'em_andamento' as StatusEstagio,
-  },
-  {
-    id: '2',
-    empresa: 'Agência Criativa',
-    data_inicio: '21/05/2016',
-    status: 'pendente' as StatusEstagio,
-  },
-  {
-    id: '3',
-    empresa: 'DataCorp',
-    data_inicio: '07/05/2026',
-    status: 'concluido' as StatusEstagio,
-  },
-]
+import { Estagio, EstagioRecomendado} from "@/lib/supabase/interfaces";
+import OrientacaoCard, { handleVerDetalhes } from '@/components/CardOrientacoes';
 
 
 export default function Dashboard() {
   const { usuario, setUsuario } = useAuth();
+
+  const [orientacoes, setOrientacoes ] = useState<Estagio[]>([])
+  useEffect(() => {
+    async function carregarOrientacoes() {
+      const estagios = await listarEstagiosPorOrientadorId("db64bcca-172c-4b19-b3fe-33aea90e4df3")
+      if (estagios) {
+        const estagiosComAluno = await Promise.all(estagios.map(async (estagio) => {
+        const usuario = await buscarUsuarioPorId(estagio.Id_estagiario);
+        console.log("Estágio:", estagio.id, "Usuário encontrado:", usuario);
+        return{
+          ...estagio,
+          nome_estagiario: usuario?.["Nome-Completo"] || "Aluno Nao Encontrado",
+          email_estagiario: usuario?.Email || "Email não encontrado"
+        }
+        }));
+        setOrientacoes(estagiosComAluno);
+      }
+    }
+    carregarOrientacoes();
+  }, []);
 
   const configPorPerfil = {
     aluno: {
@@ -122,15 +121,17 @@ export default function Dashboard() {
         <section className="my-6">
       <h2 className="text-2xl font-bold text-gray-800 mb-6">Minhas Orientações</h2>
       
-      {/* Grid responsivo: 1 coluna no celular, 2 no tablet, 3 no desktop */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {estagiosMock.map((estagio) => (
-          <EstagioCard
-            key={estagio.id}
-            id={estagio.id}
-            empresa={estagio.empresa}
-            data={estagio.data_inicio}
-            status={estagio.status}
+      <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6`}>
+        {orientacoes.map((orientacao) => (
+
+            <OrientacaoCard
+            key={orientacao.id}
+            id= {orientacao.id}
+            nomeEstagiario={orientacao.nome_estagiario || "Sem nome"}
+            emailEstagiario={orientacao.email_estagiario || "Sem email"}
+            empresa={orientacao.empresa}
+            data={orientacao.data_de_inicio}
+            status={orientacao.status}
             onVerDetalhes={handleVerDetalhes}
           />
         ))}
