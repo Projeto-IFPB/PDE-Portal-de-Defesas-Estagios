@@ -5,9 +5,9 @@ import CardInformativo from "@/components/CardInformativo";
 import { CardEstagioRecomendado, CardNenhumEstagioDisponivel } from "@/components/CardEstagioRecomendado";
 import { cardsAluno, cardsOrientador, cardsCoordenador } from "@/data/cards-dashboard";
 import { useAuth } from "@/contexts/AuthContext";
-import { listarEstagiosRecomendados } from "@/lib/supabase/functions-supabase";
+import { listarEstagiosRecomendados } from "@/lib/supabase/functions-select";
 import { useEffect, useState } from "react";
-import { EstagioRecomendado } from "@/lib/supabase/interface";
+import { EstagioRecomendado } from "@/lib/supabase/interfaces";
 
 export default function Dashboard() {
   const { usuario, setUsuario } = useAuth();
