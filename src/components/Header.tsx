@@ -8,7 +8,7 @@ export default function Header() {
     const { usuario } = useAuth();
 
     return (
-        <header className='hidden md:flex items-center justify-end gap-4 h-16 px-6 bg-white w-full'>
+        <header className='hidden md:flex sticky top-0 z-30 items-center justify-end gap-4 h-16 px-6 bg-white w-full'>
             <button className='p-2 rounded-md hover:bg-gray-100 transition-colors cursor-pointer' aria-label='Notificações'>
                 <NotificationsOutlineIcon className='w-5 h-5 text-gray-600 hover:text-blue-700' />
             </button>
@@ -24,7 +24,7 @@ export default function Header() {
               </p>
             </div>
 
-            <div className='w-10 h-10 rounded-full bg-gray-300 flex-shrink-0'>
+            <div className='w-10 h-10 rounded-full bg-gray-300 shrink-0'>
             </div>
         </header>
     );
