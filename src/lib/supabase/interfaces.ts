@@ -9,14 +9,15 @@ export interface Usuario {
 
 export interface Estagio {
   id: string;
-  id_estagiario: string; 
-  orientador_id: string; 
-  id_coordenador: string | null;
+  Id_estagiario: string; 
+  Id_orientador: string; 
+  Id_coordenador: string | null;
   status: 'pendente' | 'em_andamento' | 'concluido';
   empresa: string;
   data_de_inicio: string; 
   nome_estagiario?: string;
   email_estagiario?: string;
+  foto_estagiario?: string;
 }
 
 export interface AgendaDefesa {

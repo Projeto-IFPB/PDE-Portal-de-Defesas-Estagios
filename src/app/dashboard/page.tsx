@@ -5,7 +5,7 @@ import CardInformativo from "@/components/CardInformativo";
 import { CardEstagioRecomendado, CardNenhumEstagioDisponivel } from "@/components/CardEstagioRecomendado";
 import { cardsAluno, cardsOrientador, cardsCoordenador } from "@/data/cards-dashboard";
 import { useAuth } from "@/contexts/AuthContext";
-import { listarEstagiosRecomendados,listarEstagiosPorOrientadorId, buscarUsuarioPorId  } from "@/lib/supabase/functions-select";
+import { listarEstagiosRecomendados,listarEstagiosPorOrientadorId, buscarUsuarioPorId, obterCaminhoFotoPerfil, obterUrlPublicaFotoPerfil } from "@/lib/supabase/functions-select";
 import { useEffect, useState } from "react";
 import { Estagio, EstagioRecomendado} from "@/lib/supabase/interfaces";
 import OrientacaoCard, { handleVerDetalhes } from '@/components/CardOrientacoes';
@@ -17,16 +17,22 @@ export default function Dashboard() {
   const [orientacoes, setOrientacoes ] = useState<Estagio[]>([])
   useEffect(() => {
     async function carregarOrientacoes() {
-      const estagios = await listarEstagiosPorOrientadorId("db64bcca-172c-4b19-b3fe-33aea90e4df3")
+      const estagios = await listarEstagiosPorOrientadorId("db64bcca-172c-4b19-b3fe-33aea90e4df3");
       if (estagios) {
         const estagiosComAluno = await Promise.all(estagios.map(async (estagio) => {
-        const usuario = await buscarUsuarioPorId(estagio.Id_estagiario);
-        console.log("Estágio:", estagio.id, "Usuário encontrado:", usuario);
-        return{
-          ...estagio,
-          nome_estagiario: usuario?.["Nome-Completo"] || "Aluno Nao Encontrado",
-          email_estagiario: usuario?.Email || "Email não encontrado"
-        }
+          const usuario = await buscarUsuarioPorId(estagio.Id_estagiario);
+          const caminhoFoto = await obterCaminhoFotoPerfil(estagio.Id_estagiario);
+
+          
+          let fotoUrl = await obterUrlPublicaFotoPerfil(caminhoFoto);
+          
+
+          return {
+            ...estagio,
+            nome_estagiario: usuario?.["Nome-Completo"] || "Aluno Não Encontrado",
+            email_estagiario: usuario?.Email || "Email não encontrado",
+            foto_estagiario: fotoUrl
+          };
         }));
         setOrientacoes(estagiosComAluno);
       }
@@ -133,6 +139,7 @@ export default function Dashboard() {
             data={orientacao.data_de_inicio}
             status={orientacao.status}
             onVerDetalhes={handleVerDetalhes}
+            foto_perfil={orientacao.foto_estagiario}
           />
         ))}
       </div>

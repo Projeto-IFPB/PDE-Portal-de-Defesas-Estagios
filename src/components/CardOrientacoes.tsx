@@ -1,6 +1,8 @@
 "use client";
 
-import Building2Icon from '@iconify-react/lucide/building-2';
+import { useEffect, useState } from "react";
+import { obterUrlPublicaFotoPerfil } from "@/lib/supabase/functions-select";
+import Building2Icon from "@iconify-react/lucide/building-2";
 import CalendarMonthOutlineIcon from "@iconify-react/material-symbols/calendar-month-outline";
 
 export const handleVerDetalhes = (id: string) => {
@@ -10,13 +12,14 @@ export const handleVerDetalhes = (id: string) => {
 export type StatusEstagio = "pendente" | "em_andamento" | "concluido";
 
 interface OrientacaoCardProps {
-    id: string
-    emailEstagiario: string
+  id: string;
+  emailEstagiario: string;
   nomeEstagiario: string;
   empresa: string;
   data: string;
   status: StatusEstagio;
   onVerDetalhes?: (id: string) => void;
+  foto_perfil?: string;
 }
 
 // Configuração visual dinâmica baseada no status do estágio
@@ -26,48 +29,67 @@ const statusConfig: Record<
 > = {
   pendente: {
     label: "Pendente",
-    colorClasses: "bg-yellow-100 text-yellow-800 border-yellow-200",
+    colorClasses: "bg-red-100 text-red-800 border-red-200",
   },
   em_andamento: {
     label: "Em Andamento",
-    colorClasses: "bg-green-100 text-green-800 border-green-200",
+    colorClasses: "bg-emerald-300 text-green-800 border-green-200",
   },
   concluido: {
     label: "Concluído",
-    colorClasses: "bg-gray-100 text-gray-800 border-gray-200",
+    colorClasses:
+      "bg-slate-400 text-slate-800 border-gray-200",
   },
 };
 
 export default function OrientacaoCard({
-    id,
-    nomeEstagiario,
-    emailEstagiario,
+  id,
+  nomeEstagiario,
+  emailEstagiario,
   empresa,
   data,
   status,
   onVerDetalhes,
+  foto_perfil,
 }: OrientacaoCardProps) {
   const currentStatus = statusConfig[status];
-  const dataFormatada = new Date(data).toLocaleDateString('pt-BR', {
-  timeZone: 'UTC' // O 'UTC' evita que a data mude de dia por causa do fuso horário
-});
+  const dataFormatada = new Date(data).toLocaleDateString("pt-BR", {
+    timeZone: "UTC", // O 'UTC' evita que a data mude de dia por causa do fuso horário
+  });
+  const [fotoUrl, setFotoUrl] = useState<string | null>(null); // Estado para a foto
+
+  useEffect(() => {
+    async function carregarFoto() {
+      const padrao = await obterUrlPublicaFotoPerfil("sem_foto_perfil.jpg");
+      setFotoUrl(
+        foto_perfil && foto_perfil !== "sem imagem" ? foto_perfil : padrao
+      );
+    }
+    carregarFoto();
+  }, [foto_perfil]);
 
   return (
     <div className="flex flex-col justify-between p-5 bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 min-h-70">
       <div>
         <div className="flex justify-between mb-3">
-            <div className="flex gap-2" >
-          <div>
-            <img src="https://gruposepe.com.br/upload/noticia/28904/1776364910_35.png" alt="manoel gomi"className='w-14 h-14 rounded-full'  />
-          </div>
-          <div className="flex flex-col">
-            <h3
-              className="text-xl font-semibold text-gray-900 overflow-hidden text-ellipsis"
-            >
-              {nomeEstagiario}
-            </h3>
-            <p className='truncate overflow-hidden text-ellipsis'>{emailEstagiario}</p>
-          </div>
+          <div className="flex gap-2">
+            <div className="shrink-0">
+              {fotoUrl && (
+                <img
+                  src={fotoUrl}
+                  alt={nomeEstagiario}
+                  className="w-[3.5rem] h-[3.5rem] rounded-full object-cover"
+                />
+              )}
+            </div>
+            <div className="flex flex-col">
+              <h3 className="text-xl font-semibold text-gray-900 overflow-hidden text-ellipsis">
+                {nomeEstagiario}
+              </h3>
+              <p className="truncate overflow-hidden text-ellipsis">
+                {emailEstagiario}
+              </p>
+            </div>
           </div>
           <div>
             <span
@@ -79,16 +101,21 @@ export default function OrientacaoCard({
         </div>
         <hr className="border-t-1 border-gray-200 mb-6" />
         <div>
-            <div className="flex gap-2">
-        <Building2Icon height="1em" className='ml-2' />
-          <p className="text-sm text-gray-600 mb-2 line-clamp-2 font-semibold text-base">{empresa}</p>
+          <div className="flex gap-2">
+            <Building2Icon height="1em" className="ml-2" />
+            <p className="text-sm text-gray-600 mb-2 line-clamp-2 font-semibold text-base">
+              {empresa}
+            </p>
           </div>
           <div className="flex gap-2">
-          <CalendarMonthOutlineIcon className="w-4 h-4 ml-2" /> <p  className="text-sm text-gray-600 mb-2 line-clamp-2 font-semibold text-base">Data de Inicio: {dataFormatada}</p>
-        </div>
+            <CalendarMonthOutlineIcon className="w-4 h-4 ml-2" />{" "}
+            <p className="text-sm text-gray-600 mb-2 line-clamp-2 font-semibold text-base">
+              Data de Inicio: {dataFormatada}
+            </p>
+          </div>
         </div>
       </div>
-      <hr className="border-t-1 border-gray-200 mb-3"/>
+      <hr className="border-t-1 border-gray-200 mb-3" />
       <div className="flex justify-evenly gap-6">
         <button
           onClick={() => onVerDetalhes && onVerDetalhes(id)}
