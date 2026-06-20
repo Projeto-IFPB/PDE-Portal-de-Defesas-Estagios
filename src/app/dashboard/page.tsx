@@ -5,42 +5,17 @@ import CardInformativo from "@/components/CardInformativo";
 import { CardEstagioRecomendado, CardNenhumEstagioDisponivel } from "@/components/CardEstagioRecomendado";
 import { cardsAluno, cardsOrientador, cardsCoordenador } from "@/data/cards-dashboard";
 import { useAuth } from "@/contexts/AuthContext";
-import { listarEstagiosRecomendados,listarEstagiosPorOrientadorId, buscarUsuarioPorId, obterCaminhoFotoPerfil, obterUrlPublicaFotoPerfil } from "@/lib/supabase/functions-select";
+import { listarEstagiosRecomendados} from "@/lib/supabase/functions-select";
 import { useEffect, useState } from "react";
-import { Estagio, EstagioRecomendado} from "@/lib/supabase/interfaces";
+import {EstagioRecomendado} from "@/lib/supabase/interfaces";
 import OrientacaoCard, { handleVerDetalhes } from '@/components/CardOrientacoes';
-
-//coloquei um id provisorio so para testar, quando colocarmos o login vamos puxar pelo id no local-storage
-const id_orientador = "db64bcca-172c-4b19-b3fe-33aea90e4df3"
+import { useOrientacoes } from '@/hooks/useOrientacoes';
 
 export default function Dashboard() {
   const { usuario, setUsuario } = useAuth();
+  const { orientacoes } = useOrientacoes();
 
-  const [orientacoes, setOrientacoes ] = useState<Estagio[]>([])
-  useEffect(() => {
-    async function carregarOrientacoes() {
-      const estagios = await listarEstagiosPorOrientadorId(id_orientador);
-      if (estagios) {
-        const estagiosComAluno = await Promise.all(estagios.map(async (estagio) => {
-          const usuario = await buscarUsuarioPorId(estagio.Id_estagiario);
-          const caminhoFoto = await obterCaminhoFotoPerfil(estagio.Id_estagiario);
 
-          
-          let fotoUrl = await obterUrlPublicaFotoPerfil(caminhoFoto);
-          
-
-          return {
-            ...estagio,
-            nome_estagiario: usuario?.["Nome-Completo"] || "Aluno Não Encontrado",
-            email_estagiario: usuario?.Email || "Email não encontrado",
-            foto_estagiario: fotoUrl
-          };
-        }));
-        setOrientacoes(estagiosComAluno);
-      }
-    }
-    carregarOrientacoes();
-  }, []);
 
   const configPorPerfil = {
     aluno: {
