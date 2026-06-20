@@ -10,6 +10,8 @@ import { useEffect, useState } from "react";
 import { Estagio, EstagioRecomendado} from "@/lib/supabase/interfaces";
 import OrientacaoCard, { handleVerDetalhes } from '@/components/CardOrientacoes';
 
+//coloquei um id provisorio so para testar, quando colocarmos o login vamos puxar pelo id no local-storage
+const id_orientador = "db64bcca-172c-4b19-b3fe-33aea90e4df3"
 
 export default function Dashboard() {
   const { usuario, setUsuario } = useAuth();
@@ -17,7 +19,7 @@ export default function Dashboard() {
   const [orientacoes, setOrientacoes ] = useState<Estagio[]>([])
   useEffect(() => {
     async function carregarOrientacoes() {
-      const estagios = await listarEstagiosPorOrientadorId("db64bcca-172c-4b19-b3fe-33aea90e4df3");
+      const estagios = await listarEstagiosPorOrientadorId(id_orientador);
       if (estagios) {
         const estagiosComAluno = await Promise.all(estagios.map(async (estagio) => {
           const usuario = await buscarUsuarioPorId(estagio.Id_estagiario);
