@@ -1,4 +1,4 @@
-import { EstagioRecomendado } from "@/lib/supabase/interface";
+import { EstagioRecomendado } from "@/lib/supabase/interfaces";
 import { SearchX } from 'lucide-react';
 
 
