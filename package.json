@@ -10,6 +10,11 @@
     "format": "biome format --write"
   },
   "dependencies": {
+    "@iconify-react/icon-park-outline": "^1.0.2",
+    "@iconify-react/lucide": "^1.0.18",
+    "@iconify-react/material-symbols": "^1.0.20",
+    "@supabase/supabase-js": "^2.108.2",
+    "lucide-react": "^1.20.0",
     "next": "16.2.9",
     "react": "19.2.4",
     "react-dom": "19.2.4"
