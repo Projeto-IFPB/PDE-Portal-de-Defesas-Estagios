@@ -9,7 +9,7 @@ export default function HeaderMobile() {
     const { usuario } = useAuth();
 
     return (
-        <header className='flex md:hidden items-center justify-between h-16 px-4 bg-white'>
+        <header className='flex md:hidden sticky top-0 z-30 items-center justify-between h-16 px-4 bg-white'>
             <h1 className='font-bold text-blue-700'>
                 PDE
             </h1>
