@@ -25,7 +25,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Estado inicial simulado. 
   // No futuro, isso será substituído pela resposta de login do Supabase.
   const [usuario, setUsuario] = useState<UsuarioMock>({
-    id: 'c72ed7b0-beb7-4d52-9ccd-677deb32c348',
+    id: 'd941ce6d-3acf-40a6-a43e-1289839c1bad',
     nome: 'Manoel Gomes', 
     perfil: 'aluno',
     fotoPerfil: 'sem foto',
@@ -36,8 +36,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     async function carregarFotoPerfil() {
     const caminho = await obterCaminhoFotoPerfil(usuario.id);
     const url = await obterUrlPublicaFotoPerfil(caminho);
+    const foto_padrao = await obterUrlPublicaFotoPerfil("sem_foto_perfil.jpg")
     if (url && url !== 'sem imagem') {
         setUsuario({...usuario, fotoPerfil: url });
+    }
+    else {
+      setUsuario({...usuario, fotoPerfil: foto_padrao})
     }
     }
     carregarFotoPerfil();
