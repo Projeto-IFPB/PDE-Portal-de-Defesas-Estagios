@@ -8,20 +8,16 @@ export interface Usuario {
 }
 
 export interface Estagio {
-  id: string | number; 
-  aluno_id: string; 
-  orientador_id: string; 
-  id_coordenador: string | null;
-  status: 'Pendente' | 'Em andamento' | 'Concluído';
-  data_inicio: string; 
-}
-
-export interface UsuarioEspelho {
-  id: string; 
-  nome: string;
-  email: string;
-  perfil: 'estagiario' | 'orientador' | 'coordenador' | 'pendente';
-  created_at: string;
+  id: string;
+  Id_estagiario: string; 
+  Id_orientador: string; 
+  Id_coordenador: string | null;
+  status: 'pendente' | 'em_andamento' | 'concluido';
+  empresa: string;
+  data_de_inicio: string; 
+  nome_estagiario?: string;
+  email_estagiario?: string;
+  foto_estagiario?: string;
 }
 
 export interface AgendaDefesa {

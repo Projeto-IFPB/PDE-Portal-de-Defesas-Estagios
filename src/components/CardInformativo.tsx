@@ -27,7 +27,7 @@ export default function CardInformativo({
 }: PropsCardInformativo) {
   return (
     <article
-      className={`relative flex min-h-[140px] flex-col justify-between overflow-hidden rounded-2xl p-5 shadow-sm transition hover:shadow-md md:p-6 ${estilosVariante[variante]}`}
+      className={`relative flex min-h-35 flex-col justify-between overflow-hidden rounded-2xl p-5 shadow-sm transition hover:shadow-md md:p-6 ${estilosVariante[variante]}`}
     >
       <div className="relative z-10 w-full overflow-hidden">
         <h3 className="text-sm font-medium tracking-wide md:text-base truncate">

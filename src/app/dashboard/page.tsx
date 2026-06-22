@@ -5,12 +5,17 @@ import CardInformativo from "@/components/CardInformativo";
 import { CardEstagioRecomendado, CardNenhumEstagioDisponivel } from "@/components/CardEstagioRecomendado";
 import { cardsAluno, cardsOrientador, cardsCoordenador } from "@/data/cards-dashboard";
 import { useAuth } from "@/contexts/AuthContext";
-import { listarEstagiosRecomendados } from "@/lib/supabase/functions-supabase";
+import { listarEstagiosRecomendados} from "@/lib/supabase/functions-select";
 import { useEffect, useState } from "react";
-import { EstagioRecomendado } from "@/lib/supabase/interface";
+import {EstagioRecomendado} from "@/lib/supabase/interfaces";
+import OrientacaoCard, { handleVerDetalhes } from '@/components/CardOrientacoes';
+import { useOrientacoes } from '@/hooks/useOrientacoes';
 
 export default function Dashboard() {
   const { usuario, setUsuario } = useAuth();
+  const { orientacoes } = useOrientacoes();
+
+
 
   const configPorPerfil = {
     aluno: {
@@ -79,9 +84,8 @@ export default function Dashboard() {
         ))}
       </section>
 
-      <div className="grid grid-col-1 lg:grid-cols-3 estagios">
+    <div className="grid grid-col-1 lg:grid-cols-3 estagios">
         <section className="lg:col-span-2">
-          <h1 className="mt-10">Meus Estágios</h1>
         </section>
 
       <section className={`lg:col-span-1 space-y-3 ${usuario.perfil !== 'aluno' ? 'hidden' : 'mt-10'}`}>
@@ -96,7 +100,28 @@ export default function Dashboard() {
           )}
       </section>
       </div>
+          {(usuario.perfil === 'orientador' || usuario.perfil === 'coordenador') && (
+        <section className="my-6">
+      <h2 className="text-2xl font-bold text-gray-800 mb-6">Minhas Orientações</h2>
+      
+      <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6`}>
+        {orientacoes.map((orientacao) => (
 
+            <OrientacaoCard
+            key={orientacao.id}
+            id= {orientacao.id}
+            nomeEstagiario={orientacao.nome_estagiario || "Sem nome"}
+            emailEstagiario={orientacao.email_estagiario || "Sem email"}
+            empresa={orientacao.empresa}
+            data={orientacao.data_de_inicio}
+            status={orientacao.status}
+            onVerDetalhes={handleVerDetalhes}
+            foto_perfil={orientacao.foto_estagiario}
+          />
+        ))}
+      </div>
+        </section>
+      )}
       
 
     </main>
