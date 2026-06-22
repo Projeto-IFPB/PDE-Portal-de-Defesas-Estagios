@@ -1,15 +1,23 @@
-import Aside from "@/components/Aside";
-import NavMobile from "@/components/NavMobile";
-import Header from "@/components/Header";
+'use client';
+
+import { useAuth } from "@/contexts/AuthContext";
+import { CardAlterarImagemPerfilDesktop, CardAlterarImagemPerfilMobile } from "@/components/CardAlterarImagemPerfil";
 
 export default function Dashboard() {
-    return (
-        <>
-          <main className="col-span-4 p-6">
-          {/* Todo o conteúdo da página deve ficar aqui */}
-            <h1>Página de Perfil do Usuário</h1>
-            
-          </main>
-        </>
-      );
+  const { usuario, setUsuario } = useAuth();
+
+  return (
+    <>
+    <main className="col-span-4 p-6">
+    {/* Todo o conteúdo da página deve ficar aqui */}
+      <section className="alterar_foto grid grid-cols-1 lg:grid-cols-4">
+
+        <CardAlterarImagemPerfilMobile />
+
+        <CardAlterarImagemPerfilDesktop />
+      </section>
+      
+    </main>
+    </>
+    );
 }
