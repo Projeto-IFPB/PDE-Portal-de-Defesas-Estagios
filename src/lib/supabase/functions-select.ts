@@ -202,6 +202,69 @@ export async function listarEstagiosRecomendados(): Promise<EstagioRecomendado[]
   }
 }
 
+// Função de Upload de foto de perfil para o Storage do supabase
+export async function uploadFotoPerfil(
+  arquivo: File,
+  idUsuario: string
+): Promise<string | null> {
+  try {
+    const caminhoAntigo = await obterCaminhoFotoPerfil(idUsuario);
+
+    if (caminhoAntigo) {
+      await supabase.storage
+        .from('Fotos_perfil')
+        .remove([caminhoAntigo]);
+    }
+
+    const caminho = `${idUsuario}/perfil_${Date.now()}`;
+
+    const { error } = await supabase.storage
+      .from('Fotos_perfil')
+      .upload(caminho, arquivo);
+
+    if (error) {
+      console.error("Erro ao fazer upload da foto:", error.message);
+      return null;
+    }
+
+    return caminho;
+  } catch (error) {
+    console.error("Erro inesperado em uploadFotoPerfil:", error);
+    return null;
+  }
+}
+
+
+// Salvar/atualizar o caminho da foto na tabela Fotos_perfil
+export async function salvarCaminhoFotoPerfil(
+  idUsuario: string,
+  caminhoArquivo: string,
+  nomeArquivo: string
+): Promise<boolean> {
+  try {
+    const { error } = await supabase
+      .from('Fotos_perfil')
+      .upsert(
+        {
+          id_usuario: idUsuario,
+          caminho_arquivo: caminhoArquivo,
+          nome: nomeArquivo,
+        },
+        { onConflict: 'id_usuario'}
+      );
+
+    if (error) {
+      console.error("Erro ao salvar caminho da foto:", error.message);
+      return false;
+    }
+    return true;
+
+  } catch (error) {
+    console.error("Erro inesperado em salvarCaminhoFotoPerfil", error);
+    return false;
+  }
+}
+
 // Funcoes de inserir dados (Insert/Post)
 
 //* Cadastra um novo usuário no Supabase Auth enviando o perfil junto.

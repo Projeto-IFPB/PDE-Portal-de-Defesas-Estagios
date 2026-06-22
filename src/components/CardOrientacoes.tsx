@@ -78,7 +78,7 @@ export default function OrientacaoCard({
                 <img
                   src={fotoUrl}
                   alt={nomeEstagiario}
-                  className="w-[3.5rem] h-[3.5rem] rounded-full object-cover"
+                  className="w-14 h-14 rounded-full object-cover"
                 />
               )}
             </div>
@@ -99,23 +99,23 @@ export default function OrientacaoCard({
             </span>
           </div>
         </div>
-        <hr className="border-t-1 border-gray-200 mb-6" />
+        <hr className="border-t border-gray-200 mb-6" />
         <div>
           <div className="flex gap-2">
             <Building2Icon height="1em" className="ml-2" />
-            <p className="text-sm text-gray-600 mb-2 line-clamp-2 font-semibold text-base">
+            <p className="text-gray-600 mb-2 line-clamp-2 font-semibold text-base">
               {empresa}
             </p>
           </div>
           <div className="flex gap-2">
             <CalendarMonthOutlineIcon className="w-4 h-4 ml-2" />{" "}
-            <p className="text-sm text-gray-600 mb-2 line-clamp-2 font-semibold text-base">
+            <p className="text-gray-600 mb-2 line-clamp-2 font-semibold text-base">
               Data de Inicio: {dataFormatada}
             </p>
           </div>
         </div>
       </div>
-      <hr className="border-t-1 border-gray-200 mb-3" />
+      <hr className="border-t border-gray-200 mb-3" />
       <div className="flex gap-3 w-full">
         <button
           onClick={() => onVerDetalhes && onVerDetalhes(id)}

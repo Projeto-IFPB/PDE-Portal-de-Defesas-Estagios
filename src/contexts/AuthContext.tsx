@@ -10,7 +10,7 @@ interface UsuarioMock {
   id: string;
   nome: string;
   perfil: PerfilUsuario;
-  fotoPerfil:string;
+  fotoPerfil:string | undefined;
   dataCadastro:string;
 }
 
@@ -28,7 +28,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     id: 'd941ce6d-3acf-40a6-a43e-1289839c1bad',
     nome: 'Manoel Gomes', 
     perfil: 'aluno',
-    fotoPerfil: 'sem foto',
+    fotoPerfil: undefined,
     dataCadastro: 'Jun 2026',          
   });
 
