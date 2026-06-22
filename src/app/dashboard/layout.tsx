@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Aside from "@/components/Aside";
 import NavMobile from "@/components/NavMobile";
 import Header from "@/components/Header";
+import HeaderMobile from "@/components/HeaderMobile";
 import { AuthProvider } from "@/contexts/AuthContext";
 
 const geistSans = Geist({
@@ -33,6 +34,8 @@ export default function RootLayout({
         <NavMobile />
 
         <div>
+          <HeaderMobile />
+
           <Header />
           <main className="pb-20 lg:pb-0">{children}</main>
         </div>
