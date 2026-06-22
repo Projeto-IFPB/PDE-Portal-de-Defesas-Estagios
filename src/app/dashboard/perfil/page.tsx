@@ -1,16 +1,20 @@
-import { Camera } from "lucide-react";
+'use client';
+
+import { useAuth } from "@/contexts/AuthContext";
 import { CardAlterarImagemPerfilDesktop, CardAlterarImagemPerfilMobile } from "@/components/CardAlterarImagemPerfil";
 
 export default function Dashboard() {
+  const { usuario, setUsuario } = useAuth();
+
   return (
     <>
     <main className="col-span-4 p-6">
     {/* Todo o conteúdo da página deve ficar aqui */}
       <section className="alterar_foto grid grid-cols-1 lg:grid-cols-4">
 
-        <CardAlterarImagemPerfilMobile nome={'Ryan'} srcImagem="https://storyblok-cdn.photoroom.com/f/191576/1200x800/a3640fdc4c/profile_picture_maker_before.webp" />
+        <CardAlterarImagemPerfilMobile />
 
-        <CardAlterarImagemPerfilDesktop nome={'Ryan'} srcImagem="https://storyblok-cdn.photoroom.com/f/191576/1200x800/a3640fdc4c/profile_picture_maker_before.webp" dataCadastro="Jun 2026" />
+        <CardAlterarImagemPerfilDesktop />
       </section>
       
     </main>
