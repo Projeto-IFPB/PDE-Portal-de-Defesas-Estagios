@@ -76,7 +76,7 @@ export function CardAlterarImagemPerfilDesktop() {
             alt="Minha foto de perfil" /> 
 
             <h2 className="font-semibold text-lg mt-4">{usuario.nome}</h2>
-            <p className="text-[0.7rem] font-semibold text-slate-500 mb-5">Mesmo desde Jun 2026</p>
+            <p className="text-[0.7rem] font-semibold text-slate-500 mb-5">{'Membro desde ' + usuario.dataCadastro}</p>
 
             <input
             type="file"
@@ -90,7 +90,7 @@ export function CardAlterarImagemPerfilDesktop() {
             onClick={() => inputRef.current?.click()}>
                 Alterar Foto
             </button>
-            <p className="text-[0.7rem] font-semibold text-slate-500 mb-5">{'Membro desde ' + usuario.dataCadastro}</p>
+            <p className="text-[0.7rem] font-semibold text-slate-500 mb-5">JPG ou PNG. Tamanho máx 5MB</p>
 
         </div>
     )
