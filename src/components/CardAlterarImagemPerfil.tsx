@@ -1,21 +1,8 @@
-import { useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
-import { obterCaminhoFotoPerfil, obterUrlPublicaFotoPerfil } from "@/lib/supabase/functions-select";
 import { Camera } from "lucide-react";
 
 export function CardAlterarImagemPerfilMobile() {
     const { usuario, setUsuario } = useAuth();
-
-    useEffect(() => {
-        async function carregarFotoPerfil() {
-        const caminho = await obterCaminhoFotoPerfil(usuario.id);
-        const url = await obterUrlPublicaFotoPerfil(caminho);
-        if (url && url !== 'sem imagem') {
-            setUsuario({...usuario, fotoPerfil: url });
-        }
-        }
-        carregarFotoPerfil();
-    }, [])
 
     return (
         <div className="lg:hidden foto flex flex-col items-center mb-2">

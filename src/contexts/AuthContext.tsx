@@ -1,5 +1,7 @@
 'use client';
 
+import { obterCaminhoFotoPerfil, obterUrlPublicaFotoPerfil } from '@/lib/supabase/functions-select';
+import { useEffect } from 'react';
 import { createContext, useContext, useState, ReactNode } from 'react';
 
 export type PerfilUsuario = 'aluno' | 'orientador' | 'coordenador';
@@ -29,6 +31,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     fotoPerfil: 'sem foto',
     dataCadastro: 'Jun 2026',          
   });
+
+  useEffect(() => {
+    async function carregarFotoPerfil() {
+    const caminho = await obterCaminhoFotoPerfil(usuario.id);
+    const url = await obterUrlPublicaFotoPerfil(caminho);
+    if (url && url !== 'sem imagem') {
+        setUsuario({...usuario, fotoPerfil: url });
+    }
+    }
+    carregarFotoPerfil();
+  }, []);
 
   return (
     <AuthContext.Provider value={{ usuario, setUsuario }}>
