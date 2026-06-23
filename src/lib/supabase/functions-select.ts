@@ -266,12 +266,12 @@ export async function salvarCaminhoFotoPerfil(
 }
 
 
-export async function listarDefesas(usuarioId: string, perfil: 'aluno' | 'orientador') {
+export async function listarDefesas(usuarioId: string, perfil: 'aluno' | 'orientador' | 'coordenador') {
   if (perfil === 'aluno') {
     const { data: estagios } = await supabase
       .from('Estagios')
       .select('id')
-      .eq('Id_estagio', usuarioId)
+      .eq('Id_estagiario', usuarioId)
 
     if (!estagios?.length) return []
 
@@ -286,6 +286,7 @@ export async function listarDefesas(usuarioId: string, perfil: 'aluno' | 'orient
     return data ?? []
   }
 
+  // Orientador ou Coordenador
   const {data: estagios_orientados } = await supabase
     .from('Estagios')
     .select('id')
@@ -295,7 +296,7 @@ export async function listarDefesas(usuarioId: string, perfil: 'aluno' | 'orient
 
   const ids = estagios_orientados.map((estagio) => estagio.id)
   const { data } = await supabase
-    .from('Defesas_estagios')
+    .from('Defesa_estagios')
     .select('*')
     .in('id_estagio', ids)
 
