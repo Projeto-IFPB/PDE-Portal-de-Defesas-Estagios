@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 import {
   X,
   Calendar,
@@ -11,7 +11,10 @@ import {
   CloudUpload,
   CheckCircle,
 } from "lucide-react";
-import { agendarDefesa, uploadESalvarDocumento } from '@/lib/supabase/functions-insert';
+import {
+  agendarDefesa,
+  uploadESalvarDocumento,
+} from "@/lib/supabase/functions-insert";
 
 interface ModalOrientacaoProps {
   isOpen: boolean;
@@ -19,15 +22,22 @@ interface ModalOrientacaoProps {
   estagioId: string; // <-- Recebendo o ID
 }
 
-export default function ModalOrientacao({ isOpen, onClose, estagioId }: ModalOrientacaoProps) {
+export default function ModalOrientacao({
+  isOpen,
+  onClose,
+  estagioId,
+}: ModalOrientacaoProps) {
   const modalRef = useRef<HTMLDivElement>(null);
-  
+
   // Estados do formulário
   const [dataDefesa, setDataDefesa] = useState("");
   const [localDefesa, setLocalDefesa] = useState("");
   const [banca, setBanca] = useState([{ nome: "", email: "" }]);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [feedback, setFeedback] = useState<{ tipo: 'sucesso' | 'erro'; mensagem: string } | null>(null);
+  const [feedback, setFeedback] = useState<{
+    tipo: "sucesso" | "erro";
+    mensagem: string;
+  } | null>(null);
   const [ataFile, setAtaFile] = useState<File | null>(null);
   const [relatorioFile, setRelatorioFile] = useState<File | null>(null);
 
@@ -36,26 +46,34 @@ export default function ModalOrientacao({ isOpen, onClose, estagioId }: ModalOri
     setDataDefesa("");
     setLocalDefesa("");
     setBanca([{ nome: "", email: "" }]);
-    setAtaFile(null);  
-    setRelatorioFile(null); 
+    setAtaFile(null);
+    setRelatorioFile(null);
   };
 
   const fecharModal = () => {
-    if (isSubmitting) return; 
+    if (isSubmitting) return;
     onClose();
     resetarFormulario();
   };
 
   // Função para atualizar um membro específico da banca
-  const handleBancaChange = (index: number, campo: 'nome' | 'email', valor: string) => {
+  const handleBancaChange = (
+    index: number,
+    campo: "nome" | "email",
+    valor: string
+  ) => {
     const novaBanca = [...banca];
     novaBanca[index][campo] = valor;
     setBanca(novaBanca);
   };
 
   const handleConfirmarAgendamento = async () => {
-    if (!dataDefesa || !localDefesa || banca.some(m => !m.nome || !m.email)) {
-      setFeedback({ tipo: 'erro', mensagem: "Por favor, preencha todos os campos obrigatórios." });
+    if (!dataDefesa || !localDefesa || banca.some((m) => !m.nome || !m.email)) {
+      setFeedback({
+        tipo: "erro",
+        mensagem: "Por favor, preencha todos os campos obrigatórios.",
+      });
+      setTimeout(() => setFeedback(null), 3000);
       return;
     }
 
@@ -66,26 +84,34 @@ export default function ModalOrientacao({ isOpen, onClose, estagioId }: ModalOri
         id_estagio: estagioId,
         data_defesa: dataDefesa,
         local_defesa: localDefesa,
-        banca_examinadora: banca, 
-        status: 'agendado'
+        banca_examinadora: banca,
+        status: "agendado",
       });
       if (ataFile) {
-        await uploadESalvarDocumento(ataFile, estagioId, 'ata_defesa');
+        await uploadESalvarDocumento(ataFile, estagioId, "ata_defesa");
       }
       if (relatorioFile) {
-        await uploadESalvarDocumento(relatorioFile, estagioId, 'relatorio_final');
+        await uploadESalvarDocumento(
+          relatorioFile,
+          estagioId,
+          "relatorio_final"
+        );
       }
 
-      setFeedback({ tipo: 'sucesso', mensagem: "Defesa agendada com sucesso!" });
+      setFeedback({
+        tipo: "sucesso",
+        mensagem: "Defesa agendada com sucesso!",
+      });
       setTimeout(() => {
         setFeedback(null);
         fecharModal();
       }, 2000);
-      
-      
     } catch (error) {
       console.error("Erro ao agendar:", error);
-      setFeedback({ tipo: 'erro', mensagem: "Ocorreu um erro ao agendar. Tente novamente." });
+      setFeedback({
+        tipo: "erro",
+        mensagem: "Ocorreu um erro ao agendar. Tente novamente.",
+      });
       setTimeout(() => setFeedback(null), 3000);
     } finally {
       setIsSubmitting(false);
@@ -94,7 +120,10 @@ export default function ModalOrientacao({ isOpen, onClose, estagioId }: ModalOri
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
         fecharModal();
       }
     }
@@ -109,13 +138,16 @@ export default function ModalOrientacao({ isOpen, onClose, estagioId }: ModalOri
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+    <div
+      className={`fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 ${window.screen.width <= 768 ? `flex-col` : ""}`}
+    >
       {feedback && (
-        <div 
+        <div
           className={`fixed top-6 right-6 z-[60] px-6 py-3 rounded-full font-semibold shadow-lg transition-all duration-300 animate-in fade-in slide-in-from-top-5
-            ${feedback.tipo === 'sucesso' 
-              ? 'bg-[#d1fae5] text-[#064e3b]'
-              : 'bg-red-100 text-red-800'     
+            ${
+              feedback.tipo === "sucesso"
+                ? "bg-[#d1fae5] text-[#064e3b]"
+                : "bg-red-100 text-red-800"
             }`}
         >
           {feedback.mensagem}
@@ -123,7 +155,7 @@ export default function ModalOrientacao({ isOpen, onClose, estagioId }: ModalOri
       )}
       <div
         ref={modalRef}
-        className={`bg-white rounded-xl shadow-xl w-full max-w-3xl flex flex-col ${banca.length >= 2 ? "max-h-[90vh] overflow-y-auto" : "overflow-visible"}`}
+        className={`bg-white rounded-xl shadow-xl w-full max-w-3xl flex flex-col ${banca.length >= 2 || window.screen.width <= 768 ? "max-h-[90vh] overflow-y-auto" : "overflow-visible"}`}
       >
         <div className="p-8 pb-4">
           <div className="flex mb-1 justify-between items-start">
@@ -142,7 +174,7 @@ export default function ModalOrientacao({ isOpen, onClose, estagioId }: ModalOri
             Preencha os detalhes para formalizar o evento acadêmico.
           </p>
           <hr className="border-t border-gray-200 mb-5" />
-          
+
           <div className="flex items-center gap-2 mb-4">
             <Calendar className="w-5 h-5 text-green-700" />
             <h3 className="text-sm font-bold text-green-700 tracking-wide">
@@ -150,9 +182,14 @@ export default function ModalOrientacao({ isOpen, onClose, estagioId }: ModalOri
             </h3>
           </div>
 
-          <div className="grid grid-cols-2 gap-6 mb-8">
+          <div
+            className={` gap-6 mb-8 ${window.screen.width < 768 ? `flex flex-col` : "grid grid-cols-2"}`}
+          >
             <div className="flex flex-col">
-              <label htmlFor="datadefesa" className="text-sm font-medium text-gray-800 mb-1.5">
+              <label
+                htmlFor="datadefesa"
+                className="text-sm font-medium text-gray-800 mb-1.5"
+              >
                 Data da Defesa
               </label>
               <input
@@ -164,7 +201,10 @@ export default function ModalOrientacao({ isOpen, onClose, estagioId }: ModalOri
               />
             </div>
             <div className="flex flex-col">
-              <label htmlFor="localdefesa" className="text-sm font-medium text-gray-800 mb-1.5">
+              <label
+                htmlFor="localdefesa"
+                className="text-sm font-medium text-gray-800 mb-1.5"
+              >
                 Local da Defesa
               </label>
               <div className="relative flex items-center">
@@ -189,34 +229,47 @@ export default function ModalOrientacao({ isOpen, onClose, estagioId }: ModalOri
           </div>
 
           {banca.map((membro, index) => (
-            <div key={index} className="grid grid-cols-2 gap-6 mb-3">
+            <div
+              key={index}
+              className={` gap-6 mb-3 ${window.screen.width < 768 ? `flex flex-col bg-gray-200 rounded-lg p-6` : "grid grid-cols-2"}`}
+            >
               <div className="flex flex-col">
-                <label className="text-sm font-medium text-gray-800 mb-1.5">Nome do Integrante</label>
-                <input 
-                  type="text" 
-                  placeholder="Nome Completo" 
+                <label
+                  className={`text-sm font-medium  mb-1.5 ${window.screen.width < 768 ? "text-[#004bb5]" : "text-gray-800"}`}
+                >
+                  Nome do Integrante
+                </label>
+                <input
+                  type="text"
+                  placeholder="Nome Completo"
                   value={membro.nome}
-                  onChange={(e) => handleBancaChange(index, 'nome', e.target.value)}
-                  className="w-full border border-gray-300 rounded-md p-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" 
+                  onChange={(e) =>
+                    handleBancaChange(index, "nome", e.target.value)
+                  }
+                  className={`w-full border border-gray-300 rounded-md p-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 ${window.screen.width < 768 ? "bg-white border-gray-400" : "border-gray-300"}`}
                 />
               </div>
               <div className="flex flex-col">
-                <label className="text-sm font-medium text-gray-800 mb-1.5">E-mail Institucional</label>
-                <input 
-                  type="email" 
-                  placeholder="nome@instituicao.edu" 
+                <label
+                  className={`text-sm font-medium mb-1.5 ${window.screen.width < 768 ? "text-[#004bb5]" : "text-gray-800"}`}
+                >
+                  E-mail Institucional
+                </label>
+                <input
+                  type="email"
+                  placeholder="nome@instituicao.edu"
                   value={membro.email}
-                  onChange={(e) => handleBancaChange(index, 'email', e.target.value)}
-                  className="w-full border border-gray-300 rounded-md p-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" 
+                  onChange={(e) =>
+                    handleBancaChange(index, "email", e.target.value)
+                  }
+                  className={`w-full border  rounded-md p-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 ${window.screen.width < 768 ? "bg-white border-gray-400" : "border-gray-300"}`}
                 />
               </div>
             </div>
           ))}
-
-          {/* O botão de adicionar não precisa mais gerar ID */}
-          <button 
-            type="button" 
-            onClick={() => setBanca([...banca, { nome: "", email: "" }])} 
+          <button
+            type="button"
+            onClick={() => setBanca([...banca, { nome: "", email: "" }])}
             className="flex items-center gap-2 text-[#004bb5] text-sm font-medium hover:text-blue-800 mb-8 transition-colors"
           >
             <PlusCircle className="w-4 h-4" /> Adicionar Integrante
@@ -229,7 +282,7 @@ export default function ModalOrientacao({ isOpen, onClose, estagioId }: ModalOri
             </h3>
           </div>
 
-          <div className="grid grid-cols-2 gap-6 mb-8">
+          <div className={` gap-6 mb-8 ${window.screen.width < 768 ? `flex flex-col bg-gray-200 rounded-lg p-6` : "grid grid-cols-2"}`}>
             <div>
               <div className="flex justify-between items-end mb-1.5">
                 <span className="text-sm font-medium text-gray-800">
@@ -239,7 +292,7 @@ export default function ModalOrientacao({ isOpen, onClose, estagioId }: ModalOri
                   <Download className="w-3.5 h-3.5" /> Baixar Modelo
                 </button>
               </div>
-              <label className="border-2 border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors bg-white group">
+              <label className={`border-2 border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors group ${window.screen.width < 768 ? "bg-gray-200":"bg-white"}`}>
                 <FileUp className="w-6 h-6 text-[#004bb5] mb-2 group-hover:scale-110 transition-transform" />
                 <span className="text-sm font-semibold text-gray-800 text-center">
                   {ataFile ? ataFile.name : "Arraste ou clique"}
@@ -249,10 +302,10 @@ export default function ModalOrientacao({ isOpen, onClose, estagioId }: ModalOri
                     PDF até 5MB
                   </span>
                 )}
-                <input 
-                  type="file" 
-                  className="hidden" 
-                  accept=".pdf" 
+                <input
+                  type="file"
+                  className="hidden"
+                  accept=".pdf"
                   onChange={(e) => setAtaFile(e.target.files?.[0] || null)}
                 />
               </label>
@@ -267,7 +320,7 @@ export default function ModalOrientacao({ isOpen, onClose, estagioId }: ModalOri
                   <Download className="w-3.5 h-3.5" /> Baixar Modelo
                 </button>
               </div>
-              <label className="border-2 border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors bg-white group">
+              <label className={`border-2 border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors  group ${window.screen.width < 768 ? "bg-gray-200":"bg-white"}`}>
                 <CloudUpload className="w-6 h-6 text-[#004bb5] mb-2 group-hover:scale-110 transition-transform" />
                 <span className="text-sm font-semibold text-gray-800 text-center">
                   {relatorioFile ? relatorioFile.name : "Arraste ou clique"}
@@ -277,19 +330,20 @@ export default function ModalOrientacao({ isOpen, onClose, estagioId }: ModalOri
                     PDF até 15MB
                   </span>
                 )}
-                <input 
-                  type="file" 
-                  className="hidden" 
-                  accept=".pdf" 
-                  onChange={(e) => setRelatorioFile(e.target.files?.[0] || null)}
+                <input
+                  type="file"
+                  className="hidden"
+                  accept=".pdf"
+                  onChange={(e) =>
+                    setRelatorioFile(e.target.files?.[0] || null)
+                  }
                 />
               </label>
             </div>
           </div>
-          
         </div>
-        
-        <div className="bg-gray-50/80 px-8 py-5 border-t border-gray-100 flex justify-end items-center gap-6">
+
+        <div className={`bg-gray-50/80 px-8 py-5 border-t border-gray-100 flex  items-center gap-6 ${window.screen.width <= 768 ? `flex-col` : "justify-end"}`}>
           <button
             onClick={fecharModal}
             disabled={isSubmitting}
