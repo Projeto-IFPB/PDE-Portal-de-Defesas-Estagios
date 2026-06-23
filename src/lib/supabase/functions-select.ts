@@ -202,7 +202,7 @@ export async function listarEstagiosRecomendados(): Promise<EstagioRecomendado[]
   }
 }
 
-// Função de Upload de foto de perfil para o Storage do supabase
+//11. Função de Upload de foto de perfil para o Storage do supabase
 export async function uploadFotoPerfil(
   arquivo: File,
   idUsuario: string
@@ -235,7 +235,7 @@ export async function uploadFotoPerfil(
 }
 
 
-// Salvar/atualizar o caminho da foto na tabela Fotos_perfil
+//12. Salvar/atualizar o caminho da foto na tabela Fotos_perfil
 export async function salvarCaminhoFotoPerfil(
   idUsuario: string,
   caminhoArquivo: string,
@@ -264,11 +264,3 @@ export async function salvarCaminhoFotoPerfil(
     return false;
   }
 }
-
-// Funcoes de inserir dados (Insert/Post)
-
-//* Cadastra um novo usuário no Supabase Auth enviando o perfil junto.
-
-// Funcoes de inserir dados (Insert/Post)
-
-//* Cadastra um novo usuário no Supabase Auth enviando o perfil junto.

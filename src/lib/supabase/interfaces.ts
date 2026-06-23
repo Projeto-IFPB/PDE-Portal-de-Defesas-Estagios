@@ -22,11 +22,14 @@ export interface Estagio {
 
 export interface AgendaDefesa {
   id?: string;
-  estagio_id: string; 
+  id_estagio: string; 
   data_defesa: string; 
-  banca_examinadora: string[];
+  banca_examinadora: {};
   status: 'agendado' | 'realizado' | 'cancelado';
   created_at?: string;
+  ata_defesa?: string;
+  relatorio_final?: string;
+  local_defesa: string;
 }
 
 export interface EstagioRecomendado {

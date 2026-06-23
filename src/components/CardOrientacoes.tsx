@@ -1,9 +1,9 @@
 "use client";
-
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import { Building2Icon } from "lucide-react";
 import { obterUrlPublicaFotoPerfil } from "@/lib/supabase/functions-select";
-import Building2Icon from "@iconify-react/lucide/building-2";
 import CalendarMonthOutlineIcon from "@iconify-react/material-symbols/calendar-month-outline";
+import ModalOrientacao from "./ModalOrientacao";
 
 export const handleVerDetalhes = (id: string) => {
   console.log("Visualizando estágio ID:", id);
@@ -37,8 +37,7 @@ const statusConfig: Record<
   },
   concluido: {
     label: "Concluído",
-    colorClasses:
-      "bg-slate-400 text-slate-800 border-gray-200",
+    colorClasses: "bg-slate-400 text-slate-800 border-gray-200",
   },
 };
 
@@ -52,6 +51,8 @@ export default function OrientacaoCard({
   onVerDetalhes,
   foto_perfil,
 }: OrientacaoCardProps) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const currentStatus = statusConfig[status];
   const dataFormatada = new Date(data).toLocaleDateString("pt-BR", {
     timeZone: "UTC", // O 'UTC' evita que a data mude de dia por causa do fuso horário
@@ -78,7 +79,7 @@ export default function OrientacaoCard({
                 <img
                   src={fotoUrl}
                   alt={nomeEstagiario}
-                  className="w-14 h-14 rounded-full object-cover"
+                  className="w-12 h-12 rounded-full object-cover"
                 />
               )}
             </div>
@@ -102,13 +103,13 @@ export default function OrientacaoCard({
         <hr className="border-t border-gray-200 mb-6" />
         <div>
           <div className="flex gap-2">
-            <Building2Icon height="1em" className="ml-2" />
+            <Building2Icon className="w-4 h-4 ml-2 mt-1" />
             <p className="text-gray-600 mb-2 line-clamp-2 font-semibold text-base">
               {empresa}
             </p>
           </div>
           <div className="flex gap-2">
-            <CalendarMonthOutlineIcon className="w-4 h-4 ml-2" />{" "}
+            <CalendarMonthOutlineIcon className="w-4 h-4 ml-2 mt-1" />
             <p className="text-gray-600 mb-2 line-clamp-2 font-semibold text-base">
               Data de Inicio: {dataFormatada}
             </p>
@@ -123,10 +124,17 @@ export default function OrientacaoCard({
         >
           Ver Detalhes
         </button>
-        <button className="flex-1 py-2 px-4 text-blue-800 border-2 border-solid border-blue-100 hover:bg-blue-100  text-sm font-medium rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                <button
+          onClick={() => setIsModalOpen(true)}
+          className="flex-1 py-2 px-4 text-blue-800 border-2 border-solid border-blue-100 hover:bg-blue-100  text-sm font-medium rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        >
           Agendar Defesa
         </button>
       </div>
+            {/*modalzinho*/}
+      {isModalOpen && (
+        <ModalOrientacao isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} estagioId={id} />
+      )}
     </div>
   );
 }
