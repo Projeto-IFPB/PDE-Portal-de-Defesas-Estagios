@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import { obterUrlPublicaFotoPerfil } from "@/lib/supabase/functions-select";
 import Building2Icon from "@iconify-react/lucide/building-2";
 import CalendarMonthOutlineIcon from "@iconify-react/material-symbols/calendar-month-outline";
+import FileTextIcon from "@iconify-react/lucide/file-text";
+import UsersRoundIcon from "@iconify-react/lucide/users-round";
+import CirclePlusIcon from "@iconify-react/lucide/circle-plus";
 
 export const handleVerDetalhes = (id: string) => {
   console.log("Visualizando estágio ID:", id);
@@ -37,8 +40,7 @@ const statusConfig: Record<
   },
   concluido: {
     label: "Concluído",
-    colorClasses:
-      "bg-slate-400 text-slate-800 border-gray-200",
+    colorClasses: "bg-slate-400 text-slate-800 border-gray-200",
   },
 };
 
@@ -52,6 +54,7 @@ export default function OrientacaoCard({
   onVerDetalhes,
   foto_perfil,
 }: OrientacaoCardProps) {
+  const [Modal, setModal] = useState(false);
   const currentStatus = statusConfig[status];
   const dataFormatada = new Date(data).toLocaleDateString("pt-BR", {
     timeZone: "UTC", // O 'UTC' evita que a data mude de dia por causa do fuso horário
@@ -78,7 +81,7 @@ export default function OrientacaoCard({
                 <img
                   src={fotoUrl}
                   alt={nomeEstagiario}
-                  className="w-14 h-14 rounded-full object-cover"
+                  className="w-13 h-13 rounded-full object-cover"
                 />
               )}
             </div>
@@ -123,10 +126,130 @@ export default function OrientacaoCard({
         >
           Ver Detalhes
         </button>
-        <button className="flex-1 py-2 px-4 text-blue-800 border-2 border-solid border-blue-100 hover:bg-blue-100  text-sm font-medium rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+        <button
+          onClick={() => setModal(true)}
+          className="flex-1 py-2 px-4 text-blue-800 border-2 border-solid border-blue-100 hover:bg-blue-100  text-sm font-medium rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        >
           Agendar Defesa
         </button>
       </div>
+      {/*modalzinho*/}
+      {Modal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div className="bg-white p-6 rounded-xl shadow-xl ">
+            <div className="flex mb-4 justify-between ">
+              <h2 className="text-xl font-bold text-blue-600">
+                Agendar Defesa de Estagio
+              </h2>
+              <button
+                onClick={() => setModal(false)}
+                className="text-gray-600 "
+              >
+                X
+              </button>
+            </div>
+            <p className="mb-6">
+              Preencha os detalhes para formalizar o evento acadêmico.{" "}
+              {nomeEstagiario}?
+            </p>
+            <hr className="border-t border-gray-200 mb-3" />
+            <div className="flex">
+              <CalendarMonthOutlineIcon className="w-4 h-4 text-green-600 " />
+              <h2 className="text-green-600">INFORMAÇÕES DO EVENTO</h2>
+            </div>
+            <div className="flex justify-between mb-4">
+              <div className="flex flex-col">
+                <label htmlFor="datadefesa">Data da Defesa</label>
+                <input
+                  type="date"
+                  name="datadefesa"
+                  itemID="datadefesa"
+                  className="border-2 border-solid border-blue-100"
+                />
+              </div>
+              <div className="flex flex-col">
+                <label htmlFor="localdefesa">Local da Defesa</label>
+                <input
+                  type="text"
+                  name="localdefesa"
+                  itemID="localdefesa"
+                  className="border-2 border-solid border-blue-100"
+                  placeholder="Ex: Auditorio 2 ou link Meet"
+                />
+              </div>
+            </div>
+            <div className="flex">
+              <UsersRoundIcon height="1em" className="text-green-600" />
+              <h2 className="text-green-600">BANCA EXAMINADORA</h2>
+            </div>
+            <div className="flex justify-between mb-4">
+              <div className="flex flex-col">
+                <label htmlFor="nomebanca">Nome do Integrante</label>
+                <input
+                  type="text"
+                  name="nomebanca"
+                  itemID="nomebanca"
+                  className="border-2 border-solid border-blue-100"
+                  placeholder="Nome Completo"
+                />
+              </div>
+              <div className="flex flex-col">
+                <label htmlFor="emailbanca">Local da Defesa</label>
+                <input
+                  type="text"
+                  name="emailbanca"
+                  itemID="emailbanca"
+                  className="border-2 border-solid border-blue-100"
+                  placeholder="nome@instituicao.edu"
+                />
+              </div>
+            </div>
+            <button className="text-blue-600 flex">
+              <CirclePlusIcon height="1em" /> Adicionar Integrante
+            </button>
+            <div className="flex">
+              <FileTextIcon height="1em" className="text-green-600" />
+              <h2 className="text-green-600">DOCUMENTAÇÃO</h2>
+            </div>
+            <div className="flex justify-between mb-4">
+              <div className="flex flex-col">
+                <label htmlFor="atadefesa">Ata de Defesa</label>
+                <input
+                  type="file"
+                  name="atadefesa"
+                  itemID="atadefesa"
+                  className="border-2 border-solid border-blue-100"
+                />
+              </div>
+              <div className="flex flex-col">
+                <label htmlFor="relatoriofinal">Relatório Final</label>
+                <input
+                  type="file"
+                  name="relatoriofinal"
+                  itemID="relatoriofinal"
+                  className="border-2 border-solid border-blue-100"
+                />
+              </div>
+            </div>
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => setModal(false)}
+                className="px-4 py-2 text-gray-600 border rounded-lg"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={() => {
+                  setModal(false);
+                }}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg"
+              >
+                Confirmar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
