@@ -133,7 +133,7 @@ export default function OrientacaoCard({
       </div>
             {/*modalzinho*/}
       {isModalOpen && (
-        <ModalOrientacao isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+        <ModalOrientacao isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} estagioId={id} />
       )}
     </div>
   );
