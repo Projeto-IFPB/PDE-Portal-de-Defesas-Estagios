@@ -13,7 +13,7 @@ import {
   CheckCircle,
   Building2Icon,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { obterUrlPublicaFotoPerfil } from "@/lib/supabase/functions-select";
 import CalendarMonthOutlineIcon from "@iconify-react/material-symbols/calendar-month-outline";
 
@@ -64,6 +64,22 @@ export default function OrientacaoCard({
   foto_perfil,
 }: OrientacaoCardProps) {
   const [Modal, setModal] = useState(false);
+   const modalRef = useRef<HTMLDivElement>(null); 
+
+  
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        setModal(false);
+      }
+    }
+    if (Modal) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [Modal]);
   const currentStatus = statusConfig[status];
   const dataFormatada = new Date(data).toLocaleDateString("pt-BR", {
     timeZone: "UTC", // O 'UTC' evita que a data mude de dia por causa do fuso horário
@@ -145,7 +161,7 @@ export default function OrientacaoCard({
       {/*modalzinho*/}
       {Modal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="bg-white rounded-xl shadow-xl w-full max-w-3xl overflow-hidden flex flex-col">
+          <div ref={modalRef} className="bg-white rounded-xl shadow-xl w-full max-w-3xl overflow-hidden flex flex-col ">
             <div className="p-8 pb-4">
               <div className="flex mb-1 justify-between items-start">
                 <h2 className="text-2xl font-bold text-[#004bb5]">
