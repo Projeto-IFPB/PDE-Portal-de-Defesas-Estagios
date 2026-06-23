@@ -55,7 +55,7 @@ export default function ModalOrientacao({ isOpen, onClose, estagioId }: ModalOri
 
   const handleConfirmarAgendamento = async () => {
     if (!dataDefesa || !localDefesa || banca.some(m => !m.nome || !m.email)) {
-      alert("Por favor, preencha todos os campos obrigatórios.");
+      setFeedback({ tipo: 'erro', mensagem: "Por favor, preencha todos os campos obrigatórios." });
       return;
     }
 
