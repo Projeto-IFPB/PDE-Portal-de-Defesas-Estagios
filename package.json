@@ -10,6 +10,9 @@
     "format": "biome format --write"
   },
   "dependencies": {
+    "@fullcalendar/daygrid": "^6.1.21",
+    "@fullcalendar/interaction": "^6.1.21",
+    "@fullcalendar/react": "^6.1.21",
     "@iconify-react/icon-park-outline": "^1.0.2",
     "@iconify-react/lucide": "^1.0.18",
     "@iconify-react/material-symbols": "^1.0.20",
