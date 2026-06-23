@@ -7,9 +7,7 @@ export default function Home() {
   const [isLogin, setIsLogin] = useState(true);
 
   return (
-    // Fundo com imagem corporativa e overlay embaçado
     <main className="relative min-h-screen flex items-center justify-center p-4 bg-[url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=1920&auto=format&fit=crop')] bg-cover bg-center">
-      {/* Máscara preta translúcida e desfoque */}
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
 
       {/* Container Principal */}
@@ -18,10 +16,10 @@ export default function Home() {
           !isLogin ? "md:flex-row-reverse" : ""
         }`}
       >
-        {/* Lado do Formulário (Ocupa 100% no Mobile, 50% no Desktop) */}
+        {/* Lado do Formulário */}
         <div className="w-full md:w-1/2 bg-white z-10 relative overflow-hidden flex flex-col justify-center">
           
-          {/* Logo Maior e Imponente */}
+          {/* Logo */}
           <div className="flex justify-center pt-8 sm:pt-10 mb-2">
             <Image 
               src="/img/preview-pde-transparente.png" 
@@ -138,7 +136,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Lado do Banner Azul (Oculto no Mobile, Ocupa 50% no Desktop) */}
+        {/* Lado do Banner Azul */}
         <div className="hidden md:flex w-full md:w-1/2 bg-[#1f499b] text-white p-12 flex-col justify-center items-center text-center transition-all duration-500 relative overflow-hidden">
           
           <div className="absolute top-[-50px] right-[-50px] w-40 h-40 bg-white opacity-10 rounded-full blur-2xl"></div>
