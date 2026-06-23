@@ -12,7 +12,7 @@ export default function Home() {
 
       {/* Container Principal */}
       <div 
-        className={`relative z-10 flex flex-col md:flex-row w-full max-w-5xl bg-white shadow-2xl rounded-2xl overflow-hidden min-h-[600px] transition-all duration-700 ease-in-out ${
+        className={`relative z-10 flex flex-col md:flex-row w-full max-w-5xl bg-white shadow-2xl rounded-2xl overflow-hidden min-h-150 transition-all duration-700 ease-in-out ${
           !isLogin ? "md:flex-row-reverse" : ""
         }`}
       >
@@ -139,8 +139,8 @@ export default function Home() {
         {/* Lado do Banner Azul */}
         <div className="hidden md:flex w-full md:w-1/2 bg-[#1f499b] text-white p-12 flex-col justify-center items-center text-center transition-all duration-500 relative overflow-hidden">
           
-          <div className="absolute top-[-50px] right-[-50px] w-40 h-40 bg-white opacity-10 rounded-full blur-2xl"></div>
-          <div className="absolute bottom-[-50px] left-[-50px] w-40 h-40 bg-white opacity-10 rounded-full blur-2xl"></div>
+          <div className="absolute -top-12.5 -right-12.5 w-40 h-40 bg-white opacity-10 rounded-full blur-2xl"></div>
+          <div className="absolute -bottom-12.5 -left-12.5 w-40 h-40 bg-white opacity-10 rounded-full blur-2xl"></div>
 
           {/* O React re-renderiza essa parte baseada no estado */}
           <div className="z-10 transition-opacity duration-500">

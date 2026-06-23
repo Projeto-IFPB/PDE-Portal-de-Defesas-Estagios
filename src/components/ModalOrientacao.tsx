@@ -112,7 +112,7 @@ export default function ModalOrientacao({ isOpen, onClose, estagioId }: ModalOri
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
       {feedback && (
         <div 
-          className={`fixed top-6 right-6 z-[60] px-6 py-3 rounded-full font-semibold shadow-lg transition-all duration-300 animate-in fade-in slide-in-from-top-5
+          className={`fixed top-6 right-6 z-60 px-6 py-3 rounded-full font-semibold shadow-lg transition-all duration-300 animate-in fade-in slide-in-from-top-5
             ${feedback.tipo === 'sucesso' 
               ? 'bg-[#d1fae5] text-[#064e3b]'
               : 'bg-red-100 text-red-800'     

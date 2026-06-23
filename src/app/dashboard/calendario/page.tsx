@@ -1,11 +1,12 @@
 'use client'
 
 import { useAuth } from "@/contexts/AuthContext";
-import { useEffect, useEffectEvent, useState } from "react";
+import { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { listarDefesas } from "@/lib/supabase/functions-select";
+import ModalDetalhesDefesa from "@/components/ModalDetalhesDefesa";
 
 export default function CalendarioPage() {
   const { usuario } = useAuth();
@@ -17,6 +18,7 @@ export default function CalendarioPage() {
     allDay: boolean
     extendedProps: { local: string; banca: any }
   }[]>([]);
+  const [defesaSelecionada, setDefesaSelecionada] = useState<{ local: string; banca: any } | null>(null);
 
   useEffect(() => {
     async function carregar() {
@@ -39,6 +41,7 @@ export default function CalendarioPage() {
   }, [usuario])
 
     return (
+      <>
         <div className="p-6">
           <h1 className="text-2xl font-bold mb-4"> Calendário de Defesas</h1>
           <FullCalendar 
@@ -49,9 +52,16 @@ export default function CalendarioPage() {
             height="auto"
             eventClick={(info) => {
               const { local, banca } = info.event.extendedProps
-              alert(`Local: ${local}\nBanca: ${JSON.stringify(banca)}`)
+              setDefesaSelecionada({ local, banca })
             }}
             />
         </div>
+        <ModalDetalhesDefesa
+          isOpen={!!defesaSelecionada}
+          onClose={() => setDefesaSelecionada(null)}
+          local={defesaSelecionada?.local ?? ''}
+          banca={defesaSelecionada?.banca ?? []}
+        />
+      </>
       );
 }
