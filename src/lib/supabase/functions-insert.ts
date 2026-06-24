@@ -12,6 +12,8 @@ export async function agendarDefesa(novaDefesa: AgendaDefesa) {
           data_defesa: novaDefesa.data_defesa,
           local_defesa: novaDefesa.local_defesa,
           banca_examinadora: novaDefesa.banca_examinadora,
+          titulo: novaDefesa.titulo,
+          horario_defesa: novaDefesa.horario_defesa,
           status: 'agendado',
         },
       ])

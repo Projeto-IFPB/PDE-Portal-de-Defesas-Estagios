@@ -32,6 +32,8 @@ export default function ModalOrientacao({
   // Estados do formulário
   const [dataDefesa, setDataDefesa] = useState("");
   const [localDefesa, setLocalDefesa] = useState("");
+  const [titulo, setTitulo] = useState("");
+  const [horario, setHorario] = useState("");
   const [banca, setBanca] = useState([{ nome: "", email: "" }]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [feedback, setFeedback] = useState<{
@@ -45,6 +47,8 @@ export default function ModalOrientacao({
   const resetarFormulario = () => {
     setDataDefesa("");
     setLocalDefesa("");
+    setTitulo("");
+    setHorario("");
     setBanca([{ nome: "", email: "" }]);
     setAtaFile(null);
     setRelatorioFile(null);
@@ -68,7 +72,7 @@ export default function ModalOrientacao({
   };
 
   const handleConfirmarAgendamento = async () => {
-    if (!dataDefesa || !localDefesa || banca.some((m) => !m.nome || !m.email)) {
+    if (!dataDefesa || !localDefesa || !titulo || banca.some((m) => !m.nome || !m.email)) {
       setFeedback({
         tipo: "erro",
         mensagem: "Por favor, preencha todos os campos obrigatórios.",
@@ -84,6 +88,8 @@ export default function ModalOrientacao({
         id_estagio: estagioId,
         data_defesa: dataDefesa,
         local_defesa: localDefesa,
+        titulo: titulo,
+        horario_defesa: horario,
         banca_examinadora: banca,
         status: "agendado",
       });
@@ -217,6 +223,42 @@ export default function ModalOrientacao({
                   className="w-full border border-gray-300 rounded-md py-2.5 pr-2.5 pl-9 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 placeholder:text-gray-400 text-gray-700"
                 />
               </div>
+            </div>
+          </div>
+
+          <div
+            className={` gap-6 mb-8 ${window.screen.width < 768 ? `flex flex-col` : "grid grid-cols-2"}`}
+          >
+            <div className="flex flex-col">
+              <label
+                htmlFor="titulodefesa"
+                className="text-sm font-medium text-gray-800 mb-1.5"
+              >
+                Título da Defesa
+              </label>
+              <input
+                type="text"
+                id="titulodefesa"
+                value={titulo}
+                onChange={(e) => setTitulo(e.target.value)}
+                placeholder="Ex: Defesa de Estágio Curricular Obrigatório"
+                className="w-full border border-gray-300 rounded-md p-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-700 placeholder:text-gray-400"
+              />
+            </div>
+            <div className="flex flex-col">
+              <label
+                htmlFor="horariodefesa"
+                className="text-sm font-medium text-gray-800 mb-1.5"
+              >
+                Horário da Defesa
+              </label>
+              <input
+                type="time"
+                id="horariodefesa"
+                value={horario}
+                onChange={(e) => setHorario(e.target.value)}
+                className="w-full border border-gray-300 rounded-md p-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-700"
+              />
             </div>
           </div>
 

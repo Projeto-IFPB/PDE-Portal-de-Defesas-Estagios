@@ -1,20 +1,8 @@
 import { Calendar, Clock, UserRound, CalendarX } from "lucide-react";
+import { InterfaceCardBancaDefesa } from "@/lib/supabase/interfaces";
 
-interface MembroBanca {
-    nome: string;
-    email?: string;
-}
 
-interface CardBancaDefesa {
-    data: string;
-    status: "agendado" | "concluído" | "cancelado";
-    titulo?: string;
-    horario?: string;
-    local: string;
-    banca: MembroBanca[];
-}
-
-export function CardBancaDefesa({data, status, titulo, horario, local, banca}: CardBancaDefesa) {
+export function CardBancaDefesa({data, status, titulo, horario, local, banca}: InterfaceCardBancaDefesa) {
     return (
         <>
             <div className="bg-white p-4 rounded-xl">
