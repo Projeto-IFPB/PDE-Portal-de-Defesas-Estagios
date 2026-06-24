@@ -7,6 +7,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { listarDefesas } from "@/lib/supabase/functions-select";
 import ModalDetalhesDefesa from "@/components/ModalDetalhesDefesa";
+import { MembroBanca } from "@/lib/supabase/interfaces";
 
 export default function CalendarioPage() {
   const { usuario } = useAuth();
@@ -16,9 +17,9 @@ export default function CalendarioPage() {
     title: string
     start: string
     allDay: boolean
-    extendedProps: { local: string; banca: any }
+    extendedProps: { local: string; horario: string; banca: MembroBanca[] }
   }[]>([]);
-  const [defesaSelecionada, setDefesaSelecionada] = useState<{ local: string; banca: any } | null>(null);
+  const [defesaSelecionada, setDefesaSelecionada] = useState<{ local: string; horario: string; banca: any } | null>(null);
 
   useEffect(() => {
     async function carregar() {
@@ -31,7 +32,7 @@ export default function CalendarioPage() {
           title: `Defesa - ${defesa.status}`,
           start: defesa.data_defesa,
           allDay: true,
-          extendedProps: { local: defesa.local_defesa, banca: defesa.banca_examinadora },
+          extendedProps: { local: defesa.local_defesa, horario: defesa.horario_defesa, banca: defesa.banca_examinadora },
 
          }
       ))
@@ -51,8 +52,8 @@ export default function CalendarioPage() {
             locale="pt-br"
             height="auto"
             eventClick={(info) => {
-              const { local, banca } = info.event.extendedProps
-              setDefesaSelecionada({ local, banca })
+              const { local, horario, banca } = info.event.extendedProps
+              setDefesaSelecionada({ local, horario, banca })
             }}
             />
         </div>
@@ -60,6 +61,7 @@ export default function CalendarioPage() {
           isOpen={!!defesaSelecionada}
           onClose={() => setDefesaSelecionada(null)}
           local={defesaSelecionada?.local ?? ''}
+          horario={defesaSelecionada?.horario ?? ''}
           banca={defesaSelecionada?.banca ?? []}
         />
       </>

@@ -33,6 +33,8 @@ export interface AgendaDefesa {
   ata_defesa?: string;
   relatorio_final?: string;
   local_defesa: string;
+  titulo?: string;
+  horario_defesa?: string;
 }
 
 export interface EstagioRecomendado {
@@ -43,4 +45,18 @@ export interface EstagioRecomendado {
   empresa: string;
   competencia?: string;
   vagas?: number | null;
+}
+
+export interface MembroBanca {
+    nome: string;
+    email?: string;
+}
+
+export interface InterfaceCardBancaDefesa {
+    data: string;
+    status: "agendado" | "realizado" | "cancelado";
+    titulo?: string;
+    horario?: string;
+    local: string;
+    banca: MembroBanca[];
 }
