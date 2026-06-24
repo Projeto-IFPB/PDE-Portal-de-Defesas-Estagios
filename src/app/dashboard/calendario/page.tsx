@@ -1,15 +1,67 @@
-import Aside from "@/components/Aside";
-import NavMobile from "@/components/NavMobile";
-import Header from "@/components/Header";
+'use client'
 
-export default function Dashboard() {
+import { useAuth } from "@/contexts/AuthContext";
+import { useEffect, useState } from "react";
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import { listarDefesas } from "@/lib/supabase/functions-select";
+import ModalDetalhesDefesa from "@/components/ModalDetalhesDefesa";
+
+export default function CalendarioPage() {
+  const { usuario } = useAuth();
+  const [eventos, setEventos] = useState<
+  {
+    id: string
+    title: string
+    start: string
+    allDay: boolean
+    extendedProps: { local: string; banca: any }
+  }[]>([]);
+  const [defesaSelecionada, setDefesaSelecionada] = useState<{ local: string; banca: any } | null>(null);
+
+  useEffect(() => {
+    async function carregar() {
+      if (!usuario) return
+      const defesas = await listarDefesas(usuario.id, usuario.perfil)
+
+      const eventosFormatados = defesas.map((defesa) => (
+        {
+          id: defesa.id,
+          title: `Defesa - ${defesa.status}`,
+          start: defesa.data_defesa,
+          allDay: true,
+          extendedProps: { local: defesa.local_defesa, banca: defesa.banca_examinadora },
+
+         }
+      ))
+      setEventos(eventosFormatados)
+    }
+    carregar()
+  }, [usuario])
+
     return (
-        <>
-          <main className="col-span-4 p-6">
-          {/* Todo o conteúdo da página deve ficar aqui */}
-            <h1>Página de calendário</h1>
-            
-          </main>
-        </>
+      <>
+        <div className="p-6">
+          <h1 className="text-2xl font-bold mb-4"> Calendário de Defesas</h1>
+          <FullCalendar 
+            plugins={[dayGridPlugin, interactionPlugin]}
+            initialView="dayGridMonth"
+            events={eventos}
+            locale="pt-br"
+            height="auto"
+            eventClick={(info) => {
+              const { local, banca } = info.event.extendedProps
+              setDefesaSelecionada({ local, banca })
+            }}
+            />
+        </div>
+        <ModalDetalhesDefesa
+          isOpen={!!defesaSelecionada}
+          onClose={() => setDefesaSelecionada(null)}
+          local={defesaSelecionada?.local ?? ''}
+          banca={defesaSelecionada?.banca ?? []}
+        />
+      </>
       );
 }

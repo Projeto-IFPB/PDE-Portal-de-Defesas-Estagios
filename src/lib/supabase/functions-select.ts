@@ -264,3 +264,41 @@ export async function salvarCaminhoFotoPerfil(
     return false;
   }
 }
+
+
+export async function listarDefesas(usuarioId: string, perfil: 'aluno' | 'orientador' | 'coordenador') {
+  if (perfil === 'aluno') {
+    const { data: estagios } = await supabase
+      .from('Estagios')
+      .select('id')
+      .eq('Id_estagiario', usuarioId)
+
+    if (!estagios?.length) return []
+
+    const ids = estagios.map((estagio) => estagio.id)
+    // Busca na tabela 'Defesa_estagios' todos as linhas que o id_estagio bate com os id contidos na lista ids
+    const { data } = await supabase
+      .from('Defesa_estagios')
+      .select('*')
+      .in('id_estagio', ids)
+
+    // Se data for Null ou Undefined retorna []
+    return data ?? []
+  }
+
+  // Orientador ou Coordenador
+  const {data: estagios_orientados } = await supabase
+    .from('Estagios')
+    .select('id')
+    .eq('Id_orientador', usuarioId)
+
+  if (!estagios_orientados?.length) return []
+
+  const ids = estagios_orientados.map((estagio) => estagio.id)
+  const { data } = await supabase
+    .from('Defesa_estagios')
+    .select('*')
+    .in('id_estagio', ids)
+
+  return data ?? []
+}

@@ -139,15 +139,14 @@ export default function ModalOrientacao({
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 ${window.screen.width <= 768 ? `flex-col` : ""}`}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 sm:flex-col"
     >
       {feedback && (
-        <div
-          className={`fixed top-6 right-6 z-[60] px-6 py-3 rounded-full font-semibold shadow-lg transition-all duration-300 animate-in fade-in slide-in-from-top-5
-            ${
-              feedback.tipo === "sucesso"
-                ? "bg-[#d1fae5] text-[#064e3b]"
-                : "bg-red-100 text-red-800"
+        <div 
+          className={`fixed top-6 right-6 z-60 px-6 py-3 rounded-full font-semibold shadow-lg transition-all duration-300 animate-in fade-in slide-in-from-top-5
+            ${feedback.tipo === 'sucesso' 
+              ? 'bg-[#d1fae5] text-[#064e3b]'
+              : 'bg-red-100 text-red-800'     
             }`}
         >
           {feedback.mensagem}
@@ -155,9 +154,9 @@ export default function ModalOrientacao({
       )}
       <div
         ref={modalRef}
-        className={`bg-white rounded-xl shadow-xl w-full max-w-3xl flex flex-col ${banca.length >= 2 || window.screen.width <= 768 ? "max-h-[90vh] overflow-y-auto" : "overflow-visible"}`}
+        className="bg-white rounded-xl shadow-xl w-full max-w-3xl flex flex-col max-h-[90vh]"
       >
-        <div className="p-8 pb-4">
+        <div className="p-8 pb-4 overflow-y-auto flex-1 min-h-0">
           <div className="flex mb-1 justify-between items-start">
             <h2 className="text-2xl font-bold text-[#004bb5]">
               Agendar Defesa de Estágio
