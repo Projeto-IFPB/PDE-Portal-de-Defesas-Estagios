@@ -53,7 +53,7 @@ export default function OrientacaoCard({
   const dataFormatada = new Date(data).toLocaleDateString("pt-BR", {
     timeZone: "UTC", // O 'UTC' evita que a data mude de dia por causa do fuso horário
   });
-  const [fotoUrl, setFotoUrl] = useState<string | null>(null); // Estado para a foto
+  const [fotoUrl, setFotoUrl] = useState<string | null>(null); 
 
   useEffect(() => {
     async function carregarFoto() {
@@ -68,7 +68,6 @@ export default function OrientacaoCard({
   const handleNavegarDetalhes = () => {
     router.push(`/dashboard/alunos/${id}`); 
   };
-
 
   return (
     <div className="flex flex-col justify-between p-5 bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 min-h-70">
@@ -112,7 +111,11 @@ export default function OrientacaoCard({
           <div className="flex gap-2">
             <CalendarMonthOutlineIcon className="w-4 h-4 ml-2 mt-1" />
             <p className="text-gray-600 mb-2 line-clamp-2 font-semibold text-base">
-              Data de Inicio: {dataFormatada}
+              Data de Inicio: {status === "pendente" ? (
+                <span className="text-red-500 font-semibold">Pendente</span>
+              ) : (
+                dataFormatada
+              )}
             </p>
           </div>
         </div>
@@ -125,14 +128,14 @@ export default function OrientacaoCard({
         >
           Ver Detalhes
         </button>
-                <button
+        <button
           onClick={() => setIsModalOpen(true)}
           className="flex-1 py-2 px-4 text-blue-800 border-2 border-solid border-blue-100 hover:bg-blue-100  text-sm font-medium rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
           Agendar Defesa
         </button>
       </div>
-            {/*modalzinho*/}
+      {/*modalzinho*/}
       {isModalOpen && (
         <ModalOrientacao isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} estagioId={id} />
       )}

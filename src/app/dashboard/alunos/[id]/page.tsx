@@ -61,9 +61,11 @@ export default async function DetalhesAlunoPage({
   const dataInicio = estagio.data_de_inicio ? new Date(estagio.data_de_inicio) : null;
   const dataFim = estagio.previsao_data_fim ? new Date(estagio.previsao_data_fim) : null;
   
+  const isPendente = estagio.status?.toLowerCase() === "pendente";
+  
   let progressoEstagio = 0;
 
-  if (dataInicio && dataFim) {
+  if (!isPendente && dataInicio && dataFim) {
     const tempoTotal = dataFim.getTime() - dataInicio.getTime();
     const tempoDecorrido = agora.getTime() - dataInicio.getTime();
 
@@ -131,7 +133,15 @@ export default async function DetalhesAlunoPage({
               <div className="flex justify-between items-end mt-3">
                 <div className="flex items-center gap-1.5 text-xs text-blue-100">
                   <Calendar className="w-3.5 h-3.5" />
-                  <span>Início: {dataInicio ? dataInicio.toLocaleDateString("pt-BR", { timeZone: "UTC" }) : "--/--/----"}</span>
+                  <span>
+                    Início: {isPendente ? (
+                      <span className="text-red-400 font-semibold">Pendente</span>
+                    ) : dataInicio ? (
+                      dataInicio.toLocaleDateString("pt-BR", { timeZone: "UTC" })
+                    ) : (
+                      "--/--/----"
+                    )}
+                  </span>
                 </div>
                 <span className="text-3xl font-bold tracking-tight">{progressoEstagio}%</span>
                 <div className="flex items-center gap-1.5 text-xs text-blue-100">
@@ -147,7 +157,7 @@ export default async function DetalhesAlunoPage({
                 <Briefcase className="w-5 h-5 text-[#0052cc] shrink-0" />
                 <h3 className="text-lg font-semibold text-gray-900 truncate">Detalhes do Estágio</h3>
               </div>
-    
+              
               <StatusSection 
                 estagioId={id} 
                 statusRaw={estagio.status} 
@@ -168,7 +178,13 @@ export default async function DetalhesAlunoPage({
               <div className="border-l-2 border-gray-100 pl-4">
                 <p className="text-xs text-gray-400 font-bold uppercase tracking-wider mb-1">Data de Ingresso</p>
                 <p className="text-base font-semibold text-gray-900">
-                  {estagio.data_de_inicio  ? new Date(estagio.data_de_inicio ).toLocaleDateString("pt-BR", { timeZone: "UTC" }) : "Não informada"}
+                  {isPendente ? (
+                    <span className="text-red-400 font-semibold">Pendente</span>
+                  ) : estagio.data_de_inicio ? (
+                    new Date(estagio.data_de_inicio).toLocaleDateString("pt-BR", { timeZone: "UTC" })
+                  ) : (
+                    "Não informada"
+                  )}
                 </p>
               </div>
               <div className="border-l-2 border-gray-100 pl-4">
