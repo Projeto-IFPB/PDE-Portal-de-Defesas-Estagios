@@ -3,6 +3,11 @@ import { InterfaceCardBancaDefesa } from "@/lib/supabase/interfaces";
 
 
 export function CardBancaDefesa({data, status, titulo, horario, local, banca}: InterfaceCardBancaDefesa) {
+    const styleStatus = {
+        agendado : 'bg-yellow-300 text-yellow-800',
+        realizado : 'bg-green-300 text-green-800',
+        cancelado : 'bg-red-300 text-red-800'
+    }
     return (
         <>
             <div className="bg-white p-4 rounded-xl">
@@ -11,7 +16,7 @@ export function CardBancaDefesa({data, status, titulo, horario, local, banca}: I
                     <Calendar className="mr-2 w-6 h-6 shrink-0" />
                     <p className="text-sm">{data}</p>
                     </div>
-                    <div className={`flex rounded-full px-3 items-center ${status === 'agendado' ? 'bg-yellow-300 text-yellow-800' : 'bg-green-300 text-green-800'}`}><p className="text-[0.8rem]">{status}</p></div>
+                    <div className={`flex rounded-full px-3 items-center ${styleStatus[status]}`}><p className="text-[0.8rem]">{status}</p></div>
                     
                 </div>
 
