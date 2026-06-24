@@ -1,9 +1,4 @@
-import { 
-  buscarUsuarioPorId, 
-  buscarEstagioPorId,
-  obterCaminhoFotoPerfil, 
-  obterUrlPublicaFotoPerfil 
-} from "@/lib/supabase/functions-select";
+import { buscarUsuarioPorId,buscarEstagioPorId,obterCaminhoFotoPerfil,obterUrlPublicaFotoPerfil} from "@/lib/supabase/functions-select";
 import { 
   ChevronRight, 
   FileText, 
@@ -13,11 +8,12 @@ import {
   Calendar, 
   Clock 
 } from "lucide-react";
+import Link from "next/link";
 
 const statusConfig: Record<string, { label: string; classes: string }> = {
   pendente: { label: "Pendente", classes: "bg-red-100 text-red-800 border-red-200" },
-  em_andamento: { label: "Em Andamento", classes: "bg-emerald-100 text-emerald-800 border-emerald-200" },
-  concluido: { label: "Concluído", classes: "bg-slate-100 text-slate-800 border-slate-200" },
+  em_andamento: { label: "Em Andamento", classes: "bg-emerald-300 text-green-800 border-green-200" },
+  concluido: { label: "Concluído", classes: "bg-slate-400 text-slate-800 border-gray-200" },
 };
 
 export default async function DetalhesAlunoPage({ 
@@ -37,7 +33,6 @@ export default async function DetalhesAlunoPage({
     );
   }
 
-  // 3. Agora que temos o estágio, usamos o 'Id_estagiario' dele para buscar o usuário e a foto em paralelo
   const [usuario, caminhoFoto, orientador] = await Promise.all([
     buscarUsuarioPorId(estagio.Id_estagiario),
     obterCaminhoFotoPerfil(estagio.Id_estagiario),
@@ -83,7 +78,9 @@ export default async function DetalhesAlunoPage({
     <div className="p-6 md:p-8 max-w-7xl mx-auto bg-gray-50 min-h-screen">
       
       <div className="flex items-center text-sm text-gray-500 mb-4 select-none">
-        <span className="hover:text-gray-700 cursor-pointer transition-colors">Alunos</span>
+        <Link href="/dashboard/alunos" className="hover:text-gray-700 cursor-pointer transition-colors">
+          Alunos
+        </Link>
         <ChevronRight className="w-4 h-4 mx-1 text-gray-400" />
         <span className="text-blue-600 font-medium truncate">{usuario.Nome_Completo}</span>
       </div>
