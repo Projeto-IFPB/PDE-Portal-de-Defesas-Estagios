@@ -22,7 +22,7 @@ export const useOrientacoes = () => {
   
             return {
               ...estagio,
-              nome_estagiario: usuario?.["Nome-Completo"] || "Aluno Não Encontrado",
+              nome_estagiario: usuario?.["Nome_Completo"] || "Aluno Não Encontrado",
               email_estagiario: usuario?.Email || "Email não encontrado",
               foto_estagiario: fotoUrl
             };

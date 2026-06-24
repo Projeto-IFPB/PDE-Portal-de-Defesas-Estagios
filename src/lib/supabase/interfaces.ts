@@ -3,8 +3,8 @@
 export interface Usuario {
   id: string; 
   Email: string; 
-  'Nome-Completo': string; 
-  'tipo-de-perfil': 'aluno' | 'orientador' | 'coordenador' | 'pendente'; 
+  Nome_Completo: string; 
+  tipo_de_perfil: 'aluno' | 'orientador' | 'coordenador' | 'pendente'; 
 }
 
 export interface Estagio {
@@ -18,6 +18,9 @@ export interface Estagio {
   nome_estagiario?: string;
   email_estagiario?: string;
   foto_estagiario?: string;
+  curso?: string
+  carga_horaria?: string
+  previsao_data_fim?: string
 }
 
 export interface AgendaDefesa {

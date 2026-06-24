@@ -8,7 +8,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { listarEstagiosRecomendados} from "@/lib/supabase/functions-select";
 import { useEffect, useState } from "react";
 import {EstagioRecomendado} from "@/lib/supabase/interfaces";
-import OrientacaoCard, { handleVerDetalhes } from '@/components/CardOrientacoes';
+import OrientacaoCard from '@/components/CardOrientacoes';
 import { useOrientacoes } from '@/hooks/useOrientacoes';
 
 export default function Dashboard() {
@@ -115,7 +115,6 @@ export default function Dashboard() {
             empresa={orientacao.empresa}
             data={orientacao.data_de_inicio}
             status={orientacao.status}
-            onVerDetalhes={handleVerDetalhes}
             foto_perfil={orientacao.foto_estagiario}
           />
         ))}
