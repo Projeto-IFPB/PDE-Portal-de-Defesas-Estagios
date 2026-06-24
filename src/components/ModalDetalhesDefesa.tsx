@@ -6,10 +6,11 @@ interface ModalDetalhesDefesaProps {
   isOpen: boolean;
   onClose: () => void;
   local: string;
+  horario: string;
   banca: any;
 }
 
-export default function ModalDetalhesDefesa({ isOpen, onClose, local, banca }: ModalDetalhesDefesaProps) {
+export default function ModalDetalhesDefesa({ isOpen, onClose, local, horario, banca }: ModalDetalhesDefesaProps) {
   if (!isOpen) return null;
 
   return (
@@ -22,7 +23,8 @@ export default function ModalDetalhesDefesa({ isOpen, onClose, local, banca }: M
           </button>
         </div>
         <hr className="border-t border-gray-200 mb-4" />
-        <p className="text-gray-700 mb-4"><strong>Local:</strong> {local}</p>
+        <p className="text-gray-700 mb-2"><strong>Local:</strong> {local}</p>
+        {horario && <p className="text-gray-700 mb-4"><strong>Horário:</strong> {horario}</p>}
         <p className="text-gray-700 mb-2 font-semibold">Banca Examinadora:</p>
         {Array.isArray(banca) && banca.length > 0 ? (
           <ul className="list-disc list-inside mb-4 space-y-1">

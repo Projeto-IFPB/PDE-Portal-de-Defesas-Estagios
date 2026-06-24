@@ -47,7 +47,7 @@ export interface EstagioRecomendado {
   vagas?: number | null;
 }
 
-interface MembroBanca {
+export interface MembroBanca {
     nome: string;
     email?: string;
 }
