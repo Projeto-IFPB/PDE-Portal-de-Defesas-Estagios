@@ -6,21 +6,15 @@ import { obterUrlPublicaFotoPerfil } from "@/lib/supabase/functions-select";
 import CalendarMonthOutlineIcon from "@iconify-react/material-symbols/calendar-month-outline";
 import ModalOrientacao from "./ModalOrientacao";
 
-export const handleVerDetalhes = (id: string) => {
-  console.log("Visualizando estágio ID:", id);
-};
-// Tipagem alinhada com o que você provavelmente tem no banco de dados
 export type StatusEstagio = "pendente" | "em_andamento" | "concluido";
 
 interface OrientacaoCardProps {
   id: string;
-  id_estagiario: string;
   emailEstagiario: string;
   nomeEstagiario: string;
   empresa: string;
   data: string;
   status: StatusEstagio;
-  onVerDetalhes?: (id: string) => void;
   foto_perfil?: string;
 }
 
@@ -45,13 +39,11 @@ const statusConfig: Record<
 
 export default function OrientacaoCard({
   id,
-  id_estagiario,
   nomeEstagiario,
   emailEstagiario,
   empresa,
   data,
   status,
-  onVerDetalhes,
   foto_perfil,
 }: OrientacaoCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -74,7 +66,7 @@ export default function OrientacaoCard({
   }, [foto_perfil]);
 
   const handleNavegarDetalhes = () => {
-    router.push(`/dashboard/alunos/${id_estagiario}`); 
+    router.push(`/dashboard/alunos/${id}`); 
   };
 
 

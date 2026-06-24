@@ -265,7 +265,7 @@ export async function salvarCaminhoFotoPerfil(
   }
 }
 
-
+//13. listar defesas de estagio
 export async function listarDefesas(usuarioId: string, perfil: 'aluno' | 'orientador' | 'coordenador') {
   if (perfil === 'aluno') {
     const { data: estagios } = await supabase
@@ -301,4 +301,25 @@ export async function listarDefesas(usuarioId: string, perfil: 'aluno' | 'orient
     .in('id_estagio', ids)
 
   return data ?? []
+}
+
+//14. Buscar Estagio por um id de estagio
+export async function buscarEstagioPorId(id: string): Promise<Estagio | null> {
+  try {
+    const { data, error } = await supabase
+      .from('Estagios')
+      .select('*')
+      .eq('id', id)
+      .maybeSingle();
+
+    if (error) {
+      console.error(`Erro ao buscar estágio ${id}:`, error.message);
+      return null;
+    }
+
+    return data as Estagio;
+  } catch (error) {
+    console.error("Erro inesperado em buscarEstagioPorId:", error);
+    return null;
+  }
 }

@@ -18,6 +18,9 @@ export interface Estagio {
   nome_estagiario?: string;
   email_estagiario?: string;
   foto_estagiario?: string;
+  curso?: string
+  carga_horaria?: string
+  previsao_data_fim?: string
 }
 
 export interface AgendaDefesa {
