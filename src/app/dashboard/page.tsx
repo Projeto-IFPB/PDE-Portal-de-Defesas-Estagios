@@ -110,6 +110,7 @@ export default function Dashboard() {
             <OrientacaoCard
             key={orientacao.id}
             id= {orientacao.id}
+            id_estagiario={orientacao.Id_estagiario}
             nomeEstagiario={orientacao.nome_estagiario || "Sem nome"}
             emailEstagiario={orientacao.email_estagiario || "Sem email"}
             empresa={orientacao.empresa}

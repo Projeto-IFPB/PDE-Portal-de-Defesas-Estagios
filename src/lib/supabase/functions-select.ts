@@ -9,7 +9,7 @@ export async function listarTodosUsuarios(): Promise<Usuario[] | null> {
   try {
     const { data, error } = await supabase
       .from('Usuarios')
-      .select('id, Email, "Nome-Completo", "tipo-de-perfil"'); 
+      .select('id, Email, "Nome_Completo", "tipo_de_perfil"'); 
 
     if (error) {
       console.error("Erro ao listar todos os usuários:", error.message);

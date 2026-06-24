@@ -1,5 +1,6 @@
 "use client";
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState} from "react";
+import { useRouter } from "next/navigation";
 import { Building2Icon } from "lucide-react";
 import { obterUrlPublicaFotoPerfil } from "@/lib/supabase/functions-select";
 import CalendarMonthOutlineIcon from "@iconify-react/material-symbols/calendar-month-outline";
@@ -13,6 +14,7 @@ export type StatusEstagio = "pendente" | "em_andamento" | "concluido";
 
 interface OrientacaoCardProps {
   id: string;
+  id_estagiario: string;
   emailEstagiario: string;
   nomeEstagiario: string;
   empresa: string;
@@ -43,6 +45,7 @@ const statusConfig: Record<
 
 export default function OrientacaoCard({
   id,
+  id_estagiario,
   nomeEstagiario,
   emailEstagiario,
   empresa,
@@ -52,6 +55,7 @@ export default function OrientacaoCard({
   foto_perfil,
 }: OrientacaoCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const router = useRouter();
 
   const currentStatus = statusConfig[status];
   const dataFormatada = new Date(data).toLocaleDateString("pt-BR", {
@@ -68,6 +72,11 @@ export default function OrientacaoCard({
     }
     carregarFoto();
   }, [foto_perfil]);
+
+  const handleNavegarDetalhes = () => {
+    router.push(`/dashboard/alunos/${id_estagiario}`); 
+  };
+
 
   return (
     <div className="flex flex-col justify-between p-5 bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 min-h-70">
@@ -119,7 +128,7 @@ export default function OrientacaoCard({
       <hr className="border-t border-gray-200 mb-3" />
       <div className="flex gap-3 w-full">
         <button
-          onClick={() => onVerDetalhes && onVerDetalhes(id)}
+          onClick={handleNavegarDetalhes}
           className="flex-1 py-2 px-4 bg-blue-100 hover:bg-transparent hover:border-blue-100 hover:border-2 text-blue-800 text-sm font-medium rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 min-h-15"
         >
           Ver Detalhes
