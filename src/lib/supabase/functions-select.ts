@@ -331,7 +331,7 @@ export async function listarDefesasAluno(id_aluno: string) {
     const { data: estagios_aluno, error: errorEstagios } = await supabase
       .from('Estagios')
       .select('id')
-      .eq('id_estagiario', id_aluno)
+      .eq('Id_estagiario', id_aluno)
 
     if (errorEstagios) throw errorEstagios;
     if (!estagios_aluno || estagios_aluno.length === 0) return [];
