@@ -265,7 +265,7 @@ export async function salvarCaminhoFotoPerfil(
   }
 }
 
-//13. listar defesas de estagio
+//13. listar ids de defesas de estagio
 export async function listarDefesas(usuarioId: string, perfil: 'aluno' | 'orientador' | 'coordenador') {
   if (perfil === 'aluno') {
     const { data: estagios } = await supabase
@@ -321,5 +321,36 @@ export async function buscarEstagioPorId(id: string): Promise<Estagio | null> {
   } catch (error) {
     console.error("Erro inesperado em buscarEstagioPorId:", error);
     return null;
+  }
+}
+
+// Listar Defesas de Estágios agendadas de um aluno
+export async function listarDefesasAluno(id_aluno: string) {
+  try {
+    // Buscando estagios do aluno
+    const { data: estagios_aluno, error: errorEstagios } = await supabase
+      .from('Estagios')
+      .select('id')
+      .eq('id_estagiario', id_aluno)
+
+    if (errorEstagios) throw errorEstagios;
+    if (!estagios_aluno || estagios_aluno.length === 0) return [];
+
+    const ids_estagios = estagios_aluno.map((estagio) => estagio.id)
+
+    // Buscando bancas de defesas
+    const { data: bancas_aluno, error: errorBancas } = await supabase
+      .from('Defesa_estagios')
+      .select('*')
+      .in('id_estagio', ids_estagios)
+    
+    if (errorBancas) throw errorBancas;
+    if (!bancas_aluno || bancas_aluno.length === 0) return [];
+
+    return bancas_aluno;
+  }
+  catch(error) {
+    console.error('Erro ao buscar as bancas agendadas', error)
+    return []
   }
 }
