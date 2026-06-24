@@ -1,4 +1,6 @@
-import { buscarUsuarioPorId,buscarEstagioPorId,obterCaminhoFotoPerfil,obterUrlPublicaFotoPerfil} from "@/lib/supabase/functions-select";
+import Link from "next/link";
+import { buscarUsuarioPorId, buscarEstagioPorId, obterCaminhoFotoPerfil, obterUrlPublicaFotoPerfil } from "@/lib/supabase/functions-select";
+import { StatusSection } from "./StatusSection";
 import { 
   ChevronRight, 
   FileText, 
@@ -8,7 +10,6 @@ import {
   Calendar, 
   Clock 
 } from "lucide-react";
-import Link from "next/link";
 
 const statusConfig: Record<string, { label: string; classes: string }> = {
   pendente: { label: "Pendente", classes: "bg-red-100 text-red-800 border-red-200" },
@@ -70,17 +71,12 @@ export default async function DetalhesAlunoPage({
       progressoEstagio = Math.max(0, Math.min(100, Math.round((tempoDecorrido / tempoTotal) * 100)));
     }
   }
-  const statusAtual = estagio.status 
-    ? statusConfig[estagio.status.toLowerCase()] 
-    : { label: "Sem Status", classes: "bg-gray-100 text-gray-600 border-gray-200" };
 
   return (
     <div className="p-6 md:p-8 max-w-7xl mx-auto bg-gray-50 min-h-screen">
       
       <div className="flex items-center text-sm text-gray-500 mb-4 select-none">
-        <Link href="/dashboard/alunos" className="hover:text-gray-700 cursor-pointer transition-colors">
-          Alunos
-        </Link>
+        <Link href="/dashboard/alunos" className="hover:text-gray-700 cursor-pointer transition-colors">Alunos</Link>
         <ChevronRight className="w-4 h-4 mx-1 text-gray-400" />
         <span className="text-blue-600 font-medium truncate">{usuario.Nome_Completo}</span>
       </div>
@@ -151,10 +147,13 @@ export default async function DetalhesAlunoPage({
                 <Briefcase className="w-5 h-5 text-[#0052cc] shrink-0" />
                 <h3 className="text-lg font-semibold text-gray-900 truncate">Detalhes do Estágio</h3>
               </div>
-              <span className={`px-3 py-1 border text-xs font-semibold rounded-full shrink-0 flex items-center gap-1.5 ${statusAtual.classes}`}>
-                <span className="w-1.5 h-1.5 rounded-full bg-current" />
-                {statusAtual.label}
-              </span>
+    
+              <StatusSection 
+                estagioId={id} 
+                statusRaw={estagio.status} 
+                statusConfig={statusConfig} 
+              />
+              
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-6">
