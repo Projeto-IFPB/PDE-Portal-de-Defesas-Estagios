@@ -12,9 +12,9 @@ interface PropsCardInformativo {
 }
 
 const estilosVariante: Record<VarianteCard, string> = {
-  azul: 'bg-[#185adb] text-white',      
-  verde: 'bg-[#0f7642] text-white',     
-  laranja: 'bg-[#b86b00] text-white',   
+  azul: 'bg-[#185adb] text-white',           
+  laranja: 'bg-[#b86b00] text-white',
+  verde: 'bg-[#0f7642] text-white',   
   roxo: 'bg-[#89389c] text-white',      
 };
 
