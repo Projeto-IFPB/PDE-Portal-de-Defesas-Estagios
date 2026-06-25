@@ -25,8 +25,11 @@ export default function ModalEstagio({
   const modalRef = useRef<HTMLDivElement>(null);
 
   const [empresa, setEmpresa] = useState("");
+  const [curso, setCurso] = useState("");
   const [dataFim, setDataFim] = useState("");
+  const [cargaHoraria, setCargaHoraria] = useState("");
   const [orientador, setOrientador] = useState("");
+  const [coordenador, setCoordenador] = useState("");
   const [descricao, setDescricao] = useState("");
 
   const [termoCompromisso, setTermoCompromisso] = useState<File | null>(null);
@@ -41,8 +44,11 @@ export default function ModalEstagio({
   const resetarFormulario = () => {
     setEmpresa("");
     setDataFim("");
+    setCurso("")
     setOrientador("");
+    setCoordenador("")
     setDescricao("");
+    setCargaHoraria("")
     setTermoCompromisso(null);
     setTermoOrientacao(null);
   };
@@ -54,8 +60,7 @@ export default function ModalEstagio({
   };
 
   const handleCadastrarEstagio = async () => {
-
-    if (!empresa || !dataFim || !orientador || !descricao) {
+    if (!empresa || !cargaHoraria || !dataFim || !curso || !orientador || !coordenador|| !descricao) {
       setFeedback({
         tipo: "erro",
         mensagem: "Por favor, preencha todos os campos obrigatórios.",
@@ -109,13 +114,13 @@ export default function ModalEstagio({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-
       {feedback && (
-        <div 
+        <div
           className={`fixed top-6 right-6 z-60 px-6 py-3 rounded-full font-semibold shadow-lg transition-all duration-300 animate-in fade-in slide-in-from-top-5
-            ${feedback.tipo === 'sucesso' 
-              ? 'bg-[#d1fae5] text-[#064e3b]'
-              : 'bg-red-100 text-red-800'     
+            ${
+              feedback.tipo === "sucesso"
+                ? "bg-[#d1fae5] text-[#064e3b]"
+                : "bg-red-100 text-red-800"
             }`}
         >
           {feedback.mensagem}
@@ -127,7 +132,6 @@ export default function ModalEstagio({
         className="bg-white rounded-xl shadow-xl w-full max-w-3xl flex flex-col max-h-[90vh]"
       >
         <div className="p-8 pb-4 overflow-y-auto flex-1 min-h-0">
-          
           <div className="flex mb-1 justify-between items-start">
             <h2 className="text-2xl font-bold text-[#004bb5]">
               Cadastrar Novo Estágio
@@ -141,7 +145,8 @@ export default function ModalEstagio({
             </button>
           </div>
           <p className="text-sm text-gray-600 mb-5">
-            Preencha as informações necessárias para iniciar o seu processo de estágio.
+            Preencha as informações necessárias para iniciar o seu processo de
+            estágio.
           </p>
           <hr className="border-t border-gray-200 mb-5" />
 
@@ -152,9 +157,12 @@ export default function ModalEstagio({
             </h3>
           </div>
 
-          <div className="grid grid-cols-1 gap-6 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div className="flex flex-col">
-              <label htmlFor="empresa" className="text-sm font-medium text-gray-800 mb-1.5">
+              <label
+                htmlFor="empresa"
+                className="text-sm font-medium text-gray-800 mb-1.5"
+              >
                 Empresa Empregadora
               </label>
               <input
@@ -166,11 +174,33 @@ export default function ModalEstagio({
                 className="w-full border border-gray-300 rounded-md p-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-700 placeholder:text-gray-400"
               />
             </div>
+            <div className="flex flex-col">
+              <label
+                htmlFor="curso"
+                className="text-sm font-medium text-gray-800 mb-1.5"
+              >
+                Curso Estagiario
+              </label>
+              <div className="relative flex items-center">
+                <GraduationCap className="w-4 h-4 text-gray-400 absolute left-3" />
+                <input
+                  type="text"
+                  id="curso"
+                  value={curso}
+                  onChange={(e) => setCurso(e.target.value)}
+                  placeholder="Engenharia de Software"
+                  className="w-full border border-gray-300 rounded-md py-2.5 pr-2.5 pl-9 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-700 placeholder:text-gray-400"
+                />
+              </div>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div className="flex flex-col">
-              <label htmlFor="dataFim" className="text-sm font-medium text-gray-800 mb-1.5">
+              <label
+                htmlFor="dataFim"
+                className="text-sm font-medium text-gray-800 mb-1.5"
+              >
                 Data de Enceramento(Previsão)
               </label>
               <div className="relative flex items-center">
@@ -186,7 +216,31 @@ export default function ModalEstagio({
             </div>
 
             <div className="flex flex-col">
-              <label htmlFor="orientador" className="text-sm font-medium text-gray-800 mb-1.5">
+              <label
+                htmlFor="cargaHoraria"
+                className="text-sm font-medium text-gray-800 mb-1.5"
+              >
+                Carga Horaria Semanal
+              </label>
+              <div className="relative flex items-center">
+                <GraduationCap className="w-4 h-4 text-gray-400 absolute left-3" />
+                <input
+                  type="number"
+                  id="cargaHoraria"
+                  value={cargaHoraria}
+                  onChange={(e) => setCargaHoraria(e.target.value)}
+                  placeholder="30h"
+                  className="w-full border border-gray-300 rounded-md py-2.5 pr-2.5 pl-9 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-700 placeholder:text-gray-400"
+                />
+              </div>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div className="flex flex-col">
+              <label
+                htmlFor="orientador"
+                className="text-sm font-medium text-gray-800 mb-1.5"
+              >
                 Nome do Orientador
               </label>
               <div className="relative flex items-center">
@@ -201,10 +255,33 @@ export default function ModalEstagio({
                 />
               </div>
             </div>
+
+            <div className="flex flex-col">
+              <label
+                htmlFor="coordenador"
+                className="text-sm font-medium text-gray-800 mb-1.5"
+              >
+                Nome do Coordenador
+              </label>
+              <div className="relative flex items-center">
+                <GraduationCap className="w-4 h-4 text-gray-400 absolute left-3" />
+                <input
+                  type="text"
+                  id="coordenador"
+                  value={coordenador}
+                  onChange={(e) => setCoordenador(e.target.value)}
+                  placeholder="Coordenador acadêmico"
+                  className="w-full border border-gray-300 rounded-md py-2.5 pr-2.5 pl-9 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-700 placeholder:text-gray-400"
+                />
+              </div>
+            </div>
           </div>
           <div className="grid grid-cols-1 gap-6 mb-8">
             <div className="flex flex-col">
-              <label htmlFor="descricao" className="text-sm font-medium text-gray-800 mb-1.5">
+              <label
+                htmlFor="descricao"
+                className="text-sm font-medium text-gray-800 mb-1.5"
+              >
                 Breve descrição do Estágio
               </label>
               <textarea
@@ -226,7 +303,6 @@ export default function ModalEstagio({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-
             <div>
               <div className="flex justify-between items-end mb-1.5">
                 <span className="text-sm font-medium text-gray-800">
@@ -239,7 +315,9 @@ export default function ModalEstagio({
               <label className="border-2 border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors group bg-white">
                 <FileUp className="w-6 h-6 text-[#004bb5] mb-2 group-hover:scale-110 transition-transform" />
                 <span className="text-sm font-semibold text-gray-800 text-center max-w-[200px] truncate">
-                  {termoCompromisso ? termoCompromisso.name : "Arraste ou clique"}
+                  {termoCompromisso
+                    ? termoCompromisso.name
+                    : "Arraste ou clique"}
                 </span>
                 {!termoCompromisso && (
                   <span className="text-xs text-gray-500 font-medium uppercase mt-0.5">
@@ -250,11 +328,12 @@ export default function ModalEstagio({
                   type="file"
                   className="hidden"
                   accept=".pdf"
-                  onChange={(e) => setTermoCompromisso(e.target.files?.[0] || null)}
+                  onChange={(e) =>
+                    setTermoCompromisso(e.target.files?.[0] || null)
+                  }
                 />
               </label>
             </div>
-
 
             <div>
               <div className="flex justify-between items-end mb-1.5">
@@ -279,14 +358,14 @@ export default function ModalEstagio({
                   type="file"
                   className="hidden"
                   accept=".docx,.doc,.pdf"
-                  onChange={(e) => setTermoOrientacao(e.target.files?.[0] || null)}
+                  onChange={(e) =>
+                    setTermoOrientacao(e.target.files?.[0] || null)
+                  }
                 />
               </label>
             </div>
           </div>
-
         </div>
-
 
         <div className="bg-gray-50/80 px-8 py-5 border-t border-gray-100 flex items-center justify-end gap-6">
           <button
@@ -305,7 +384,6 @@ export default function ModalEstagio({
             {!isSubmitting && <CheckCircle className="w-4 h-4" />}
           </button>
         </div>
-
       </div>
     </div>
   );
