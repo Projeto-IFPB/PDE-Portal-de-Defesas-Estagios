@@ -1,3 +1,4 @@
+import { cadastrarEstagio, uploadESalvarDocumento } from "@/lib/supabase/functions-insert";
 import { useEffect, useRef, useState } from "react";
 import {
   X,
@@ -19,6 +20,7 @@ interface ModalCadastroEstagioProps {
 }
 
 interface UsuarioSugestao {
+  id: string;
   Nome_Completo: string;
   tipo_de_perfil: string;
 }
@@ -58,7 +60,7 @@ export default function ModalEstagio({
         // 1. Busca os Usuários (Orientadores e Coordenadores)
         const { data: dataUsuarios, error: errorUsuarios } = await supabase
           .from("Usuarios")
-          .select("Nome_Completo, tipo_de_perfil");
+          .select("id ,Nome_Completo, tipo_de_perfil");
 
         if (errorUsuarios) throw errorUsuarios;
         if (dataUsuarios) setUsuariosSugestoes(dataUsuarios);
@@ -114,6 +116,7 @@ export default function ModalEstagio({
   };
 
   const handleCadastrarEstagio = async () => {
+    // 1. Validação dos campos obrigatórios (Mantida exatamente como a sua)
     if (
       !empresa ||
       !cargaHoraria ||
@@ -133,19 +136,37 @@ export default function ModalEstagio({
 
     try {
       setIsSubmitting(true);
+
+      // 2. Chamada do serviço isolado que criamos
+      await cadastrarEstagio({
+        idEstagiario: Id_usuario,
+        nomeOrientador: orientador,
+        nomeCoordenador: coordenador,
+        empresa: empresa,
+        curso: curso,
+        cargaHoraria: cargaHoraria,
+        dataFim: dataFim,
+        descricao : descricao,
+        usuariosSugestoes: usuariosSugestoes,
+        termoCompromisso: termoCompromisso,
+        termoOrientacao: termoOrientacao
+      });
+      
       setFeedback({
         tipo: "sucesso",
-        mensagem: "Estágio cadastrado com sucesso!",
+        mensagem: "Estágio e documentos cadastrados com sucesso!",
       });
+
       setTimeout(() => {
         setFeedback(null);
         fecharModal();
       }, 2000);
-    } catch (error) {
-      console.error("Erro ao cadastrar estágio:", error);
+    } catch (error: any) {
+      console.error("❌ Erro ao cadastrar estágio:", error);
       setFeedback({
         tipo: "erro",
-        mensagem: "Ocorreu um erro ao cadastrar. Tente novamente.",
+        mensagem:
+          error.message || "Ocorreu um erro ao cadastrar. Tente novamente.",
       });
       setTimeout(() => setFeedback(null), 3000);
     } finally {
