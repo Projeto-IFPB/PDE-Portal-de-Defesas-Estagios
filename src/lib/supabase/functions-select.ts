@@ -324,7 +324,7 @@ export async function buscarEstagioPorId(id: string): Promise<Estagio | null> {
   }
 }
 
-// Listar Defesas de Estágios agendadas de um aluno
+// 15. Listar Defesas de Estágios agendadas de um aluno
 export async function listarDefesasAluno(id_aluno: string) {
   try {
     // Buscando estagios do aluno
@@ -353,4 +353,58 @@ export async function listarDefesasAluno(id_aluno: string) {
     console.error('Erro ao buscar as bancas agendadas', error)
     return []
   }
+}
+
+// 16. Buscar Estágios para a Lista do Coordenador
+export async function getEstagiosDoCoordenador(coordenadorId: string): Promise<any[]> {
+  const { data, error } = await supabase
+    .from('Estagios')
+    .select(`
+      id,
+      empresa,
+      data_de_inicio,
+      status,
+      aluno:Usuarios!Id_estagiario(id, Nome_Completo),
+      orientador:Usuarios!Id_orientador(id, Nome_Completo)
+    `)
+    .eq('Id_coordenador', coordenadorId)
+    .order('data_de_inicio', { ascending: false });
+
+  if (error) {
+    console.error('Erro ao buscar estágios do coordenador:', error.message);
+    throw new Error('Falha ao carregar a lista de estágios.');
+  }
+
+  if (!data || data.length === 0) return [];
+
+  const userIds = new Set<string>();
+  data.forEach((estagio: any) => {
+    if (estagio.aluno?.id) userIds.add(estagio.aluno.id);
+    if (estagio.orientador?.id) userIds.add(estagio.orientador.id);
+  });
+
+  const idsArray = Array.from(userIds);
+  const fotosMap: Record<string, string> = {};
+
+  if (idsArray.length > 0) {
+    const { data: fotosData } = await supabase
+      .from('Fotos_perfil')
+      .select('id_usuario, caminho_arquivo')
+      .in('id_usuario', idsArray);
+
+    if (fotosData) {
+      for (const foto of fotosData) {
+        if (foto.caminho_arquivo) {
+          const { data: pubUrlData } = supabase.storage.from('Fotos_perfil').getPublicUrl(foto.caminho_arquivo);
+          fotosMap[foto.id_usuario] = pubUrlData.publicUrl;
+        }
+      }
+    }
+  }
+
+  return data.map((estagio: any) => ({
+    ...estagio,
+    aluno: estagio.aluno ? { ...estagio.aluno, fotoUrl: fotosMap[estagio.aluno.id] || null } : null,
+    orientador: estagio.orientador ? { ...estagio.orientador, fotoUrl: fotosMap[estagio.orientador.id] || null } : null
+  }));
 }
