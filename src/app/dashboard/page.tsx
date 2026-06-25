@@ -1,22 +1,31 @@
-'use client';
+"use client";
 
 import CabecalhoBoasVindas from "@/components/CabecalhoBoasVindas";
 import CardInformativo from "@/components/CardInformativo";
-import { CardEstagioRecomendado, CardNenhumEstagioDisponivel } from "@/components/CardEstagioRecomendado";
-import { cardsAluno, cardsOrientador, cardsCoordenador } from "@/data/cards-dashboard";
+import {
+  CardEstagioRecomendado,
+  CardNenhumEstagioDisponivel,
+} from "@/components/CardEstagioRecomendado";
+import {
+  cardsAluno,
+  cardsOrientador,
+  cardsCoordenador,
+} from "@/data/cards-dashboard";
 import { useAuth } from "@/contexts/AuthContext";
-import { listarEstagiosRecomendados} from "@/lib/supabase/functions-select";
+import { listarEstagiosRecomendados } from "@/lib/supabase/functions-select";
 import { useEffect, useState } from "react";
-import {EstagioRecomendado} from "@/lib/supabase/interfaces";
-import OrientacaoCard from '@/components/CardOrientacoes';
-import { useOrientacoes } from '@/hooks/useOrientacoes';
+import { EstagioRecomendado } from "@/lib/supabase/interfaces";
+import OrientacaoCard from "@/components/CardOrientacoes";
+import { useOrientacoes } from "@/hooks/useOrientacoes";
 import { PlusCircle } from "lucide-react";
+import ModalEstagio from "@/components/ModalCadastroEstagio";
 
 export default function Dashboard() {
   const { usuario, setUsuario } = useAuth();
   const { orientacoes } = useOrientacoes();
-
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  // id temporario
+  const id = "c72ed7b0-beb7-4d52-9ccd-677deb32c348"
 
   const configPorPerfil = {
     aluno: {
@@ -38,12 +47,13 @@ export default function Dashboard() {
 
   const { titulo, subtitulo, cards } = configPorPerfil[usuario.perfil];
 
-  const gridColunasDesktop = cards.length >= 4 
-    ? 'lg:grid-cols-2 xl:grid-cols-4' 
-    : 'lg:grid-cols-3';
+  const gridColunasDesktop =
+    cards.length >= 4 ? "lg:grid-cols-2 xl:grid-cols-4" : "lg:grid-cols-3";
 
   // Puxando os estágios recomendados pela universidade
-  const [estagiosDisponiveis, setEstagiosDisponiveis] = useState<EstagioRecomendado[]>([])
+  const [estagiosDisponiveis, setEstagiosDisponiveis] = useState<
+    EstagioRecomendado[]
+  >([]);
 
   useEffect(() => {
     async function carregarEstagios() {
@@ -55,33 +65,51 @@ export default function Dashboard() {
     carregarEstagios();
   }, []);
 
-
-
   return (
     <main className="col-span-1 p-4 md:p-8 lg:col-span-4 lg:p-10">
-      
       {/* Botões provisórios para troca de perfil */}
       <div className="mb-8 flex gap-2 rounded-lg bg-white p-2 shadow-sm w-fit border border-gray-200">
-         <button onClick={() => setUsuario({ ...usuario, perfil: 'aluno' })} className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${usuario.perfil === 'aluno' ? 'bg-[#185adb] text-white' : 'bg-gray-50 text-gray-600 hover:bg-gray-100'}`}>Aluno</button>
-         <button onClick={() => setUsuario({ ...usuario, perfil: 'orientador' })} className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${usuario.perfil === 'orientador' ? 'bg-[#185adb] text-white' : 'bg-gray-50 text-gray-600 hover:bg-gray-100'}`}>Orientador</button>
-         <button onClick={() => setUsuario({ ...usuario, perfil: 'coordenador' })} className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${usuario.perfil === 'coordenador' ? 'bg-[#185adb] text-white' : 'bg-gray-50 text-gray-600 hover:bg-gray-100'}`}>Coordenador</button>
+        <button
+          onClick={() => setUsuario({ ...usuario, perfil: "aluno" })}
+          className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${usuario.perfil === "aluno" ? "bg-[#185adb] text-white" : "bg-gray-50 text-gray-600 hover:bg-gray-100"}`}
+        >
+          Aluno
+        </button>
+        <button
+          onClick={() => setUsuario({ ...usuario, perfil: "orientador" })}
+          className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${usuario.perfil === "orientador" ? "bg-[#185adb] text-white" : "bg-gray-50 text-gray-600 hover:bg-gray-100"}`}
+        >
+          Orientador
+        </button>
+        <button
+          onClick={() => setUsuario({ ...usuario, perfil: "coordenador" })}
+          className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${usuario.perfil === "coordenador" ? "bg-[#185adb] text-white" : "bg-gray-50 text-gray-600 hover:bg-gray-100"}`}
+        >
+          Coordenador
+        </button>
       </div>
 
       <div className="flex items-center justify-between">
-      <CabecalhoBoasVindas 
-        titulo={titulo}
-        subtitulo={subtitulo}
-      />
-      <button
-        onClick={() => (true)}
-        className="flex items-center justify-center gap-1.5 px-4 py-3 text-sm font-medium text-white transition-colors bg-[#185adb] rounded-lg shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-      >
-        <PlusCircle size={18} strokeWidth={2} />
-        Cadastrar Novo Estágio
-      </button>
+        <CabecalhoBoasVindas titulo={titulo} subtitulo={subtitulo} />
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="flex items-center justify-center gap-1.5 px-4 py-3 text-sm font-medium text-white transition-colors bg-[#185adb] rounded-lg shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        >
+          <PlusCircle size={18} strokeWidth={2} />
+          Cadastrar Novo Estágio
+        </button>
       </div>
+      {isModalOpen && (
+        <ModalEstagio
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          Id_usuario={id}
+        />
+      )}
 
-      <section className={`grid grid-cols-1 gap-4 sm:grid-cols-2 ${gridColunasDesktop} lg:gap-6`}>
+      <section
+        className={`grid grid-cols-1 gap-4 sm:grid-cols-2 ${gridColunasDesktop} lg:gap-6`}
+      >
         {cards.map((card, index) => (
           <CardInformativo
             key={index}
@@ -94,45 +122,48 @@ export default function Dashboard() {
         ))}
       </section>
 
-    <div className="grid grid-col-1 lg:grid-cols-3 estagios">
-        <section className="lg:col-span-2">
-        </section>
+      <div className="grid grid-col-1 lg:grid-cols-3 estagios">
+        <section className="lg:col-span-2"></section>
 
-      <section className={`lg:col-span-1 space-y-3 ${usuario.perfil !== 'aluno' ? 'hidden' : 'mt-10'}`}>
-        <h2 className="text-xl font-semibold">Estágios Disponíveis</h2>
+        <section
+          className={`lg:col-span-1 space-y-3 ${usuario.perfil !== "aluno" ? "hidden" : "mt-10"}`}
+        >
+          <h2 className="text-xl font-semibold">Estágios Disponíveis</h2>
 
-        { estagiosDisponiveis.length > 0 ? (
-          estagiosDisponiveis.map((estagio) => (
-            <CardEstagioRecomendado key={estagio.id} estagio={estagio} />   
-          ))) :
-          (
+          {estagiosDisponiveis.length > 0 ? (
+            estagiosDisponiveis.map((estagio) => (
+              <CardEstagioRecomendado key={estagio.id} estagio={estagio} />
+            ))
+          ) : (
             <CardNenhumEstagioDisponivel />
           )}
-      </section>
+        </section>
       </div>
-          {(usuario.perfil === 'orientador' || usuario.perfil === 'coordenador') && (
+      {(usuario.perfil === "orientador" ||
+        usuario.perfil === "coordenador") && (
         <section className="my-6">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">Minhas Orientações</h2>
-      
-      <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6`}>
-        {orientacoes.map((orientacao) => (
+          <h2 className="text-2xl font-bold text-gray-800 mb-6">
+            Minhas Orientações
+          </h2>
 
-            <OrientacaoCard
-            key={orientacao.id}
-            id= {orientacao.id}
-            nomeEstagiario={orientacao.nome_estagiario || "Sem nome"}
-            emailEstagiario={orientacao.email_estagiario || "Sem email"}
-            empresa={orientacao.empresa}
-            data={orientacao.data_de_inicio}
-            status={orientacao.status}
-            foto_perfil={orientacao.foto_estagiario}
-          />
-        ))}
-      </div>
+          <div
+            className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6`}
+          >
+            {orientacoes.map((orientacao) => (
+              <OrientacaoCard
+                key={orientacao.id}
+                id={orientacao.id}
+                nomeEstagiario={orientacao.nome_estagiario || "Sem nome"}
+                emailEstagiario={orientacao.email_estagiario || "Sem email"}
+                empresa={orientacao.empresa}
+                data={orientacao.data_de_inicio}
+                status={orientacao.status}
+                foto_perfil={orientacao.foto_estagiario}
+              />
+            ))}
+          </div>
         </section>
       )}
-      
-
     </main>
   );
 }
