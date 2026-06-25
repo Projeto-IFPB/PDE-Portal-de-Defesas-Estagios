@@ -24,27 +24,23 @@ export default function ModalEstagio({
 }: ModalCadastroEstagioProps) {
   const modalRef = useRef<HTMLDivElement>(null);
 
-  // Estados do formulário
   const [empresa, setEmpresa] = useState("");
-  const [dataInicio, setDataInicio] = useState("");
+  const [dataFim, setDataFim] = useState("");
   const [orientador, setOrientador] = useState("");
   const [descricao, setDescricao] = useState("");
-  
-  // Estados de arquivos
+
   const [termoCompromisso, setTermoCompromisso] = useState<File | null>(null);
   const [termoOrientacao, setTermoOrientacao] = useState<File | null>(null);
 
-  // Estados de controle e feedback
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [feedback, setFeedback] = useState<{
     tipo: "sucesso" | "erro";
     mensagem: string;
   } | null>(null);
 
-  // Função para resetar o formulário
   const resetarFormulario = () => {
     setEmpresa("");
-    setDataInicio("");
+    setDataFim("");
     setOrientador("");
     setDescricao("");
     setTermoCompromisso(null);
@@ -58,7 +54,8 @@ export default function ModalEstagio({
   };
 
   const handleCadastrarEstagio = async () => {
-    if (!empresa || !dataInicio || !orientador || !descricao) {
+
+    if (!empresa || !dataFim || !orientador || !descricao) {
       setFeedback({
         tipo: "erro",
         mensagem: "Por favor, preencha todos os campos obrigatórios.",
@@ -69,7 +66,6 @@ export default function ModalEstagio({
 
     try {
       setIsSubmitting(true);
-
 
       setFeedback({
         tipo: "sucesso",
@@ -113,7 +109,7 @@ export default function ModalEstagio({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-      
+
       {feedback && (
         <div 
           className={`fixed top-6 right-6 z-60 px-6 py-3 rounded-full font-semibold shadow-lg transition-all duration-300 animate-in fade-in slide-in-from-top-5
@@ -132,30 +128,33 @@ export default function ModalEstagio({
       >
         <div className="p-8 pb-4 overflow-y-auto flex-1 min-h-0">
           
-          <div >
-            <h2 >
+          <div className="flex mb-1 justify-between items-start">
+            <h2 className="text-2xl font-bold text-[#004bb5]">
               Cadastrar Novo Estágio
             </h2>
             <button
               onClick={fecharModal}
-              disabled={isSubmitting}>
+              disabled={isSubmitting}
+              className="text-gray-400 hover:text-gray-600 transition-colors disabled:opacity-50"
+            >
               <X className="w-5 h-5" />
             </button>
           </div>
-          <p>
+          <p className="text-sm text-gray-600 mb-5">
             Preencha as informações necessárias para iniciar o seu processo de estágio.
           </p>
-          <hr/>
-          <div>
+          <hr className="border-t border-gray-200 mb-5" />
+
+          <div className="flex items-center gap-2 mb-4">
             <Building className="w-5 h-5 text-green-700" />
-            <h3>
+            <h3 className="text-sm font-bold text-green-700 tracking-wide">
               INFORMAÇÕES DO ESTÁGIO
             </h3>
           </div>
 
-          <div>
-            <div>
-              <label htmlFor="empresa">
+          <div className="grid grid-cols-1 gap-6 mb-6">
+            <div className="flex flex-col">
+              <label htmlFor="empresa" className="text-sm font-medium text-gray-800 mb-1.5">
                 Empresa Empregadora
               </label>
               <input
@@ -163,41 +162,46 @@ export default function ModalEstagio({
                 id="empresa"
                 value={empresa}
                 onChange={(e) => setEmpresa(e.target.value)}
-                placeholder="Nome da empresa ou CNPJ"/>
+                placeholder="Nome da empresa ou CNPJ"
+                className="w-full border border-gray-300 rounded-md p-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-700 placeholder:text-gray-400"
+              />
             </div>
           </div>
 
-          <div>
-            <div>
-              <label htmlFor="dataInicio">
-                Data de Início
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div className="flex flex-col">
+              <label htmlFor="dataFim" className="text-sm font-medium text-gray-800 mb-1.5">
+                Data de Enceramento(Previsão)
               </label>
-              <div>
+              <div className="relative flex items-center">
                 <Calendar className="w-4 h-4 text-gray-400 absolute left-3" />
                 <input
                   type="date"
                   id="dataInicio"
-                  value={dataInicio}
-                  onChange={(e) => setDataInicio(e.target.value)}/>
+                  value={dataFim}
+                  onChange={(e) => setDataFim(e.target.value)}
+                  className="w-full border border-gray-300 rounded-md py-2.5 pr-2.5 pl-9 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-700"
+                />
               </div>
             </div>
 
-            <div>
-              <label htmlFor="orientador">
+            <div className="flex flex-col">
+              <label htmlFor="orientador" className="text-sm font-medium text-gray-800 mb-1.5">
                 Nome do Orientador
               </label>
-              <div>
+              <div className="relative flex items-center">
                 <GraduationCap className="w-4 h-4 text-gray-400 absolute left-3" />
                 <input
                   type="text"
                   id="orientador"
                   value={orientador}
                   onChange={(e) => setOrientador(e.target.value)}
-                  placeholder="Orientador acadêmico"/>
+                  placeholder="Orientador acadêmico"
+                  className="w-full border border-gray-300 rounded-md py-2.5 pr-2.5 pl-9 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-700 placeholder:text-gray-400"
+                />
               </div>
             </div>
           </div>
-
           <div className="grid grid-cols-1 gap-6 mb-8">
             <div className="flex flex-col">
               <label htmlFor="descricao" className="text-sm font-medium text-gray-800 mb-1.5">
@@ -207,35 +211,38 @@ export default function ModalEstagio({
                 id="descricao"
                 value={descricao}
                 onChange={(e) => setDescricao(e.target.value)}
-                placeholder="Resuma as principais atividades e objetivos..."/>
+                placeholder="Resuma as principais atividades e objetivos..."
+                rows={4}
+                className="w-full border border-gray-300 rounded-md p-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-700 placeholder:text-gray-400 resize-none"
+              />
             </div>
           </div>
 
-          <div>
+          <div className="flex items-center gap-2 mb-4">
             <FileText className="w-5 h-5 text-green-700" />
-            <h3>
+            <h3 className="text-sm font-bold text-green-700 tracking-wide">
               DOCUMENTAÇÃO OBRIGATÓRIA
             </h3>
           </div>
 
-          <div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
 
             <div>
-              <div>
-                <span>
+              <div className="flex justify-between items-end mb-1.5">
+                <span className="text-sm font-medium text-gray-800">
                   Termo de Compromisso
                 </span>
-                <button>
+                <button className="flex items-center gap-1 text-[#004bb5] text-xs font-semibold hover:underline">
                   <Download className="w-3.5 h-3.5" /> Baixar Modelo
                 </button>
               </div>
-              <label>
+              <label className="border-2 border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors group bg-white">
                 <FileUp className="w-6 h-6 text-[#004bb5] mb-2 group-hover:scale-110 transition-transform" />
-                <span>
+                <span className="text-sm font-semibold text-gray-800 text-center max-w-[200px] truncate">
                   {termoCompromisso ? termoCompromisso.name : "Arraste ou clique"}
                 </span>
                 {!termoCompromisso && (
-                  <span>
+                  <span className="text-xs text-gray-500 font-medium uppercase mt-0.5">
                     PDF até 5MB
                   </span>
                 )}
@@ -248,22 +255,23 @@ export default function ModalEstagio({
               </label>
             </div>
 
+
             <div>
-              <div>
-                <span>
+              <div className="flex justify-between items-end mb-1.5">
+                <span className="text-sm font-medium text-gray-800">
                   Termo de Orientação
                 </span>
-                <button>
+                <button className="flex items-center gap-1 text-[#004bb5] text-xs font-semibold hover:underline">
                   <Download className="w-3.5 h-3.5" /> Baixar Modelo
                 </button>
               </div>
-              <label>
+              <label className="border-2 border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors group bg-white">
                 <CloudUpload className="w-6 h-6 text-[#004bb5] mb-2 group-hover:scale-110 transition-transform" />
-                <span>
+                <span className="text-sm font-semibold text-gray-800 text-center max-w-[200px] truncate">
                   {termoOrientacao ? termoOrientacao.name : "Arraste ou clique"}
                 </span>
                 {!termoOrientacao && (
-                  <span>
+                  <span className="text-xs text-gray-500 font-medium uppercase mt-0.5">
                     DOCX até 15MB
                   </span>
                 )}
@@ -278,6 +286,7 @@ export default function ModalEstagio({
           </div>
 
         </div>
+
 
         <div className="bg-gray-50/80 px-8 py-5 border-t border-gray-100 flex items-center justify-end gap-6">
           <button
