@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import {EstagioRecomendado} from "@/lib/supabase/interfaces";
 import OrientacaoCard from '@/components/CardOrientacoes';
 import { useOrientacoes } from '@/hooks/useOrientacoes';
+import { PlusCircle } from "lucide-react";
 
 export default function Dashboard() {
   const { usuario, setUsuario } = useAuth();
@@ -66,10 +67,19 @@ export default function Dashboard() {
          <button onClick={() => setUsuario({ ...usuario, perfil: 'coordenador' })} className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${usuario.perfil === 'coordenador' ? 'bg-[#185adb] text-white' : 'bg-gray-50 text-gray-600 hover:bg-gray-100'}`}>Coordenador</button>
       </div>
 
+      <div className="flex items-center justify-between">
       <CabecalhoBoasVindas 
         titulo={titulo}
         subtitulo={subtitulo}
       />
+      <button
+        onClick={() => (true)}
+        className="flex items-center justify-center gap-1.5 px-4 py-3 text-sm font-medium text-white transition-colors bg-[#185adb] rounded-lg shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+      >
+        <PlusCircle size={18} strokeWidth={2} />
+        Cadastrar Novo Estágio
+      </button>
+      </div>
 
       <section className={`grid grid-cols-1 gap-4 sm:grid-cols-2 ${gridColunasDesktop} lg:gap-6`}>
         {cards.map((card, index) => (
