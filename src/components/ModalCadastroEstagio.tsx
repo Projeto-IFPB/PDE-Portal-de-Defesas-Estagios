@@ -10,11 +10,17 @@ import {
   CloudUpload,
   CheckCircle,
 } from "lucide-react";
+import { supabase } from "@/lib/supabase/supabaseClient";
 
 interface ModalCadastroEstagioProps {
   isOpen: boolean;
   onClose: () => void;
   Id_usuario: string;
+}
+
+interface UsuarioSugestao {
+  Nome_Completo: string;
+  tipo_de_perfil: string;
 }
 
 export default function ModalEstagio({
@@ -32,6 +38,11 @@ export default function ModalEstagio({
   const [coordenador, setCoordenador] = useState("");
   const [descricao, setDescricao] = useState("");
 
+  const [usuariosSugestoes, setUsuariosSugestoes] = useState<UsuarioSugestao[]>(
+    []
+  );
+  const [cursosSugestoes, setCursosSugestoes] = useState<string[]>([]);
+
   const [termoCompromisso, setTermoCompromisso] = useState<File | null>(null);
   const [termoOrientacao, setTermoOrientacao] = useState<File | null>(null);
 
@@ -41,14 +52,57 @@ export default function ModalEstagio({
     mensagem: string;
   } | null>(null);
 
+  useEffect(() => {
+    async function carregarSugestoes() {
+      try {
+        // 1. Busca os Usuários (Orientadores e Coordenadores)
+        const { data: dataUsuarios, error: errorUsuarios } = await supabase
+          .from("Usuarios")
+          .select("Nome_Completo, tipo_de_perfil");
+
+        if (errorUsuarios) throw errorUsuarios;
+        if (dataUsuarios) setUsuariosSugestoes(dataUsuarios);
+
+        const { data: dataEstagios, error: errorEstagios } = await supabase
+          .from("Estagios")
+          .select("curso");
+
+        if (errorEstagios) throw errorEstagios;
+
+        if (dataEstagios) {
+          const cursosUnicos = Array.from(
+            new Set(dataEstagios.map((item) => item.curso).filter(Boolean))
+          );
+          setCursosSugestoes(cursosUnicos);
+        }
+      } catch (error) {
+        console.error("Erro ao carregar sugestões do Supabase:", error);
+      }
+    }
+
+    if (isOpen) {
+      carregarSugestoes();
+    }
+  }, [isOpen]);
+
+  const orientadoresFiltrados = usuariosSugestoes.filter(
+    (user) =>
+      user.tipo_de_perfil === "orientador" ||
+      user.tipo_de_perfil === "coordenador"
+  );
+
+  const coordenadoresFiltrados = usuariosSugestoes.filter(
+    (user) => user.tipo_de_perfil === "coordenador"
+  );
+
   const resetarFormulario = () => {
     setEmpresa("");
     setDataFim("");
-    setCurso("")
+    setCurso("");
     setOrientador("");
-    setCoordenador("")
+    setCoordenador("");
     setDescricao("");
-    setCargaHoraria("")
+    setCargaHoraria("");
     setTermoCompromisso(null);
     setTermoOrientacao(null);
   };
@@ -60,7 +114,15 @@ export default function ModalEstagio({
   };
 
   const handleCadastrarEstagio = async () => {
-    if (!empresa || !cargaHoraria || !dataFim || !curso || !orientador || !coordenador|| !descricao) {
+    if (
+      !empresa ||
+      !cargaHoraria ||
+      !dataFim ||
+      !curso ||
+      !orientador ||
+      !coordenador ||
+      !descricao
+    ) {
       setFeedback({
         tipo: "erro",
         mensagem: "Por favor, preencha todos os campos obrigatórios.",
@@ -71,12 +133,10 @@ export default function ModalEstagio({
 
     try {
       setIsSubmitting(true);
-
       setFeedback({
         tipo: "sucesso",
         mensagem: "Estágio cadastrado com sucesso!",
       });
-
       setTimeout(() => {
         setFeedback(null);
         fecharModal();
@@ -117,11 +177,7 @@ export default function ModalEstagio({
       {feedback && (
         <div
           className={`fixed top-6 right-6 z-60 px-6 py-3 rounded-full font-semibold shadow-lg transition-all duration-300 animate-in fade-in slide-in-from-top-5
-            ${
-              feedback.tipo === "sucesso"
-                ? "bg-[#d1fae5] text-[#064e3b]"
-                : "bg-red-100 text-red-800"
-            }`}
+            ${feedback.tipo === "sucesso" ? "bg-[#d1fae5] text-[#064e3b]" : "bg-red-100 text-red-800"}`}
         >
           {feedback.mensagem}
         </div>
@@ -186,11 +242,17 @@ export default function ModalEstagio({
                 <input
                   type="text"
                   id="curso"
+                  list="lista-cursos"
                   value={curso}
                   onChange={(e) => setCurso(e.target.value)}
                   placeholder="Engenharia de Software"
                   className="w-full border border-gray-300 rounded-md py-2.5 pr-2.5 pl-9 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-700 placeholder:text-gray-400"
                 />
+                <datalist id="lista-cursos">
+                  {cursosSugestoes.map((nomeCurso, idx) => (
+                    <option key={idx} value={nomeCurso} />
+                  ))}
+                </datalist>
               </div>
             </div>
           </div>
@@ -198,7 +260,7 @@ export default function ModalEstagio({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div className="flex flex-col">
               <label
-                htmlFor="dataFim"
+                htmlFor="dataInicio"
                 className="text-sm font-medium text-gray-800 mb-1.5"
               >
                 Data de Enceramento(Previsão)
@@ -235,6 +297,7 @@ export default function ModalEstagio({
               </div>
             </div>
           </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div className="flex flex-col">
               <label
@@ -248,14 +311,19 @@ export default function ModalEstagio({
                 <input
                   type="text"
                   id="orientador"
+                  list="lista-orientadores"
                   value={orientador}
                   onChange={(e) => setOrientador(e.target.value)}
                   placeholder="Orientador acadêmico"
                   className="w-full border border-gray-300 rounded-md py-2.5 pr-2.5 pl-9 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-700 placeholder:text-gray-400"
                 />
+                <datalist id="lista-orientadores">
+                  {orientadoresFiltrados.map((user, idx) => (
+                    <option key={idx} value={user.Nome_Completo} />
+                  ))}
+                </datalist>
               </div>
             </div>
-
             <div className="flex flex-col">
               <label
                 htmlFor="coordenador"
@@ -268,14 +336,21 @@ export default function ModalEstagio({
                 <input
                   type="text"
                   id="coordenador"
+                  list="lista-coordenadores"
                   value={coordenador}
                   onChange={(e) => setCoordenador(e.target.value)}
                   placeholder="Coordenador acadêmico"
                   className="w-full border border-gray-300 rounded-md py-2.5 pr-2.5 pl-9 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-700 placeholder:text-gray-400"
                 />
+                <datalist id="lista-coordenadores">
+                  {coordenadoresFiltrados.map((user, idx) => (
+                    <option key={idx} value={user.Nome_Completo} />
+                  ))}
+                </datalist>
               </div>
             </div>
           </div>
+
           <div className="grid grid-cols-1 gap-6 mb-8">
             <div className="flex flex-col">
               <label
