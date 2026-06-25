@@ -13,8 +13,8 @@ import {
 
 const statusConfig: Record<string, { label: string; classes: string }> = {
   pendente: { label: "Pendente", classes: "bg-red-100 text-red-800 border-red-200" },
-  em_andamento: { label: "Em Andamento", classes: "bg-emerald-300 text-green-800 border-green-200" },
-  concluido: { label: "Concluído", classes: "bg-slate-400 text-slate-800 border-gray-200" },
+  em_andamento: { label: "Em Andamento", classes: "bg-blue-100 text-blue-800 border-blue-200" },
+  concluido: { label: "Concluído", classes: "bg-emerald-100 text-emerald-800 border-emerald-200" },
 };
 
 export default async function DetalhesAlunoPage({ 
