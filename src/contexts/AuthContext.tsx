@@ -25,8 +25,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Estado inicial simulado. 
   // No futuro, isso será substituído pela resposta de login do Supabase.
   const [usuario, setUsuario] = useState<UsuarioMock>({
-    id: 'c72ed7b0-beb7-4d52-9ccd-677deb32c348',
-    nome: 'Manoel Gomes', 
+    id: 'db64bcca-172c-4b19-b3fe-33aea90e4df3',
+    nome: 'Petronio', 
     perfil: 'aluno',
     fotoPerfil: undefined,
     dataCadastro: 'Jun 2026',          

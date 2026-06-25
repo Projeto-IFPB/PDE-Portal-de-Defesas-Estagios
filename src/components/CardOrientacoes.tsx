@@ -29,11 +29,11 @@ const statusConfig: Record<
   },
   em_andamento: {
     label: "Em Andamento",
-    colorClasses: "bg-emerald-300 text-green-800 border-green-200",
+    colorClasses: "bg-blue-100 text-blue-800 border-blue-200",
   },
   concluido: {
     label: "Concluído",
-    colorClasses: "bg-slate-400 text-slate-800 border-gray-200",
+    colorClasses: "bg-emerald-100 text-emerald-800 border-emerald-200",
   },
 };
 
