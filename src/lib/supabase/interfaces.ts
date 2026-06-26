@@ -60,3 +60,17 @@ export interface InterfaceCardBancaDefesa {
     local: string;
     banca: MembroBanca[];
 }
+
+export interface CadastroEstagio {
+  idEstagiario: string;
+  nomeOrientador: string;
+  nomeCoordenador: string;
+  empresa: string;
+  curso: string;
+  cargaHoraria: string | number;
+  dataFim: string;
+  descricao: string
+  usuariosSugestoes: Array<{ id: string; Nome_Completo: string; tipo_de_perfil: string }>;
+  termoCompromisso: File | null
+  termoOrientacao: File | null
+}

@@ -1,10 +1,10 @@
 "use client";
-import { useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Building2Icon } from "lucide-react";
 import { obterUrlPublicaFotoPerfil } from "@/lib/supabase/functions-select";
 import CalendarMonthOutlineIcon from "@iconify-react/material-symbols/calendar-month-outline";
-import ModalOrientacao from "./ModalOrientacao";
+import ModalOrientacao from "./ModalAgendarDefesa";
 
 export type StatusEstagio = "pendente" | "em_andamento" | "concluido";
 
@@ -53,7 +53,7 @@ export default function OrientacaoCard({
   const dataFormatada = new Date(data).toLocaleDateString("pt-BR", {
     timeZone: "UTC", // O 'UTC' evita que a data mude de dia por causa do fuso horário
   });
-  const [fotoUrl, setFotoUrl] = useState<string | null>(null); 
+  const [fotoUrl, setFotoUrl] = useState<string | null>(null);
 
   useEffect(() => {
     async function carregarFoto() {
@@ -66,7 +66,7 @@ export default function OrientacaoCard({
   }, [foto_perfil]);
 
   const handleNavegarDetalhes = () => {
-    router.push(`/dashboard/alunos/${id}`); 
+    router.push(`/dashboard/alunos/${id}`);
   };
 
   return (
@@ -111,7 +111,8 @@ export default function OrientacaoCard({
           <div className="flex gap-2">
             <CalendarMonthOutlineIcon className="w-4 h-4 ml-2 mt-1" />
             <p className="text-gray-600 mb-2 line-clamp-2 font-semibold text-base">
-              Data de Inicio: {status === "pendente" ? (
+              Data de Inicio:{" "}
+              {status === "pendente" ? (
                 <span className="text-red-500 font-semibold">Pendente</span>
               ) : (
                 dataFormatada
@@ -137,7 +138,11 @@ export default function OrientacaoCard({
       </div>
       {/*modalzinho*/}
       {isModalOpen && (
-        <ModalOrientacao isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} estagioId={id} />
+        <ModalOrientacao
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          estagioId={id}
+        />
       )}
     </div>
   );

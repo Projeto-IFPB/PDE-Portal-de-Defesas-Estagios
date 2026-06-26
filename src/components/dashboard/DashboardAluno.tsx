@@ -7,6 +7,8 @@ import CardInformativo, { VarianteCard } from "@/components/CardInformativo";
 import { CardEstagioRecomendado, CardNenhumEstagioDisponivel } from "@/components/CardEstagioRecomendado";
 import { listarEstagiosRecomendados, listarEstagiosPorEstagiarioId, listarDefesasAluno } from "@/lib/supabase/functions-select";
 import { EstagioRecomendado } from "@/lib/supabase/interfaces";
+  import { PlusCircle } from "lucide-react";
+import ModalEstagio from "@/components/ModalCadastroEstagio";
 
 interface DadosCardDashboard {
   titulo: string;
@@ -20,6 +22,11 @@ export default function DashboardAluno({ usuarioId }: { usuarioId: string }) {
   const [metricas, setMetricas] = useState<DadosCardDashboard[]>([]);
   const [estagiosDisponiveis, setEstagiosDisponiveis] = useState<EstagioRecomendado[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  // id temporario
+  const id = "c72ed7b0-beb7-4d52-9ccd-677deb32c348"
+
+
 
   useEffect(() => {
     async function carregarDados() {
@@ -73,10 +80,26 @@ export default function DashboardAluno({ usuarioId }: { usuarioId: string }) {
 
   return (
     <>
+    <div className="flex items-center justify-between">
       <CabecalhoBoasVindas 
         titulo="Bem-vindo, Estudante"
         subtitulo="Gerencie seus estágios e acompanhe seu progresso."
       />
+      <button
+          onClick={() => setIsModalOpen(true)}
+          className="flex items-center justify-center gap-1.5 px-4 py-3 text-sm font-medium text-white transition-colors bg-[#185adb] rounded-lg shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        >
+          <PlusCircle size={18} strokeWidth={2} />
+          Cadastrar Novo Estágio
+        </button>
+      </div>
+      {isModalOpen && (
+        <ModalEstagio
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          Id_usuario={id}
+        />
+      )}
 
       <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
         {isLoading ? (
