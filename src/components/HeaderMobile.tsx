@@ -18,13 +18,13 @@ export default function HeaderMobile() {
   if (!mounted) return null;
 
   return (
-    <header className="flex md:hidden sticky top-0 z-30 items-center justify-between h-16 px-4 bg-white">
+    <header className="flex md:hidden sticky top-0 z-30 items-center justify-between h-16 px-4 bg-white dark:bg-slate-900">
       <h1 className="font-bold text-blue-700">PDE</h1>
 
       <div className="flex items-center gap-3">
         <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          className="p-2 rounded-md hover:bg-gray-100 transition-colors cursor-pointer"
+          className="p-2 rounded-md hover:bg-gray-100 transition-colors cursor-pointer dark:hover:bg-slate-700"
           aria-label="Alternar tema"
         >
           {theme === "dark" ? (
