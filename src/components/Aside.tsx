@@ -45,7 +45,7 @@ export default function Aside() {
   };
 
   return (
-    <aside className="hidden md:block col-span-1 h-screen bg-gray-50 px-4 pt-3 sticky top-0 z-40 shadow-sm">
+    <aside className="hidden md:block col-span-1 h-screen bg-gray-50 px-4 pt-3 sticky top-0 z-40 shadow-sm  dark:bg-slate-950 dark:shadow-slate-800">
       <h1 className="text-blue-700 font-bold -mb-1">PDE</h1>
       <p className="text-[0.7rem] font-medium text-gray-600 mb-6">
         Portal do{" "}

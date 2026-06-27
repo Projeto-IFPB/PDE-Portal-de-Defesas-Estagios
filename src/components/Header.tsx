@@ -19,9 +19,9 @@ export default function Header() {
   if (!mounted) return null;
 
   return (
-    <header className="hidden md:flex sticky top-0 z-30 items-center justify-end gap-4 h-16 px-6 bg-white w-full">
+    <header className="hidden md:flex sticky top-0 z-30 items-center justify-end gap-4 h-16 px-6 bg-white w-full dark:bg-slate-900">
       <button
-        className="p-2 rounded-md hover:bg-gray-100 transition-colors cursor-pointer"
+        className="p-2 rounded-md hover:bg-gray-100 transition-colors cursor-pointer dark:hover:bg-slate-700"
         aria-label="Notificações"
       >
         <NotificationsOutlineIcon className="w-5 h-5 text-gray-600 hover:text-blue-700" />
@@ -29,7 +29,7 @@ export default function Header() {
 
       <button
         onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-        className="p-2 rounded-md hover:bg-gray-100 transition-colors cursor-pointer"
+        className="p-2 rounded-md hover:bg-gray-100 transition-colors cursor-pointer dark:hover:bg-slate-700"
         aria-label="Alternar tema"
       >
         {theme === "dark" ? (
@@ -40,7 +40,7 @@ export default function Header() {
       </button>
 
       <div className="text-right border-l border-gray-300 pl-4">
-        <p className="font-semibold text-sm whitespace-nowrap">
+        <p className="font-semibold text-sm whitespace-nowrap dark:text-slate-50">
           {" "}
           {usuario.nome}
         </p>
