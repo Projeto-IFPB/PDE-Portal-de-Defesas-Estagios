@@ -22,7 +22,7 @@ function NavLinkItem({
   return (
     <Link
       href={href}
-      className={`flex items-center gap-2 p-2 rounded-md ${isActive ? "bg-gray-200 text-blue-700 dark:bg-slate-700 dark:text-blue-600" : "text-gray-700 hover:bg-gray-200 hover:text-blue-700 dark:text-blue-600/50 dark:hover:bg-slate-700 dark:hover:text-blue-600"}`}
+      className={`flex items-center gap-2 p-2 rounded-md ${isActive ? "bg-gray-200 text-blue-600 dark:bg-slate-800/50 dark:border-l-4 dark:border-blue-500 dark:text-blue-400" : "text-gray-700 hover:bg-gray-200 hover:text-blue-600 dark:text-slate-400 dark:hover:bg-slate-800/50 dark:hover:text-blue-400"}`}
     >
       {icon}
       <h3>{label}</h3>
