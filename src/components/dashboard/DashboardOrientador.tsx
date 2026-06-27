@@ -90,7 +90,7 @@ export default function DashboardOrientador({ usuarioId }: { usuarioId: string }
       </section>
 
       <section className="mt-10 mb-6">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6 dark:text-slate-400">Minhas Orientações</h2>
+        <h2 className="text-2xl font-bold text-gray-800 mb-6 dark:text-slate-50">Minhas Orientações</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {orientacoes.map((orientacao) => (
             <OrientacaoCard

@@ -20,10 +20,10 @@ export function CardEstagioRecomendado({ estagio }: { estagio: EstagioRecomendad
 
 export function CardNenhumEstagioDisponivel() {
     return (
-        <div className="flex flex-col bg-white p-12 rounded-2xl shadow-sm items-center text-center">
-            <SearchX className="w-18 h-18 bg-gray-200 text-slate-500 p-3 rounded-full shrink-0 mb-3" />
-            <h1 className="text-2xl font-semibold">Nenhuma vaga disponível no momento</h1>
-            <p>Fique atento! Novas oportunidades podem surgir a qualquer instante.</p>
+        <div className="flex flex-col bg-white p-12 rounded-2xl shadow-sm items-center text-center dark:bg-slate-900">
+            <SearchX className="w-18 h-18 bg-gray-200 text-slate-500 p-3 rounded-full shrink-0 mb-3 dark:bg-slate-700" />
+            <h1 className="text-2xl font-semibold dark:text-slate-50">Nenhuma vaga disponível no momento</h1>
+            <p className="dark:text-slate-400">Fique atento! Novas oportunidades podem surgir a qualquer instante.</p>
         </div>
     )
 }
