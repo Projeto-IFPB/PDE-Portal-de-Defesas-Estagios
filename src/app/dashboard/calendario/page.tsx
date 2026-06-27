@@ -44,7 +44,7 @@ export default function CalendarioPage() {
     return (
       <>
         <div className="p-6">
-          <h1 className="text-2xl font-bold mb-4"> Calendário de Defesas</h1>
+          <h1 className="text-2xl font-bold mb-4 dark:text-slate-50"> Calendário de Defesas</h1>
           <FullCalendar 
             plugins={[dayGridPlugin, interactionPlugin]}
             initialView="dayGridMonth"

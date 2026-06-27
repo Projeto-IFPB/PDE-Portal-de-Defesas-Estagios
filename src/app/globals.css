@@ -2,3 +2,34 @@
 
 /* É aqui que você avisa ao Tailwind v4 para usar a classe .dark */
 @variant dark (&:where(.dark, .dark *));
+
+.dark .fc {
+  /* Cores de fundo e borda */
+  --fc-page-bg-color: transparent;
+  --fc-neutral-bg-color: #0f172a; 
+  --fc-border-color: #1e293b; 
+  
+  /* Cor do dia atual (Today) */
+  --fc-today-bg-color: rgba(30, 64, 175, 0.2); 
+
+  /* Cores dos Botões */
+  --fc-button-text-color: #94a3b8; 
+  --fc-button-bg-color: #0f172a; 
+  --fc-button-border-color: #1e293b; 
+  --fc-button-hover-bg-color: #1e293b; 
+  --fc-button-hover-border-color: #334155; 
+  --fc-button-active-bg-color: #334155; 
+  --fc-button-active-border-color: #475569; 
+
+  /* Cor padrão dos textos do calendário */
+  color: #94a3b8; 
+}
+
+.dark .fc .fc-toolbar-title {
+  color: #f8fafc; 
+  font-weight: 700;
+}
+
+.dark .fc .fc-daygrid-day.fc-day-today {
+  background-color: rgba(37, 99, 235, 0.1);
+}
