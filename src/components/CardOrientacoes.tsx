@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Building2Icon } from "lucide-react";
+import { Building2Icon, CalendarX } from "lucide-react";
 import { obterUrlPublicaFotoPerfil } from "@/lib/supabase/functions-select";
 import CalendarMonthOutlineIcon from "@iconify-react/material-symbols/calendar-month-outline";
 import ModalOrientacao from "./ModalAgendarDefesa";
@@ -148,4 +148,20 @@ export default function OrientacaoCard({
       )}
     </div>
   );
+}
+
+export function CardNenhumAluno() {
+    return (
+        <>
+        <div className="grid col-span-1 md:col-span-2 lg:col-span-3 bg-white py-10 justify-center items-center rounded-lg dark:bg-slate-900">
+            <div className="bg-blue-100 p-6 m-auto rounded-full mb-4">
+                <CalendarX className="w-10 h-10 text-blue-800" strokeWidth={1.2}/>
+            </div>
+            <div className="max-w-80 text-center">
+                <h1 className="text-xl font-semibold mb-3 dark:text-slate-50">Você não orienta nenhum aluno</h1>
+                <p className="text-slate-500 dark:text-slate-400">Você não orienta nenhum aluni. Novas orientações aparecerão aqui.</p>
+            </div>
+        </div>
+        </>
+    )
 }

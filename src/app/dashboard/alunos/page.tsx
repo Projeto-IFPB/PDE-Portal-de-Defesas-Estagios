@@ -1,10 +1,10 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { listarEstagiosPorOrientadorId } from "@/lib/supabase/functions-select";
 import CabecalhoPaginas from "@/components/CabecalhoPaginas";
 import { useOrientacoes } from "@/hooks/useOrientacoes";
 import OrientacaoCard from "@/components/CardOrientacoes";
+import { CardNenhumAluno } from "@/components/CardOrientacoes";
 
 export default function Dashboard() {
   const { orientacoes } = useOrientacoes();
@@ -17,7 +17,7 @@ export default function Dashboard() {
 
             <section className="mt-10 mb-6">
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {orientacoes.map((orientacao) => (
+                      { orientacoes.length > 0 ? (orientacoes.map((orientacao) => (
                         <OrientacaoCard
                           key={orientacao.id}
                           id={orientacao.id}
@@ -28,7 +28,12 @@ export default function Dashboard() {
                           status={orientacao.status}
                           foto_perfil={orientacao.foto_estagiario}
                         />
-                      ))}
+                      ))
+                    ):
+                    (
+                      <CardNenhumAluno />
+                    )
+                  }
                     </div>
                   </section>
             
