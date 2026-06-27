@@ -1,34 +1,61 @@
-'use client';
+"use client";
 
-import NotificationsOutlineIcon from '@iconify-react/material-symbols/notifications-outline';
-import DarkModeOutlineIcon from '@iconify-react/material-symbols/dark-mode-outline';
-import { useAuth } from '@/contexts/AuthContext';
+import NotificationsOutlineIcon from "@iconify-react/material-symbols/notifications-outline";
+import DarkModeOutlineIcon from "@iconify-react/material-symbols/dark-mode-outline";
+import LightModeOutlineIcon from '@iconify-react/material-symbols/light-mode-outline';
+import { useAuth } from "@/contexts/AuthContext";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 export default function Header() {
-    const { usuario } = useAuth();
+  const { usuario } = useAuth();
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
-    return (
-        <header className='hidden md:flex sticky top-0 z-30 items-center justify-end gap-4 h-16 px-6 bg-white w-full'>
-            <button className='p-2 rounded-md hover:bg-gray-100 transition-colors cursor-pointer' aria-label='Notificações'>
-                <NotificationsOutlineIcon className='w-5 h-5 text-gray-600 hover:text-blue-700' />
-            </button>
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-            <button className='p-2 rounded-md hover:bg-gray-100 transition-colors cursor-pointer' aria-label='Alternar tema'>
-                <DarkModeOutlineIcon className='w-5 h-5 text-gray-600 hover:text-blue-700' />
-            </button>
+  if (!mounted) return null;
 
-            <div className='text-right border-l border-gray-300 pl-4'>
-              <p className='font-semibold text-sm whitespace-nowrap'> {usuario.nome}</p>
-              <p className='text-xs text-gray-500 capitalize'>
-                {usuario.perfil}
-              </p>
-            </div>
+  return (
+    <header className="hidden md:flex sticky top-0 z-30 items-center justify-end gap-4 h-16 px-6 bg-white w-full">
+      <button
+        className="p-2 rounded-md hover:bg-gray-100 transition-colors cursor-pointer"
+        aria-label="Notificações"
+      >
+        <NotificationsOutlineIcon className="w-5 h-5 text-gray-600 hover:text-blue-700" />
+      </button>
 
-            <div className='w-10 h-10 rounded-full shrink-0 overflow-hidden'>
-                {usuario.fotoPerfil && (
-                    <img src={usuario.fotoPerfil} alt={usuario.nome} className='w-full h-full object-cover' />
-                )}
-            </div>
-        </header>
-    );
+      <button
+        onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+        className="p-2 rounded-md hover:bg-gray-100 transition-colors cursor-pointer"
+        aria-label="Alternar tema"
+      >
+        {theme === "dark" ? (
+          <DarkModeOutlineIcon className="w-5 h-5 text-gray-600 hover:text-blue-700" />
+        ) : (
+          <LightModeOutlineIcon className="w-5 h-5 text-gray-600 hover:text-blue-700" />
+        )}
+      </button>
+
+      <div className="text-right border-l border-gray-300 pl-4">
+        <p className="font-semibold text-sm whitespace-nowrap">
+          {" "}
+          {usuario.nome}
+        </p>
+        <p className="text-xs text-gray-500 capitalize">{usuario.perfil}</p>
+      </div>
+
+      <div className="w-10 h-10 rounded-full shrink-0 overflow-hidden">
+        {usuario.fotoPerfil && (
+          <img
+            src={usuario.fotoPerfil}
+            alt={usuario.nome}
+            className="w-full h-full object-cover"
+          />
+        )}
+      </div>
+    </header>
+  );
 }
