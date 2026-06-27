@@ -410,7 +410,7 @@ export default function ModalEstagio({
               </div>
               <label className="border-2 border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors group bg-white dark:bg-slate-900 dark:hover:bg-slate-700">
                 <FileUp className="w-6 h-6 text-[#004bb5] mb-2 group-hover:scale-110 transition-transform" />
-                <span className="text-sm font-semibold text-gray-800 text-center max-w-[200px] truncate dark:text-slate-50">
+                <span className="text-sm font-semibold text-gray-800 text-center max-w-50 truncate dark:text-slate-50">
                   {termoCompromisso
                     ? termoCompromisso.name
                     : "Arraste ou clique"}
@@ -442,7 +442,7 @@ export default function ModalEstagio({
               </div>
               <label className="border-2 border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors group bg-white dark:bg-slate-900 dark:hover:bg-slate-700">
                 <CloudUpload className="w-6 h-6 text-[#004bb5] mb-2 group-hover:scale-110 transition-transform" />
-                <span className="text-sm font-semibold text-gray-800 text-center max-w-[200px] truncate dark:text-slate-50">
+                <span className="text-sm font-semibold text-gray-800 text-center max-w-50 truncate dark:text-slate-50">
                   {termoOrientacao ? termoOrientacao.name : "Arraste ou clique"}
                 </span>
                 {!termoOrientacao && (
