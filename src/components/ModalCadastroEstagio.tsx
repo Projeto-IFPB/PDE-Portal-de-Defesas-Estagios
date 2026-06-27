@@ -206,30 +206,30 @@ export default function ModalEstagio({
 
       <div
         ref={modalRef}
-        className="bg-white rounded-xl shadow-xl w-full max-w-3xl flex flex-col max-h-[90vh]"
+        className="bg-white rounded-xl shadow-xl w-full max-w-3xl flex flex-col max-h-[90vh] dark:bg-slate-900"
       >
         <div className="p-8 pb-4 overflow-y-auto flex-1 min-h-0">
           <div className="flex mb-1 justify-between items-start">
-            <h2 className="text-2xl font-bold text-[#004bb5]">
+            <h2 className="text-2xl font-bold text-[#004bb5] dark:text-[#004bb1]">
               Cadastrar Novo Estágio
             </h2>
             <button
               onClick={fecharModal}
               disabled={isSubmitting}
-              className="text-gray-400 hover:text-gray-600 transition-colors disabled:opacity-50"
+              className="text-gray-400 hover:text-gray-600 transition-colors disabled:opacity-50 dark:text-slate-400 dark:hover:text-slate-300"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
-          <p className="text-sm text-gray-600 mb-5">
+          <p className="text-sm text-gray-600 mb-5 dark:text-slate-400">
             Preencha as informações necessárias para iniciar o seu processo de
             estágio.
           </p>
-          <hr className="border-t border-gray-200 mb-5" />
+          <hr className="border-t border-gray-200 mb-5 " />
 
           <div className="flex items-center gap-2 mb-4">
             <Building className="w-5 h-5 text-green-700" />
-            <h3 className="text-sm font-bold text-green-700 tracking-wide">
+            <h3 className="text-sm font-bold text-green-700 tracking-wide dark:text-green-600">
               INFORMAÇÕES DO ESTÁGIO
             </h3>
           </div>
@@ -238,7 +238,7 @@ export default function ModalEstagio({
             <div className="flex flex-col">
               <label
                 htmlFor="empresa"
-                className="text-sm font-medium text-gray-800 mb-1.5"
+                className="text-sm font-medium text-gray-800 mb-1.5 dark:text-slate-400"
               >
                 Empresa Empregadora
               </label>
@@ -248,13 +248,13 @@ export default function ModalEstagio({
                 value={empresa}
                 onChange={(e) => setEmpresa(e.target.value)}
                 placeholder="Nome da empresa ou CNPJ"
-                className="w-full border border-gray-300 rounded-md p-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-700 placeholder:text-gray-400"
+                className="w-full border border-gray-300 rounded-md p-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-700 placeholder:text-gray-400 dark:placeholder:text-slate-400"
               />
             </div>
             <div className="flex flex-col">
               <label
                 htmlFor="curso"
-                className="text-sm font-medium text-gray-800 mb-1.5"
+                className="text-sm font-medium text-gray-800 mb-1.5 dark:text-slate-400"
               >
                 Curso Estagiario
               </label>
@@ -267,7 +267,7 @@ export default function ModalEstagio({
                   value={curso}
                   onChange={(e) => setCurso(e.target.value)}
                   placeholder="Engenharia de Software"
-                  className="w-full border border-gray-300 rounded-md py-2.5 pr-2.5 pl-9 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-700 placeholder:text-gray-400"
+                  className="w-full border border-gray-300 rounded-md py-2.5 pr-2.5 pl-9 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-700 placeholder:text-gray-400 dark:placeholder:text-slate-400"
                 />
                 <datalist id="lista-cursos">
                   {cursosSugestoes.map((nomeCurso, idx) => (
@@ -282,7 +282,7 @@ export default function ModalEstagio({
             <div className="flex flex-col">
               <label
                 htmlFor="dataInicio"
-                className="text-sm font-medium text-gray-800 mb-1.5"
+                className="text-sm font-medium text-gray-800 mb-1.5 dark:text-slate-400"
               >
                 Data de Enceramento(Previsão)
               </label>
@@ -293,7 +293,7 @@ export default function ModalEstagio({
                   id="dataInicio"
                   value={dataFim}
                   onChange={(e) => setDataFim(e.target.value)}
-                  className="w-full border border-gray-300 rounded-md py-2.5 pr-2.5 pl-9 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-700"
+                  className="w-full border border-gray-300 rounded-md py-2.5 pr-2.5 pl-9 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-700 dark:text-slate-400"
                 />
               </div>
             </div>
@@ -301,7 +301,7 @@ export default function ModalEstagio({
             <div className="flex flex-col">
               <label
                 htmlFor="cargaHoraria"
-                className="text-sm font-medium text-gray-800 mb-1.5"
+                className="text-sm font-medium text-gray-800 mb-1.5 dark:text-slate-400"
               >
                 Carga Horaria Semanal
               </label>
@@ -313,7 +313,7 @@ export default function ModalEstagio({
                   value={cargaHoraria}
                   onChange={(e) => setCargaHoraria(e.target.value)}
                   placeholder="30h"
-                  className="w-full border border-gray-300 rounded-md py-2.5 pr-2.5 pl-9 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-700 placeholder:text-gray-400"
+                  className="w-full border border-gray-300 rounded-md py-2.5 pr-2.5 pl-9 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-700 placeholder:text-gray-400 dark:placeholder:text-slate-400"
                 />
               </div>
             </div>
@@ -323,7 +323,7 @@ export default function ModalEstagio({
             <div className="flex flex-col">
               <label
                 htmlFor="orientador"
-                className="text-sm font-medium text-gray-800 mb-1.5"
+                className="text-sm font-medium text-gray-800 mb-1.5 dark:text-slate-400"
               >
                 Nome do Orientador
               </label>
@@ -336,7 +336,7 @@ export default function ModalEstagio({
                   value={orientador}
                   onChange={(e) => setOrientador(e.target.value)}
                   placeholder="Orientador acadêmico"
-                  className="w-full border border-gray-300 rounded-md py-2.5 pr-2.5 pl-9 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-700 placeholder:text-gray-400"
+                  className="w-full border border-gray-300 rounded-md py-2.5 pr-2.5 pl-9 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-700 placeholder:text-gray-400 dark:placeholder:text-slate-400"
                 />
                 <datalist id="lista-orientadores">
                   {orientadoresFiltrados.map((user, idx) => (
@@ -348,7 +348,7 @@ export default function ModalEstagio({
             <div className="flex flex-col">
               <label
                 htmlFor="coordenador"
-                className="text-sm font-medium text-gray-800 mb-1.5"
+                className="text-sm font-medium text-gray-800 mb-1.5 dark:text-slate-400"
               >
                 Nome do Coordenador
               </label>
@@ -361,7 +361,7 @@ export default function ModalEstagio({
                   value={coordenador}
                   onChange={(e) => setCoordenador(e.target.value)}
                   placeholder="Coordenador acadêmico"
-                  className="w-full border border-gray-300 rounded-md py-2.5 pr-2.5 pl-9 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-700 placeholder:text-gray-400"
+                  className="w-full border border-gray-300 rounded-md py-2.5 pr-2.5 pl-9 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-700 placeholder:text-gray-400 dark:placeholder:text-slate-400"
                 />
                 <datalist id="lista-coordenadores">
                   {coordenadoresFiltrados.map((user, idx) => (
@@ -376,7 +376,7 @@ export default function ModalEstagio({
             <div className="flex flex-col">
               <label
                 htmlFor="descricao"
-                className="text-sm font-medium text-gray-800 mb-1.5"
+                className="text-sm font-medium text-gray-800 mb-1.5 dark:text-slate-400"
               >
                 Breve descrição do Estágio
               </label>
@@ -393,7 +393,7 @@ export default function ModalEstagio({
 
           <div className="flex items-center gap-2 mb-4">
             <FileText className="w-5 h-5 text-green-700" />
-            <h3 className="text-sm font-bold text-green-700 tracking-wide">
+            <h3 className="text-sm font-bold text-green-700 tracking-wide dark:text-green-600">
               DOCUMENTAÇÃO OBRIGATÓRIA
             </h3>
           </div>
@@ -401,22 +401,22 @@ export default function ModalEstagio({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div>
               <div className="flex justify-between items-end mb-1.5">
-                <span className="text-sm font-medium text-gray-800">
+                <span className="text-sm font-medium text-gray-800 dark:text-slate-400">
                   Termo de Compromisso
                 </span>
                 <button className="flex items-center gap-1 text-[#004bb5] text-xs font-semibold hover:underline">
                   <Download className="w-3.5 h-3.5" /> Baixar Modelo
                 </button>
               </div>
-              <label className="border-2 border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors group bg-white">
+              <label className="border-2 border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors group bg-white dark:bg-slate-900 dark:hover:bg-slate-700">
                 <FileUp className="w-6 h-6 text-[#004bb5] mb-2 group-hover:scale-110 transition-transform" />
-                <span className="text-sm font-semibold text-gray-800 text-center max-w-[200px] truncate">
+                <span className="text-sm font-semibold text-gray-800 text-center max-w-[200px] truncate dark:text-slate-50">
                   {termoCompromisso
                     ? termoCompromisso.name
                     : "Arraste ou clique"}
                 </span>
                 {!termoCompromisso && (
-                  <span className="text-xs text-gray-500 font-medium uppercase mt-0.5">
+                  <span className="text-xs text-gray-500 font-medium uppercase mt-0.5 dark:text-slate-400">
                     PDF até 5MB
                   </span>
                 )}
@@ -433,20 +433,20 @@ export default function ModalEstagio({
 
             <div>
               <div className="flex justify-between items-end mb-1.5">
-                <span className="text-sm font-medium text-gray-800">
+                <span className="text-sm font-medium text-gray-800 dark:text-slate-400">
                   Termo de Orientação
                 </span>
                 <button className="flex items-center gap-1 text-[#004bb5] text-xs font-semibold hover:underline">
                   <Download className="w-3.5 h-3.5" /> Baixar Modelo
                 </button>
               </div>
-              <label className="border-2 border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors group bg-white">
+              <label className="border-2 border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors group bg-white dark:bg-slate-900 dark:hover:bg-slate-700">
                 <CloudUpload className="w-6 h-6 text-[#004bb5] mb-2 group-hover:scale-110 transition-transform" />
-                <span className="text-sm font-semibold text-gray-800 text-center max-w-[200px] truncate">
+                <span className="text-sm font-semibold text-gray-800 text-center max-w-[200px] truncate dark:text-slate-50">
                   {termoOrientacao ? termoOrientacao.name : "Arraste ou clique"}
                 </span>
                 {!termoOrientacao && (
-                  <span className="text-xs text-gray-500 font-medium uppercase mt-0.5">
+                  <span className="text-xs text-gray-500 font-medium uppercase mt-0.5 dark:text-slate-400">
                     DOCX até 15MB
                   </span>
                 )}
@@ -463,11 +463,11 @@ export default function ModalEstagio({
           </div>
         </div>
 
-        <div className="bg-gray-50/80 px-8 py-5 border-t border-gray-100 flex items-center justify-end gap-6">
+        <div className="bg-gray-50/80 px-8 py-5 border-t border-gray-100 flex items-center justify-end gap-6 dark:bg-slate-900/50">
           <button
             onClick={fecharModal}
             disabled={isSubmitting}
-            className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors disabled:opacity-50"
+            className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors disabled:opacity-50 dark:text-slate-400 dark:hover:text-slate-200"
           >
             Cancelar
           </button>
