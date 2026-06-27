@@ -82,7 +82,7 @@ export default function DashboardCoordenador({ usuarioId }: { usuarioId: string 
 
       <section className={`grid grid-cols-1 gap-4 sm:grid-cols-2 ${gridColunasDesktop} lg:gap-6`}>
         {isLoading ? (
-          <div className="col-span-full h-35 flex items-center text-gray-500 animate-pulse">
+          <div className="col-span-full h-35 flex items-center text-gray-500 animate-pulse dark:text-slate-400">
             Carregando métricas do coordenador...
           </div>
         ) : (

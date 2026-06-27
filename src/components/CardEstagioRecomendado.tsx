@@ -5,7 +5,7 @@ import { SearchX } from 'lucide-react';
 
 export function CardEstagioRecomendado({ estagio }: { estagio: EstagioRecomendado }) {
     return (
-        <div key={estagio.id} className="bg-white p-5 rounded-2xl shadow-sm space-y-1 dark:bg-slate-900">
+        <div key={estagio.id} className="bg-white p-5 rounded-2xl shadow-sm space-y-1 dark:bg-slate-900 dark:shadow-slate-800">
               <h2 className="text-xl font-semibold -mb-1 dark:text-slate-50">{estagio.titulo}</h2>
               <h4 className="text-slate-600 font-semibold text-[0.9rem] dark:text-slate-400">{estagio.empresa}</h4>
 
