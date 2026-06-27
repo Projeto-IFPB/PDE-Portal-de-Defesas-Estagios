@@ -22,7 +22,7 @@ function NavLinkItem({
   return (
     <Link
       href={href}
-      className={`flex flex-col items-center px-4 py-2 rounded-full transition-colors duration-300 ${isActive ? "bg-gray-200 text-blue-700 dark:bg-slate-800/50 dark:text-blue-600" : "dark:text-blue-600/50 dark:hover:bg-slate-800/50 dark:hover:text-blue-600"}`}
+      className={`flex flex-col items-center px-4 py-2 rounded-full transition-colors duration-300 ${isActive ? "bg-gray-200 text-blue-700 dark:bg-slate-800/50 dark:text-blue-600" : "dark:text-slate-400 dark:hover:bg-slate-800/50 dark:hover:text-blue-600"}`}
     >
       {icon}
       <h3 className={`text-[0.6rem] ${isActive ? "block" : "hidden"}`}>
