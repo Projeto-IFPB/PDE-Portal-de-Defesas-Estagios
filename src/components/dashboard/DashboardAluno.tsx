@@ -103,7 +103,7 @@ export default function DashboardAluno({ usuarioId }: { usuarioId: string }) {
 
       <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
         {isLoading ? (
-          <div className="col-span-full h-35 flex items-center text-gray-500 animate-pulse">
+          <div className="col-span-full h-35 flex items-center text-gray-500 animate-pulse dark:text-slate-400">
             Carregando métricas do estudante...
           </div>
         ) : (
@@ -124,7 +124,7 @@ export default function DashboardAluno({ usuarioId }: { usuarioId: string }) {
         <section className="lg:col-span-2"></section>
 
         <section className="lg:col-span-1 space-y-3">
-          <h2 className="text-xl font-semibold">Estágios Disponíveis</h2>
+          <h2 className="text-xl font-semibold dark:text-slate-400">Estágios Disponíveis</h2>
           {estagiosDisponiveis.length > 0 ? (
             estagiosDisponiveis.map((estagio) => (
               <CardEstagioRecomendado key={estagio.id} estagio={estagio} />   
