@@ -28,9 +28,9 @@ export default function HeaderMobile() {
           aria-label="Alternar tema"
         >
           {theme === "dark" ? (
-            <DarkModeOutlineIcon className="w-5 h-5 text-gray-600 hover:text-blue-700" />
+            <DarkModeOutlineIcon className="w-5 h-5 text-gray-600 hover:text-blue-700 dark:text-blue-700" />
           ) : (
-            <LightModeOutlineIcon className="w-5 h-5 text-gray-600 hover:text-blue-700" />
+            <LightModeOutlineIcon className="w-5 h-5 text-yellow-600" />
           )}
         </button>
 

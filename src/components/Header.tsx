@@ -24,18 +24,18 @@ export default function Header() {
         className="p-2 rounded-md hover:bg-gray-100 transition-colors cursor-pointer dark:hover:bg-slate-700"
         aria-label="Notificações"
       >
-        <NotificationsOutlineIcon className="w-5 h-5 text-gray-600 hover:text-blue-700" />
+        <NotificationsOutlineIcon className="w-5 h-5 text-gray-600 hover:text-blue-700 dark:hover:text-yellow-600" />
       </button>
 
       <button
         onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-        className="p-2 rounded-md hover:bg-gray-100 transition-colors cursor-pointer dark:hover:bg-slate-700"
+        className="p-2 rounded-md hover:bg-gray-100 transition-colors cursor-pointer dark:hover:bg-slate-800"
         aria-label="Alternar tema"
       >
         {theme === "dark" ? (
-          <DarkModeOutlineIcon className="w-5 h-5 text-gray-600 hover:text-blue-700" />
+          <DarkModeOutlineIcon className="w-5 h-5 text-gray-600 hover:text-blue-700 dark:text-blue-700" />
         ) : (
-          <LightModeOutlineIcon className="w-5 h-5 text-gray-600 hover:text-blue-700" />
+          <LightModeOutlineIcon className="w-5 h-5 text-yellow-600" />
         )}
       </button>
 
