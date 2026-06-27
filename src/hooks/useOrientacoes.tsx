@@ -1,7 +1,7 @@
 // useOrientacoes.ts
 import {listarEstagiosPorOrientadorId, buscarUsuarioPorId, obterCaminhoFotoPerfil, obterUrlPublicaFotoPerfil } from '@/lib/supabase/functions-select'
 import { useState, useEffect } from 'react';
-import { Estagio} from '@/lib/supabase/interfaces'
+import { Estagio } from '@/lib/supabase/interfaces'
 
 
 //coloquei um id provisorio so para testar, quando colocarmos o login vamos puxar pelo id no local-storage

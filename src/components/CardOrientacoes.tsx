@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Building2Icon } from "lucide-react";
+import { Building2Icon, CalendarX } from "lucide-react";
 import { obterUrlPublicaFotoPerfil } from "@/lib/supabase/functions-select";
 import CalendarMonthOutlineIcon from "@iconify-react/material-symbols/calendar-month-outline";
 import ModalOrientacao from "./ModalAgendarDefesa";
@@ -125,14 +125,14 @@ export default function OrientacaoCard({
       <div className="flex gap-3 w-full">
         <button
           onClick={handleNavegarDetalhes}
-          className="flex-1 py-2 px-4 bg-blue-100 hover:bg-transparent hover:border-blue-100 hover:border-2 text-blue-800 text-sm font-medium rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 min-h-15 dark:bg-blue-900/40 dark:text-blue-400 dark:border-transparent
+          className="flex-1 py-2 px-4 bg-blue-100 hover:bg-transparent border-2 border-transparent hover:border-blue-700 text-blue-800 text-sm font-medium rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 min-h-15 cursor-pointer dark:bg-blue-900/40 dark:text-blue-400 dark:border-transparent
       dark:hover:bg-transparent dark:hover:border-slate-700 dark:hover:text-blue-400"
         >
           Ver Detalhes
         </button>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="flex-1 py-2 px-4 text-blue-800 border-2 border-solid border-blue-100 hover:bg-blue-100  text-sm font-medium rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:bg-transparent dark:text-blue-400 dark:border-slate-700
+          className="flex-1 py-2 px-4 text-blue-800 border-2 border-solid border-blue-100 hover:bg-blue-100  text-sm font-medium rounded-lg transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:bg-transparent dark:text-blue-400 dark:border-slate-700
       dark:hover:bg-blue-900/40 dark:hover:border-transparent dark:hover:text-blue-400"
         >
           Agendar Defesa
@@ -148,4 +148,20 @@ export default function OrientacaoCard({
       )}
     </div>
   );
+}
+
+export function CardNenhumAluno() {
+    return (
+        <>
+        <div className="grid col-span-1 md:col-span-2 lg:col-span-3 bg-white py-10 justify-center items-center rounded-lg dark:bg-slate-900">
+            <div className="bg-blue-100 p-6 m-auto rounded-full mb-4">
+                <CalendarX className="w-10 h-10 text-blue-800" strokeWidth={1.2}/>
+            </div>
+            <div className="max-w-80 text-center">
+                <h1 className="text-xl font-semibold mb-3 dark:text-slate-50">Você não orienta nenhum aluno</h1>
+                <p className="text-slate-500 dark:text-slate-400">Você não orienta nenhum aluni. Novas orientações aparecerão aqui.</p>
+            </div>
+        </div>
+        </>
+    )
 }
