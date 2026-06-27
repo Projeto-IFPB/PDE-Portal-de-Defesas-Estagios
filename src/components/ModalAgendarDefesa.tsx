@@ -160,29 +160,29 @@ export default function ModalOrientacao({
       )}
       <div
         ref={modalRef}
-        className="bg-white rounded-xl shadow-xl w-full max-w-3xl flex flex-col max-h-[90vh]"
+        className="bg-white rounded-xl shadow-xl w-full max-w-3xl flex flex-col max-h-[90vh] dark:bg-slate-900"
       >
         <div className="p-8 pb-4 overflow-y-auto flex-1 min-h-0">
           <div className="flex mb-1 justify-between items-start">
-            <h2 className="text-2xl font-bold text-[#004bb5]">
+            <h2 className="text-2xl font-bold text-[#004bb5] dark:text-[#004bb1]">
               Agendar Defesa de Estágio
             </h2>
             <button
               onClick={fecharModal}
               disabled={isSubmitting}
-              className="text-gray-400 hover:text-gray-600 transition-colors disabled:opacity-50"
+              className="text-gray-400 hover:text-gray-600 transition-colors disabled:opacity-50 dark:text-slate-400 dark:hover:text-slate-300"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
-          <p className="text-sm text-gray-600 mb-5">
+          <p className="text-sm text-gray-600 mb-5 dark:text-slate-400">
             Preencha os detalhes para formalizar o evento acadêmico.
           </p>
           <hr className="border-t border-gray-200 mb-5" />
 
           <div className="flex items-center gap-2 mb-4">
             <Calendar className="w-5 h-5 text-green-700" />
-            <h3 className="text-sm font-bold text-green-700 tracking-wide">
+            <h3 className="text-sm font-bold text-green-700 tracking-wide dark:text-green-600">
               INFORMAÇÕES DO EVENTO
             </h3>
           </div>
@@ -193,7 +193,7 @@ export default function ModalOrientacao({
             <div className="flex flex-col">
               <label
                 htmlFor="datadefesa"
-                className="text-sm font-medium text-gray-800 mb-1.5"
+                className="text-sm font-medium text-gray-800 mb-1.5 dark:text-slate-400"
               >
                 Data da Defesa
               </label>
@@ -202,13 +202,13 @@ export default function ModalOrientacao({
                 id="datadefesa"
                 value={dataDefesa}
                 onChange={(e) => setDataDefesa(e.target.value)}
-                className="w-full border border-gray-300 rounded-md p-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-700"
+                className="w-full border border-gray-300 rounded-md p-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-700 dark:text-slate-400"
               />
             </div>
             <div className="flex flex-col">
               <label
                 htmlFor="localdefesa"
-                className="text-sm font-medium text-gray-800 mb-1.5"
+                className="text-sm font-medium text-gray-800 mb-1.5 dark:text-slate-400"
               >
                 Local da Defesa
               </label>
@@ -232,7 +232,7 @@ export default function ModalOrientacao({
             <div className="flex flex-col">
               <label
                 htmlFor="titulodefesa"
-                className="text-sm font-medium text-gray-800 mb-1.5"
+                className="text-sm font-medium text-gray-800 mb-1.5 dark:text-slate-400"
               >
                 Título da Defesa
               </label>
@@ -248,7 +248,7 @@ export default function ModalOrientacao({
             <div className="flex flex-col">
               <label
                 htmlFor="horariodefesa"
-                className="text-sm font-medium text-gray-800 mb-1.5"
+                className="text-sm font-medium text-gray-800 mb-1.5 dark:text-slate-400"
               >
                 Horário da Defesa
               </label>
@@ -264,7 +264,7 @@ export default function ModalOrientacao({
 
           <div className="flex items-center gap-2 mb-4">
             <Users className="w-5 h-5 text-green-700" />
-            <h3 className="text-sm font-bold text-green-700 tracking-wide">
+            <h3 className="text-sm font-bold text-green-700 tracking-wide dark:text-green-600">
               BANCA EXAMINADORA
             </h3>
           </div>
@@ -276,7 +276,7 @@ export default function ModalOrientacao({
             >
               <div className="flex flex-col">
                 <label
-                  className={`text-sm font-medium  mb-1.5 ${window.screen.width < 768 ? "text-[#004bb5]" : "text-gray-800"}`}
+                  className={`text-sm font-medium  mb-1.5 ${window.screen.width < 768 ? "text-[#004bb5] dark:text-slate-400" : "text-gray-800 dark:text-slate-400"}`}
                 >
                   Nome do Integrante
                 </label>
@@ -292,7 +292,7 @@ export default function ModalOrientacao({
               </div>
               <div className="flex flex-col">
                 <label
-                  className={`text-sm font-medium mb-1.5 ${window.screen.width < 768 ? "text-[#004bb5]" : "text-gray-800"}`}
+                  className={`text-sm font-medium mb-1.5 ${window.screen.width < 768 ? "text-[#004bb5] dark:text-slate-400" : "text-gray-800 dark:text-slate-400"}`}
                 >
                   E-mail Institucional
                 </label>
@@ -311,14 +311,14 @@ export default function ModalOrientacao({
           <button
             type="button"
             onClick={() => setBanca([...banca, { nome: "", email: "" }])}
-            className="flex items-center gap-2 text-[#004bb5] text-sm font-medium hover:text-blue-800 mb-8 transition-colors"
+            className="flex items-center gap-2 text-[#004bb5] text-sm font-medium hover:text-blue-800 mb-8 transition-colors dark:text-[#004bb1]"
           >
             <PlusCircle className="w-4 h-4" /> Adicionar Integrante
           </button>
 
           <div className="flex items-center gap-2 mb-4">
             <FileText className="w-5 h-5 text-green-700" />
-            <h3 className="text-sm font-bold text-green-700 tracking-wide">
+            <h3 className="text-sm font-bold text-green-700 tracking-wide dark:text-green-600">
               DOCUMENTAÇÃO
             </h3>
           </div>
@@ -326,20 +326,20 @@ export default function ModalOrientacao({
           <div className={` gap-6 mb-8 ${window.screen.width < 768 ? `flex flex-col bg-gray-200 rounded-lg p-6` : "grid grid-cols-2"}`}>
             <div>
               <div className="flex justify-between items-end mb-1.5">
-                <span className="text-sm font-medium text-gray-800">
+                <span className="text-sm font-medium text-gray-800 dark:text-slate-400">
                   Ata de Defesa
                 </span>
                 <button className="flex items-center gap-1 text-[#004bb5] text-xs font-semibold hover:underline">
                   <Download className="w-3.5 h-3.5" /> Baixar Modelo
                 </button>
               </div>
-              <label className={`border-2 border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors group ${window.screen.width < 768 ? "bg-gray-200":"bg-white"}`}>
+              <label className={`border-2 border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors dark:bg-slate-900 dark:hover:bg-slate-700 group ${window.screen.width < 768 ? "bg-gray-200":"bg-white"}`}>
                 <FileUp className="w-6 h-6 text-[#004bb5] mb-2 group-hover:scale-110 transition-transform" />
-                <span className="text-sm font-semibold text-gray-800 text-center">
+                <span className="text-sm font-semibold text-gray-800 text-center dark:text-slate-50">
                   {ataFile ? ataFile.name : "Arraste ou clique"}
                 </span>
                 {!ataFile && (
-                  <span className="text-xs text-gray-500 font-medium uppercase mt-0.5">
+                  <span className="text-xs text-gray-500 font-medium uppercase mt-0.5 dark:text-slate-400">
                     PDF até 5MB
                   </span>
                 )}
@@ -354,20 +354,20 @@ export default function ModalOrientacao({
 
             <div>
               <div className="flex justify-between items-end mb-1.5">
-                <span className="text-sm font-medium text-gray-800">
+                <span className="text-sm font-medium text-gray-800 dark:text-slate-400">
                   Relatório Final
                 </span>
                 <button className="flex items-center gap-1 text-[#004bb5] text-xs font-semibold hover:underline">
                   <Download className="w-3.5 h-3.5" /> Baixar Modelo
                 </button>
               </div>
-              <label className={`border-2 border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors  group ${window.screen.width < 768 ? "bg-gray-200":"bg-white"}`}>
+              <label className={`border-2 border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors dark:bg-slate-900 dark:hover:bg-slate-700  group ${window.screen.width < 768 ? "bg-gray-200":"bg-white "}`}>
                 <CloudUpload className="w-6 h-6 text-[#004bb5] mb-2 group-hover:scale-110 transition-transform" />
-                <span className="text-sm font-semibold text-gray-800 text-center">
+                <span className="text-sm font-semibold text-gray-800 text-center dark:text-slate-50">
                   {relatorioFile ? relatorioFile.name : "Arraste ou clique"}
                 </span>
                 {!relatorioFile && (
-                  <span className="text-xs text-gray-500 font-medium uppercase mt-0.5">
+                  <span className="text-xs text-gray-500 font-medium uppercase mt-0.5 dark:text-slate-400">
                     PDF até 15MB
                   </span>
                 )}
@@ -384,11 +384,11 @@ export default function ModalOrientacao({
           </div>
         </div>
 
-        <div className={`bg-gray-50/80 px-8 py-5 border-t border-gray-100 flex  items-center gap-6 ${window.screen.width <= 768 ? `flex-col` : "justify-end"}`}>
+        <div className={`bg-gray-50/80 px-8 py-5 border-t border-gray-100 flex dark:bg-slate-900/50 items-center gap-6 ${window.screen.width <= 768 ? `flex-col` : "justify-end"}`}>
           <button
             onClick={fecharModal}
             disabled={isSubmitting}
-            className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors disabled:opacity-50"
+            className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors disabled:opacity-50 dark:text-slate-400 dark:hover:text-slate-200"
           >
             Cancelar
           </button>
