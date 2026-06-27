@@ -92,11 +92,11 @@ export default function SecaoEstagiosCoordenador({ coordenadorId }: Props) {
   if (loading) return (
     <div className="w-full flex flex-col">
       <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 gap-2">
-        <h2 className="text-2xl font-bold text-gray-800">
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-slate-50">
           Todos os Estágios do Curso
         </h2>
       </div>
-      <div className="w-full bg-white rounded-2xl shadow-sm border border-gray-100 p-8 text-center text-gray-500 animate-pulse">
+      <div className="w-full bg-white rounded-2xl shadow-sm border border-gray-100 p-8 text-center text-gray-500 animate-pulse dark:text-slate-50">
         Carregando estágios do curso...
       </div>
     </div>
@@ -106,11 +106,11 @@ export default function SecaoEstagiosCoordenador({ coordenadorId }: Props) {
   if (error) return (
     <div className="w-full flex flex-col">
       <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 gap-2">
-        <h2 className="text-2xl font-bold text-gray-800">
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-slate-50">
           Todos os Estágios do Curso
         </h2>
       </div>
-      <div className="w-full bg-white rounded-2xl shadow-sm border border-red-200 p-8 text-center text-red-500">
+      <div className="w-full bg-white rounded-2xl shadow-sm border border-red-200 p-8 text-center text-red-500 dark:bg-slate-900">
         Erro ao carregar dados: {error}
       </div>
     </div>
@@ -120,14 +120,14 @@ export default function SecaoEstagiosCoordenador({ coordenadorId }: Props) {
   if (estagios.length === 0) return (
     <div className="w-full flex flex-col">
       <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 gap-2">
-        <h2 className="text-2xl font-bold text-gray-800">
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-slate-50">
           Todos os Estágios do Curso <span className="text-gray-500 font-medium text-lg ml-1">(0)</span>
         </h2>
       </div>
-      <div className="w-full bg-white rounded-2xl shadow-sm border border-gray-100 p-12 flex flex-col items-center justify-center">
+      <div className="w-full bg-white rounded-2xl shadow-sm border border-gray-100 p-12 flex flex-col items-center justify-center dark:bg-slate-900">
         <Briefcase className="w-12 h-12 text-gray-300 mb-3" />
-        <h3 className="text-lg font-semibold text-gray-800">Nenhum estágio vinculado</h3>
-        <p className="text-gray-500 text-sm">Você ainda não possui estágios sob sua coordenação.</p>
+        <h3 className="text-lg font-semibold text-gray-800 dark:text-slate-50">Nenhum estágio vinculado</h3>
+        <p className="text-gray-500 text-sm dark:text-slate-400">Você ainda não possui estágios sob sua coordenação.</p>
       </div>
     </div>
   );
@@ -138,8 +138,8 @@ export default function SecaoEstagiosCoordenador({ coordenadorId }: Props) {
   return (
     <div className="w-full flex flex-col">
       <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 gap-2">
-        <h2 className="text-2xl font-bold text-gray-800">
-          Todos os Estágios do Curso <span className="text-2xl font-bold text-gray-800">({estagios.length})</span>
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-slate-50">
+          Todos os Estágios do Curso <span className="text-2xl font-bold text-gray-800 dark:text-slate-50">({estagios.length})</span>
         </h2>
         
         {estagios.length > 5 && (
@@ -153,10 +153,10 @@ export default function SecaoEstagiosCoordenador({ coordenadorId }: Props) {
       </div>
 
       {/* CONTAINER DESKTOP */}
-      <div className={`hidden md:block bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden transition-all duration-300 ease-in-out ${showAll ? "max-h-[600px] overflow-y-auto" : ""}`}>
+      <div className={`hidden md:block bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden transition-all duration-300 ease-in-out dark:bg-slate-900 dark:shadow-slate-800 dark:border-slate-950/80 ${showAll ? "max-h-[600px] overflow-y-auto" : ""}`}>
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="bg-slate-100 text-slate-500 text-xs font-bold uppercase tracking-wider border-b border-gray-200">
+            <tr className="bg-slate-100 text-slate-500 text-xs font-bold uppercase tracking-wider border-b border-gray-200 dark:bg-slate-950/70 dark:text-slate-400">
               <th className="p-4 pl-6">Aluno</th>
               <th className="p-4">Empresa</th>
               <th className="p-4">Orientador</th>
@@ -166,22 +166,22 @@ export default function SecaoEstagiosCoordenador({ coordenadorId }: Props) {
           </thead>
           <tbody className="divide-y divide-gray-100">
             {estagiosExibidos.map((estagio) => (
-              <tr key={estagio.id} className="hover:bg-slate-50 transition-colors">
-                <td className="p-4 pl-6 text-gray-900 font-semibold flex items-center gap-3">
+              <tr key={estagio.id} className="hover:bg-slate-50 transition-colors dark:hover:bg-slate-700">
+                <td className="p-4 pl-6 text-gray-900 font-semibold flex items-center gap-3 dark:text-slate-50">
                   <Avatar name={estagio.aluno?.Nome_Completo || ''} url={estagio.aluno?.fotoUrl} />
                   <span className="truncate max-w-[200px]">{estagio.aluno?.Nome_Completo || '-'}</span>
                 </td>
-                <td className="p-4 text-gray-600 font-medium">{estagio.empresa || '-'}</td>
-                <td className="p-4 text-gray-600 font-medium">
+                <td className="p-4 text-gray-600 font-medium dark:text-slate-400">{estagio.empresa || '-'}</td>
+                <td className="p-4 text-gray-600 font-medium dark:text-slate-400">
                   <div className="flex items-center gap-3">
                     <Avatar name={estagio.orientador?.Nome_Completo || ''} url={estagio.orientador?.fotoUrl} />
                     <span className="truncate max-w-[200px]">{estagio.orientador?.Nome_Completo || '-'}</span>
                   </div>
                 </td>
-                <td className="p-4 text-center text-gray-600 font-medium whitespace-nowrap">
+                <td className="p-4 text-center text-gray-600 font-medium whitespace-nowrap dark:text-slate-400">
                   {estagio.status?.toLowerCase() === 'pendente' ? <span className="text-red-500 font-semibold">Pendente</span> : formatarData(estagio.data_de_inicio)}
                 </td>
-                <td className="p-4 text-center pr-6 whitespace-nowrap">
+                <td className="p-4 text-center pr-6 whitespace-nowrap dark:text-slate-400">
                   <span className={`inline-flex px-3 py-1 text-xs border font-semibold rounded-full ${getStatusStyle(estagio.status)}`}>
                     {formatarStatusLabel(estagio.status)}
                   </span>

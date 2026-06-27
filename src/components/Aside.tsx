@@ -22,7 +22,7 @@ function NavLinkItem({
   return (
     <Link
       href={href}
-      className={`flex items-center gap-2 p-2 hover:bg-gray-200 hover:text-blue-700 rounded-md ${isActive ? "bg-gray-200 text-blue-700" : ""}`}
+      className={`flex items-center gap-2 p-2 rounded-md ${isActive ? "bg-gray-200 text-blue-700 dark:bg-slate-700 dark:text-blue-600" : "text-gray-700 hover:bg-gray-200 hover:text-blue-700 dark:text-blue-600/50 dark:hover:bg-slate-700 dark:hover:text-blue-600"}`}
     >
       {icon}
       <h3>{label}</h3>
@@ -45,9 +45,9 @@ export default function Aside() {
   };
 
   return (
-    <aside className="hidden md:block col-span-1 h-screen bg-gray-50 px-4 pt-3 sticky top-0 z-40 shadow-sm">
+    <aside className="hidden md:block col-span-1 h-screen bg-gray-50 px-4 pt-3 sticky top-0 z-40 shadow-sm  dark:bg-slate-950 dark:shadow-slate-800">
       <h1 className="text-blue-700 font-bold -mb-1">PDE</h1>
-      <p className="text-[0.7rem] font-medium text-gray-600 mb-6">
+      <p className="text-[0.7rem] font-medium text-gray-600 mb-6 dark:text-slate-50">
         Portal do{" "}
         {usuario.perfil === "aluno"
           ? "Aluno"

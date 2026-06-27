@@ -22,7 +22,7 @@ function NavLinkItem({
   return (
     <Link
       href={href}
-      className={`flex flex-col items-center px-4 py-2 rounded-full transition-colors duration-300 ${isActive ? "bg-gray-200 text-blue-700" : ""}`}
+      className={`flex flex-col items-center px-4 py-2 rounded-full transition-colors duration-300 ${isActive ? "bg-gray-200 text-blue-700 dark:bg-slate-700 dark:text-blue-600" : "dark:text-blue-600/50 dark:hover:bg-slate-700 dark:hover:text-blue-600"}`}
     >
       {icon}
       <h3 className={`text-[0.6rem] ${isActive ? "block" : "hidden"}`}>
@@ -47,7 +47,7 @@ export default function NavMobile() {
   };
 
   return (
-    <nav className="flex fixed md:hidden bottom-0 left-0 right-0 justify-around items-center w-screen bg-gray-50 z-50 h-16 border-t border-gray-200 shadow-l pb-[env(safe-area-inset-bottom)]">
+    <nav className="flex fixed md:hidden bottom-0 left-0 right-0 justify-around items-center w-screen bg-gray-50 z-50 h-16 border-t border-gray-200 shadow-l pb-[env(safe-area-inset-bottom)] dark:bg-slate-950 dark:shadow-slate-800">
       <NavLinkItem
         href={"/dashboard"}
         icon={<DashboardOutlineIcon className="w-4 h-4" />}

@@ -44,7 +44,7 @@ export function CardAlterarImagemPerfilMobile() {
                 </div>
                 </div>
 
-                <h2 className="font-semibold text-lg text-center">{usuario.nome}</h2>
+                <h2 className="font-semibold text-lg text-center dark:text-slate-50">{usuario.nome}</h2>
             </div>
         )
     }
@@ -69,14 +69,14 @@ export function CardAlterarImagemPerfilDesktop() {
     }
 
     return (
-        <div className="hidden lg:flex flex-col col-span-1 bg-white items-center px-6 pt-6 rounded-lg shadow-md">
+        <div className="hidden lg:flex flex-col col-span-1 bg-white items-center px-6 pt-6 rounded-lg shadow-md dark:bg-slate-900 dark:shadow-slate-800">
             <img 
             className="rounded-full w-30 h-30 border-2 border-white object-cover shadow-md" 
             src={usuario.fotoPerfil} 
             alt="Minha foto de perfil" /> 
 
-            <h2 className="font-semibold text-lg mt-4">{usuario.nome}</h2>
-            <p className="text-[0.7rem] font-semibold text-slate-500 mb-5">{'Membro desde ' + usuario.dataCadastro}</p>
+            <h2 className="font-semibold text-lg mt-4 dark:text-slate-50">{usuario.nome}</h2>
+            <p className="text-[0.7rem] font-semibold text-slate-500 mb-5 dark:text-slate-400">{'Membro desde ' + usuario.dataCadastro}</p>
 
             <input
             type="file"
@@ -90,7 +90,7 @@ export function CardAlterarImagemPerfilDesktop() {
             onClick={() => inputRef.current?.click()}>
                 Alterar Foto
             </button>
-            <p className="text-[0.7rem] font-semibold text-slate-500 mb-5">JPG ou PNG. Tamanho máx 5MB</p>
+            <p className="text-[0.7rem] font-semibold text-slate-500 mb-5 dark:text-slate-400">JPG ou PNG. Tamanho máx 5MB</p>
 
         </div>
     )

@@ -70,7 +70,7 @@ export default function OrientacaoCard({
   };
 
   return (
-    <div className="flex flex-col justify-between p-5 bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 min-h-70">
+    <div className="flex flex-col justify-between p-5 bg-white  rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 min-h-70 dark:bg-slate-900 dark:shadow-slate-800">
       <div>
         <div className="flex justify-between mb-3">
           <div className="flex gap-2 flex-1 min-w-0">
@@ -84,10 +84,10 @@ export default function OrientacaoCard({
               )}
             </div>
             <div className="flex flex-col flex-1 min-w-0">
-              <h3 className="text-xl font-semibold text-gray-900 truncate">
+              <h3 className="text-xl font-semibold text-gray-900 truncate dark:text-slate-50">
                 {nomeEstagiario}
               </h3>
-              <p className="truncate text-gray-600 text-sm">
+              <p className="truncate text-gray-600 text-sm dark:text-slate-400">
                 {emailEstagiario}
               </p>
             </div>
@@ -103,14 +103,14 @@ export default function OrientacaoCard({
         <hr className="border-t border-gray-200 mb-6" />
         <div>
           <div className="flex gap-2">
-            <Building2Icon className="w-4 h-4 ml-2 mt-1" />
-            <p className="text-gray-600 mb-2 line-clamp-2 font-semibold text-base">
+            <Building2Icon className="w-4 h-4 ml-2 mt-1 dark:text-slate-400" />
+            <p className="text-gray-600 mb-2 line-clamp-2 font-semibold text-base dark:text-slate-400">
               {empresa}
             </p>
           </div>
           <div className="flex gap-2">
-            <CalendarMonthOutlineIcon className="w-4 h-4 ml-2 mt-1" />
-            <p className="text-gray-600 mb-2 line-clamp-2 font-semibold text-base">
+            <CalendarMonthOutlineIcon className="w-4 h-4 ml-2 mt-1 dark:text-slate-400" />
+            <p className="text-gray-600 mb-2 line-clamp-2 font-semibold text-base dark:text-slate-400">
               Data de Inicio:{" "}
               {status === "pendente" ? (
                 <span className="text-red-500 font-semibold">Pendente</span>
@@ -125,13 +125,15 @@ export default function OrientacaoCard({
       <div className="flex gap-3 w-full">
         <button
           onClick={handleNavegarDetalhes}
-          className="flex-1 py-2 px-4 bg-blue-100 hover:bg-transparent hover:border-blue-100 hover:border-2 text-blue-800 text-sm font-medium rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 min-h-15"
+          className="flex-1 py-2 px-4 bg-blue-100 hover:bg-transparent hover:border-blue-100 hover:border-2 text-blue-800 text-sm font-medium rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 min-h-15 dark:bg-blue-900/40 dark:text-blue-400 dark:border-transparent
+      dark:hover:bg-transparent dark:hover:border-slate-700 dark:hover:text-blue-400"
         >
           Ver Detalhes
         </button>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="flex-1 py-2 px-4 text-blue-800 border-2 border-solid border-blue-100 hover:bg-blue-100  text-sm font-medium rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          className="flex-1 py-2 px-4 text-blue-800 border-2 border-solid border-blue-100 hover:bg-blue-100  text-sm font-medium rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:bg-transparent dark:text-blue-400 dark:border-slate-700
+      dark:hover:bg-blue-900/40 dark:hover:border-transparent dark:hover:text-blue-400"
         >
           Agendar Defesa
         </button>
