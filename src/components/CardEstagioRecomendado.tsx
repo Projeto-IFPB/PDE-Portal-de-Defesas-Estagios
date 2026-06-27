@@ -13,7 +13,7 @@ export function CardEstagioRecomendado({ estagio }: { estagio: EstagioRecomendad
                 <p className="bg-gray-200 rounded-sm p-1 dark:bg-slate-700">{estagio.competencia}</p>
                 <p className="bg-gray-200 rounded-sm p-1 dark:bg-slate-700">{estagio.vagas ? estagio.vagas + ' Vagas' : 'Quantidade de Vagas Indefinidas'}</p>
               </div>
-              <button className="border border-blue-600 p-2 w-full rounded-lg text-blue-600 text-sm font-semibold hover:bg-blue-600 hover:text-white">Ver Detalhes</button>
+              <button className="border border-blue-600 p-2 w-full rounded-lg text-blue-600 text-sm font-semibold cursor-pointer hover:bg-blue-600 hover:text-white">Ver Detalhes</button>
             </div>
     )
 }

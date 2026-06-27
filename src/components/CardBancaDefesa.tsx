@@ -46,7 +46,7 @@ export function CardBancaDefesa({data, status, titulo, horario, local, banca}: I
 export function CardNenhumaBanca() {
     return (
         <>
-        <div className="bg-white py-10 flex flex-col text-center items-center dark:bg-slate-900">
+        <div className="bg-white py-10 flex flex-col text-center items-center rounded-lg dark:bg-slate-900">
             <div className="bg-blue-100 p-6 m-auto rounded-full mb-4">
                 <CalendarX className="w-10 h-10 text-blue-800" strokeWidth={1.2}/>
             </div>
