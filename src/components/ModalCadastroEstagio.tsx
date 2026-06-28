@@ -16,6 +16,7 @@ import { supabase } from "@/lib/supabase/supabaseClient";
 interface ModalCadastroEstagioProps {
   isOpen: boolean;
   onClose: () => void;
+  onSuccess: () => void;
   Id_usuario: string;
 }
 
@@ -28,6 +29,7 @@ interface UsuarioSugestao {
 export default function ModalEstagio({
   isOpen,
   onClose,
+  onSuccess,
   Id_usuario,
 }: ModalCadastroEstagioProps) {
   const modalRef = useRef<HTMLDivElement>(null);
@@ -160,6 +162,7 @@ export default function ModalEstagio({
       setTimeout(() => {
         setFeedback(null);
         fecharModal();
+        onSuccess();
       }, 2000);
     } catch (error: any) {
       console.error("❌ Erro ao cadastrar estágio:", error);
