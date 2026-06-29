@@ -53,7 +53,8 @@ export async function listarEstagiosPorEstagiarioId(estagiarioId: string): Promi
     const { data, error } = await supabase
       .from('Estagios')
       .select('*')
-      .eq('Id_estagiario', estagiarioId); 
+      .eq('Id_estagiario', estagiarioId)
+      .order("created_at", {ascending: false});
 
     if (error) {
       console.error(`Erro ao listar estágios do aluno ${estagiarioId}:`, error.message);

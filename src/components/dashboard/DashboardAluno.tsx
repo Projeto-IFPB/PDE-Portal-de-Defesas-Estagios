@@ -5,10 +5,11 @@ import { Briefcase, Clock, Bookmark, LucideIcon } from "lucide-react";
 import CabecalhoBoasVindas from "@/components/CabecalhoBoasVindas";
 import CardInformativo, { VarianteCard } from "@/components/CardInformativo";
 import { CardEstagioRecomendado, CardNenhumEstagioDisponivel } from "@/components/CardEstagioRecomendado";
-import { listarEstagiosRecomendados, listarEstagiosPorEstagiarioId, listarDefesasAluno } from "@/lib/supabase/functions-select";
-import { EstagioRecomendado } from "@/lib/supabase/interfaces";
+import { listarEstagiosRecomendados, listarEstagiosPorEstagiarioId, listarDefesasAluno, buscarUsuarioPorId } from "@/lib/supabase/functions-select";
+import { EstagioRecomendado, Estagio } from "@/lib/supabase/interfaces";
   import { PlusCircle } from "lucide-react";
 import ModalEstagio from "@/components/ModalCadastroEstagio";
+import { CardEstagioAluno, CardSemEstagios } from "../CardEstagioAluno";
 
 interface DadosCardDashboard {
   titulo: string;
@@ -23,12 +24,11 @@ export default function DashboardAluno({ usuarioId }: { usuarioId: string }) {
   const [estagiosDisponiveis, setEstagiosDisponiveis] = useState<EstagioRecomendado[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // id temporario
-  const id = "c72ed7b0-beb7-4d52-9ccd-677deb32c348"
+  const [orientadores, setOrientadores] = useState<Record<string, string>>({});
+  const [meusEstagios, setMeusEstagios] = useState<Estagio[]>([]);
 
 
 
-  useEffect(() => {
     async function carregarDados() {
       setIsLoading(true);
       try {
@@ -42,6 +42,7 @@ export default function DashboardAluno({ usuarioId }: { usuarioId: string }) {
         setEstagiosDisponiveis(vagas);
 
         const estAluno = meusEstagios || [];
+        setMeusEstagios(estAluno);
         const defAluno = bancas || [];
         const ativosAluno = estAluno.filter(e => e.status?.toLowerCase() === 'em_andamento').length;
 
@@ -75,8 +76,28 @@ export default function DashboardAluno({ usuarioId }: { usuarioId: string }) {
       }
     }
 
+ useEffect(() => {
     if (usuarioId) carregarDados();
   }, [usuarioId]);
+
+  useEffect(() => {
+    async function carregarOrientadores() {
+      const mapaOrientadores: Record<string, string> = {};
+
+      await Promise.all(meusEstagios.map(async (estagio) => {
+        const orientador = await buscarUsuarioPorId(estagio.Id_orientador);
+
+        if (orientador) {
+          mapaOrientadores[estagio.Id_orientador] = orientador.Nome_Completo;
+        }
+      })
+    );
+    setOrientadores(mapaOrientadores);
+    }
+    if (meusEstagios.length > 0) {
+      carregarOrientadores();
+    }
+  }, [meusEstagios]);
 
   return (
     <>
@@ -97,7 +118,8 @@ export default function DashboardAluno({ usuarioId }: { usuarioId: string }) {
         <ModalEstagio
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          Id_usuario={id}
+          onSuccess={carregarDados}
+          Id_usuario={usuarioId}
         />
       )}
 
@@ -120,8 +142,26 @@ export default function DashboardAluno({ usuarioId }: { usuarioId: string }) {
         )}
       </section>
 
-      <div className="grid grid-col-1 lg:grid-cols-3 estagios mt-10">
-        <section className="lg:col-span-2"></section>
+      <div className="grid grid-cols-1 lg:grid-cols-3 estagios mt-10 gap-6">
+        <section className="lg:col-span-2">
+          <h2 className="text-xl font-semibold mb-6 dark:text-slate-400">
+            Meus Estágios
+          </h2>
+            <div className="space-y-4">
+              {meusEstagios.length > 0 ? (
+                meusEstagios.map((estagio) => (
+                  <CardEstagioAluno
+                    key={estagio.id}
+                    estagio={estagio}
+                    orientador={orientadores[estagio.Id_orientador]}
+                    curso={estagio.curso ?? "Não Informado"}
+                  />
+                ))
+              ) : (
+                <CardSemEstagios />
+              )}
+            </div>
+        </section>
 
         <section className="lg:col-span-1 space-y-3">
           <h2 className="text-xl font-semibold dark:text-slate-400">Estágios Disponíveis</h2>
