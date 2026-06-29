@@ -13,6 +13,7 @@
     "@fullcalendar/daygrid": "^6.1.21",
     "@fullcalendar/interaction": "^6.1.21",
     "@fullcalendar/react": "^6.1.21",
+    "@hookform/resolvers": "^5.4.0",
     "@iconify-react/icon-park-outline": "^1.0.2",
     "@iconify-react/icon-park-solid": "^1.0.2",
     "@iconify-react/lucide": "^1.0.18",
@@ -24,7 +25,9 @@
     "next": "16.2.9",
     "next-themes": "^0.4.6",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "react-hook-form": "^7.80.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.0",
