@@ -89,12 +89,13 @@ export default function Home() {
       if (!authData.user) throw new Error("Erro ao criar credenciais de acesso.");
 
       // 2. Insere os dados adicionais na nossa tabela pública 'Usuarios' vinculando pelo ID
-      const { error: dbError } = await supabase.from("Usuarios").insert({
-        id: authData.user.id,
-        Email: dados.Email,
-        Nome_Completo: dados.Nome_Completo,
-        tipo_de_perfil: dados.tipo_de_perfil,
-      });
+      const { error: dbError } = await supabase
+        .from('Usuarios')
+        .update({ 
+          Nome_Completo: dados.Nome_Completo, 
+          tipo_de_perfil: dados.tipo_de_perfil 
+        })
+        .eq('id', authData.user.id);
 
       if (dbError) throw dbError;
 
