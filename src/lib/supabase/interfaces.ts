@@ -80,6 +80,7 @@ export interface CadastroEstagio {
 export interface cadastroEstagioRecomendado {
   titulo: string;
   empresa: string;
+  qtdVagas: Number;
   competencia: string;
   descricao: string;
 }

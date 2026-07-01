@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { X, Building, CheckCircle } from "lucide-react";
+import { X, Building, CheckCircle, Hash } from "lucide-react"; // Adicionei 'Hash' para o ícone
 import { cadastrarEstagioRecomendado } from "@/lib/supabase/functions-insert";
 
 interface ModalCadastroEstagioRecomendadoProps {
@@ -17,6 +17,7 @@ export default function ModalEstagioRecomendado({
 }: ModalCadastroEstagioRecomendadoProps) {
   const modalRef = useRef<HTMLDivElement>(null);
   const [empresa, setEmpresa] = useState("");
+  const [qtdVagas, setQtdVagas] = useState("");
   const [titulo, setTitulo] = useState("");
   const [descricao, setDescricao] = useState("");
   const [competencias, setCompetencias] = useState("");
@@ -28,6 +29,7 @@ export default function ModalEstagioRecomendado({
 
   const resetarFormulario = () => {
     setEmpresa("");
+    setQtdVagas("");
     setTitulo("");
     setCompetencias("");
     setDescricao("");
@@ -40,7 +42,7 @@ export default function ModalEstagioRecomendado({
   };
 
   const handleCadastrarEstagioRecomendado = async () => {
-    if (!empresa || !titulo || !competencias || !descricao) {
+    if (!empresa || !titulo || !competencias || !descricao || !qtdVagas) {
       setFeedback({
         tipo: "erro",
         mensagem: "Por favor, preencha todos os campos obrigatórios.",
@@ -55,13 +57,14 @@ export default function ModalEstagioRecomendado({
       await cadastrarEstagioRecomendado({
         titulo: titulo,
         empresa: empresa,
+        qtdVagas: Number(qtdVagas),
         competencia: competencias,
         descricao: descricao,
       });
 
       setFeedback({
         tipo: "sucesso",
-        mensagem: "Estágio e documentos cadastrados com sucesso!",
+        mensagem: "Estágio Recomendado cadastrado com sucesso!",
       });
 
       setTimeout(() => {
@@ -169,6 +172,28 @@ export default function ModalEstagioRecomendado({
                   value={empresa}
                   onChange={(e) => setEmpresa(e.target.value)}
                   placeholder="Nome da empresa parceira"
+                  className="w-full border border-gray-300 rounded-md py-2.5 pr-2.5 pl-9 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-700 dark:text-slate-100 placeholder:text-gray-400 dark:placeholder:text-slate-400 dark:border-slate-600 dark:bg-slate-800"
+                />
+              </div>
+            </div>
+
+            {/* Novo Campo de Qtd Vagas */}
+            <div className="flex flex-col">
+              <label
+                htmlFor="qtdVagas"
+                className="text-sm font-medium text-gray-800 mb-1.5 dark:text-slate-400"
+              >
+                Quantidade de Vagas
+              </label>
+              <div className="relative flex items-center">
+                <Hash className="w-4 h-4 text-gray-500 absolute left-3" />
+                <input
+                  type="number"
+                  id="qtdVagas"
+                  value={qtdVagas}
+                  onChange={(e) => setQtdVagas(e.target.value)}
+                  placeholder="Ex: 1"
+                  min="1"
                   className="w-full border border-gray-300 rounded-md py-2.5 pr-2.5 pl-9 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-700 dark:text-slate-100 placeholder:text-gray-400 dark:placeholder:text-slate-400 dark:border-slate-600 dark:bg-slate-800"
                 />
               </div>

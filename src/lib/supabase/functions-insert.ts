@@ -153,6 +153,7 @@ export async function cadastrarEstagio({
 export async function cadastrarEstagioRecomendado({
   titulo,
   empresa,
+  qtdVagas,
   competencia,
   descricao,
 }: cadastroEstagioRecomendado) {
@@ -162,6 +163,7 @@ export async function cadastrarEstagioRecomendado({
       {
         titulo: titulo,
         empresa: empresa,
+        vagas: qtdVagas,
         competencia: competencia,
         descricao: descricao,
       },
