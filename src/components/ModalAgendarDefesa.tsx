@@ -220,7 +220,7 @@ export default function ModalOrientacao({
                   value={localDefesa}
                   onChange={(e) => setLocalDefesa(e.target.value)}
                   placeholder="Ex: Auditório 2 ou Link Meet"
-                  className="w-full border border-gray-300 rounded-md py-2.5 pr-2.5 pl-9 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 placeholder:text-gray-400 text-gray-700"
+                  className="w-full border border-gray-300 rounded-md py-2.5 pr-2.5 pl-9 text-sm outline-none focus:border-blue-500 dark:text-gray-400 focus:ring-1 focus:ring-blue-500 placeholder:text-gray-400 text-gray-700"
                 />
               </div>
             </div>
@@ -242,7 +242,7 @@ export default function ModalOrientacao({
                 value={titulo}
                 onChange={(e) => setTitulo(e.target.value)}
                 placeholder="Ex: Defesa de Estágio Curricular Obrigatório"
-                className="w-full border border-gray-300 rounded-md p-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-700 placeholder:text-gray-400"
+                className="w-full border border-gray-300 rounded-md p-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 dark:text-gray-400 text-gray-700 placeholder:text-gray-400"
               />
             </div>
             <div className="flex flex-col">
@@ -257,7 +257,7 @@ export default function ModalOrientacao({
                 id="horariodefesa"
                 value={horario}
                 onChange={(e) => setHorario(e.target.value)}
-                className="w-full border border-gray-300 rounded-md p-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-700"
+                className="w-full border border-gray-300 rounded-md p-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 dark:text-gray-400 text-gray-700"
               />
             </div>
           </div>
@@ -287,7 +287,7 @@ export default function ModalOrientacao({
                   onChange={(e) =>
                     handleBancaChange(index, "nome", e.target.value)
                   }
-                  className={`w-full border border-gray-300 rounded-md p-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 ${window.screen.width < 768 ? "bg-white border-gray-400" : "border-gray-300"}`}
+                  className={`w-full border border-gray-300 rounded-md p-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 dark:text-gray-400 ${window.screen.width < 768 ? "bg-white border-gray-400" : "border-gray-300"}`}
                 />
               </div>
               <div className="flex flex-col">
@@ -303,7 +303,7 @@ export default function ModalOrientacao({
                   onChange={(e) =>
                     handleBancaChange(index, "email", e.target.value)
                   }
-                  className={`w-full border  rounded-md p-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 ${window.screen.width < 768 ? "bg-white border-gray-400" : "border-gray-300"}`}
+                  className={`w-full border  rounded-md p-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 dark:text-gray-400 ${window.screen.width < 768 ? "bg-white border-gray-400" : "border-gray-300"}`}
                 />
               </div>
             </div>
