@@ -144,264 +144,264 @@ export default function ModalOrientacao({
   if (!isOpen) return null;
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 sm:flex-col"
-    >
-      {feedback && (
-        <div 
-          className={`fixed top-6 right-6 z-60 px-6 py-3 rounded-full font-semibold shadow-lg transition-all duration-300 animate-in fade-in slide-in-from-top-5
-            ${feedback.tipo === 'sucesso' 
-              ? 'bg-[#d1fae5] text-[#064e3b]'
-              : 'bg-red-100 text-red-800'     
-            }`}
-        >
-          {feedback.mensagem}
-        </div>
-      )}
-      <div
-        ref={modalRef}
-        className="bg-white rounded-xl shadow-xl w-full max-w-3xl flex flex-col max-h-[90vh] dark:bg-slate-900"
+  <div
+    className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 sm:flex-col"
+  >
+    {feedback && (
+      <div 
+        className={`fixed top-6 right-6 z-60 px-6 py-3 rounded-full font-semibold shadow-lg transition-all duration-300 animate-in fade-in slide-in-from-top-5
+          ${feedback.tipo === 'sucesso' 
+            ? 'bg-[#d1fae5] text-[#064e3b]'
+            : 'bg-red-100 text-red-800'    
+          }`}
       >
-        <div className="p-8 pb-4 overflow-y-auto flex-1 min-h-0">
-          <div className="flex mb-1 justify-between items-start">
-            <h2 className="text-2xl font-bold text-[#004bb5] dark:text-[#004bb1]">
-              Agendar Defesa de Estágio
-            </h2>
-            <button
-              onClick={fecharModal}
-              disabled={isSubmitting}
-              className="text-gray-400 hover:text-gray-600 transition-colors disabled:opacity-50 dark:text-slate-400 dark:hover:text-slate-300"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
-          <p className="text-sm text-gray-600 mb-5 dark:text-slate-400">
-            Preencha os detalhes para formalizar o evento acadêmico.
-          </p>
-          <hr className="border-t border-gray-200 mb-5" />
-
-          <div className="flex items-center gap-2 mb-4">
-            <Calendar className="w-5 h-5 text-green-700" />
-            <h3 className="text-sm font-bold text-green-700 tracking-wide dark:text-green-600">
-              INFORMAÇÕES DO EVENTO
-            </h3>
-          </div>
-
-          <div
-            className={` gap-6 mb-8 ${window.screen.width < 768 ? `flex flex-col` : "grid grid-cols-2"}`}
-          >
-            <div className="flex flex-col">
-              <label
-                htmlFor="datadefesa"
-                className="text-sm font-medium text-gray-800 mb-1.5 dark:text-slate-400"
-              >
-                Data da Defesa
-              </label>
-              <input
-                type="date"
-                id="datadefesa"
-                value={dataDefesa}
-                onChange={(e) => setDataDefesa(e.target.value)}
-                className="w-full border border-gray-300 rounded-md p-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-700 dark:text-slate-400"
-              />
-            </div>
-            <div className="flex flex-col">
-              <label
-                htmlFor="localdefesa"
-                className="text-sm font-medium text-gray-800 mb-1.5 dark:text-slate-400"
-              >
-                Local da Defesa
-              </label>
-              <div className="relative flex items-center">
-                <MapPin className="w-4 h-4 text-gray-400 absolute left-3" />
-                <input
-                  type="text"
-                  id="localdefesa"
-                  value={localDefesa}
-                  onChange={(e) => setLocalDefesa(e.target.value)}
-                  placeholder="Ex: Auditório 2 ou Link Meet"
-                  className="w-full border border-gray-300 rounded-md py-2.5 pr-2.5 pl-9 text-sm outline-none focus:border-blue-500 dark:text-gray-400 focus:ring-1 focus:ring-blue-500 placeholder:text-gray-400 text-gray-700"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div
-            className={` gap-6 mb-8 ${window.screen.width < 768 ? `flex flex-col` : "grid grid-cols-2"}`}
-          >
-            <div className="flex flex-col">
-              <label
-                htmlFor="titulodefesa"
-                className="text-sm font-medium text-gray-800 mb-1.5 dark:text-slate-400"
-              >
-                Título da Defesa
-              </label>
-              <input
-                type="text"
-                id="titulodefesa"
-                value={titulo}
-                onChange={(e) => setTitulo(e.target.value)}
-                placeholder="Ex: Defesa de Estágio Curricular Obrigatório"
-                className="w-full border border-gray-300 rounded-md p-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 dark:text-gray-400 text-gray-700 placeholder:text-gray-400"
-              />
-            </div>
-            <div className="flex flex-col">
-              <label
-                htmlFor="horariodefesa"
-                className="text-sm font-medium text-gray-800 mb-1.5 dark:text-slate-400"
-              >
-                Horário da Defesa
-              </label>
-              <input
-                type="time"
-                id="horariodefesa"
-                value={horario}
-                onChange={(e) => setHorario(e.target.value)}
-                className="w-full border border-gray-300 rounded-md p-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 dark:text-gray-400 text-gray-700"
-              />
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2 mb-4">
-            <Users className="w-5 h-5 text-green-700" />
-            <h3 className="text-sm font-bold text-green-700 tracking-wide dark:text-green-600">
-              BANCA EXAMINADORA
-            </h3>
-          </div>
-
-          {banca.map((membro, index) => (
-            <div
-              key={index}
-              className={` gap-6 mb-3 ${window.screen.width < 768 ? `flex flex-col bg-gray-200 rounded-lg p-6` : "grid grid-cols-2"}`}
-            >
-              <div className="flex flex-col">
-                <label
-                  className={`text-sm font-medium  mb-1.5 ${window.screen.width < 768 ? "text-[#004bb5] dark:text-slate-400" : "text-gray-800 dark:text-slate-400"}`}
-                >
-                  Nome do Integrante
-                </label>
-                <input
-                  type="text"
-                  placeholder="Nome Completo"
-                  value={membro.nome}
-                  onChange={(e) =>
-                    handleBancaChange(index, "nome", e.target.value)
-                  }
-                  className={`w-full border border-gray-300 rounded-md p-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 dark:text-gray-400 ${window.screen.width < 768 ? "bg-white border-gray-400" : "border-gray-300"}`}
-                />
-              </div>
-              <div className="flex flex-col">
-                <label
-                  className={`text-sm font-medium mb-1.5 ${window.screen.width < 768 ? "text-[#004bb5] dark:text-slate-400" : "text-gray-800 dark:text-slate-400"}`}
-                >
-                  E-mail Institucional
-                </label>
-                <input
-                  type="email"
-                  placeholder="nome@instituicao.edu"
-                  value={membro.email}
-                  onChange={(e) =>
-                    handleBancaChange(index, "email", e.target.value)
-                  }
-                  className={`w-full border  rounded-md p-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 dark:text-gray-400 ${window.screen.width < 768 ? "bg-white border-gray-400" : "border-gray-300"}`}
-                />
-              </div>
-            </div>
-          ))}
-          <button
-            type="button"
-            onClick={() => setBanca([...banca, { nome: "", email: "" }])}
-            className="flex items-center gap-2 text-[#004bb5] text-sm font-medium hover:text-blue-800 mb-8 transition-colors dark:text-[#004bb1]"
-          >
-            <PlusCircle className="w-4 h-4" /> Adicionar Integrante
-          </button>
-
-          <div className="flex items-center gap-2 mb-4">
-            <FileText className="w-5 h-5 text-green-700" />
-            <h3 className="text-sm font-bold text-green-700 tracking-wide dark:text-green-600">
-              DOCUMENTAÇÃO
-            </h3>
-          </div>
-
-          <div className={` gap-6 mb-8 ${window.screen.width < 768 ? `flex flex-col bg-gray-200 rounded-lg p-6` : "grid grid-cols-2"}`}>
-            <div>
-              <div className="flex justify-between items-end mb-1.5">
-                <span className="text-sm font-medium text-gray-800 dark:text-slate-400">
-                  Ata de Defesa
-                </span>
-                <button className="flex items-center gap-1 text-[#004bb5] text-xs font-semibold hover:underline">
-                  <Download className="w-3.5 h-3.5" /> Baixar Modelo
-                </button>
-              </div>
-              <label className={`border-2 border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors dark:bg-slate-900 dark:hover:bg-slate-700 group ${window.screen.width < 768 ? "bg-gray-200":"bg-white"}`}>
-                <FileUp className="w-6 h-6 text-[#004bb5] mb-2 group-hover:scale-110 transition-transform" />
-                <span className="text-sm font-semibold text-gray-800 text-center dark:text-slate-50">
-                  {ataFile ? ataFile.name : "Arraste ou clique"}
-                </span>
-                {!ataFile && (
-                  <span className="text-xs text-gray-500 font-medium uppercase mt-0.5 dark:text-slate-400">
-                    PDF até 5MB
-                  </span>
-                )}
-                <input
-                  type="file"
-                  className="hidden"
-                  accept=".pdf"
-                  onChange={(e) => setAtaFile(e.target.files?.[0] || null)}
-                />
-              </label>
-            </div>
-
-            <div>
-              <div className="flex justify-between items-end mb-1.5">
-                <span className="text-sm font-medium text-gray-800 dark:text-slate-400">
-                  Relatório Final
-                </span>
-                <button className="flex items-center gap-1 text-[#004bb5] text-xs font-semibold hover:underline">
-                  <Download className="w-3.5 h-3.5" /> Baixar Modelo
-                </button>
-              </div>
-              <label className={`border-2 border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors dark:bg-slate-900 dark:hover:bg-slate-700  group ${window.screen.width < 768 ? "bg-gray-200":"bg-white "}`}>
-                <CloudUpload className="w-6 h-6 text-[#004bb5] mb-2 group-hover:scale-110 transition-transform" />
-                <span className="text-sm font-semibold text-gray-800 text-center dark:text-slate-50">
-                  {relatorioFile ? relatorioFile.name : "Arraste ou clique"}
-                </span>
-                {!relatorioFile && (
-                  <span className="text-xs text-gray-500 font-medium uppercase mt-0.5 dark:text-slate-400">
-                    PDF até 15MB
-                  </span>
-                )}
-                <input
-                  type="file"
-                  className="hidden"
-                  accept=".pdf"
-                  onChange={(e) =>
-                    setRelatorioFile(e.target.files?.[0] || null)
-                  }
-                />
-              </label>
-            </div>
-          </div>
-        </div>
-
-        <div className={`bg-gray-50/80 px-8 py-5 border-t border-gray-100 flex dark:bg-slate-900/50 items-center gap-6 ${window.screen.width <= 768 ? `flex-col` : "justify-end"}`}>
+        {feedback.mensagem}
+      </div>
+    )}
+    <div
+      ref={modalRef}
+      className="bg-white rounded-xl shadow-xl w-full max-w-3xl flex flex-col max-h-[90vh] dark:bg-slate-900"
+    >
+      <div className="p-8 pb-4 overflow-y-auto flex-1 min-h-0">
+        <div className="flex mb-1 justify-between items-start">
+          <h2 className="text-2xl font-bold text-[#004bb5] dark:text-[#004bb1]">
+            Agendar Defesa de Estágio
+          </h2>
           <button
             onClick={fecharModal}
             disabled={isSubmitting}
-            className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors disabled:opacity-50 dark:text-slate-400 dark:hover:text-slate-200"
+            className="text-gray-400 hover:text-gray-600 transition-colors disabled:opacity-50 dark:text-slate-400 dark:hover:text-slate-300"
           >
-            Cancelar
-          </button>
-          <button
-            onClick={handleConfirmarAgendamento}
-            disabled={isSubmitting}
-            className="px-5 py-2.5 bg-[#0052cc] hover:bg-[#0043a6] text-white rounded-lg text-sm font-semibold flex items-center gap-2 transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isSubmitting ? "Agendando..." : "Confirmar Agendamento"}
-            {!isSubmitting && <CheckCircle className="w-4 h-4" />}
+            <X className="w-5 h-5" />
           </button>
         </div>
+        <p className="text-sm text-gray-600 mb-5 dark:text-slate-400">
+          Preencha os detalhes para formalizar o evento acadêmico.
+        </p>
+        <hr className="border-t border-gray-200 mb-5" />
+
+        <div className="flex items-center gap-2 mb-4">
+          <Calendar className="w-5 h-5 text-green-700" />
+          <h3 className="text-sm font-bold text-green-700 tracking-wide dark:text-green-600">
+            INFORMAÇÕES DO EVENTO
+          </h3>
+        </div>
+
+        <div
+          className={` gap-6 mb-8 ${window.screen.width < 768 ? `flex flex-col` : "grid grid-cols-2"}`}
+        >
+          <div className="flex flex-col">
+            <label
+              htmlFor="datadefesa"
+              className="text-sm font-medium text-gray-800 mb-1.5 dark:text-slate-400"
+            >
+              Data da Defesa
+            </label>
+            <input
+              type="date"
+              id="datadefesa"
+              value={dataDefesa}
+              onChange={(e) => setDataDefesa(e.target.value)}
+              className="w-full border border-gray-300 rounded-md p-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-700 dark:text-slate-100"
+            />
+          </div>
+          <div className="flex flex-col">
+            <label
+              htmlFor="localdefesa"
+              className="text-sm font-medium text-gray-800 mb-1.5 dark:text-slate-400"
+            >
+              Local da Defesa
+            </label>
+            <div className="relative flex items-center">
+              <MapPin className="w-4 h-4 text-gray-400 absolute left-3" />
+              <input
+                type="text"
+                id="localdefesa"
+                value={localDefesa}
+                onChange={(e) => setLocalDefesa(e.target.value)}
+                placeholder="Ex: Auditório 2 ou Link Meet"
+                className="w-full border border-gray-300 rounded-md py-2.5 pr-2.5 pl-9 text-sm outline-none focus:border-blue-500 dark:text-slate-100 focus:ring-1 focus:ring-blue-500 placeholder:text-gray-400 text-gray-700"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div
+          className={` gap-6 mb-8 ${window.screen.width < 768 ? `flex flex-col` : "grid grid-cols-2"}`}
+        >
+          <div className="flex flex-col">
+            <label
+              htmlFor="titulodefesa"
+              className="text-sm font-medium text-gray-800 mb-1.5 dark:text-slate-400"
+            >
+              Título da Defesa
+            </label>
+            <input
+              type="text"
+              id="titulodefesa"
+              value={titulo}
+              onChange={(e) => setTitulo(e.target.value)}
+              placeholder="Ex: Defesa de Estágio Curricular Obrigatório"
+              className="w-full border border-gray-300 rounded-md p-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 dark:text-slate-100 text-gray-700 placeholder:text-gray-400"
+            />
+          </div>
+          <div className="flex flex-col">
+            <label
+              htmlFor="horariodefesa"
+              className="text-sm font-medium text-gray-800 mb-1.5 dark:text-slate-400"
+            >
+              Horário da Defesa
+            </label>
+            <input
+              type="time"
+              id="horariodefesa"
+              value={horario}
+              onChange={(e) => setHorario(e.target.value)}
+              className="w-full border border-gray-300 rounded-md p-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 dark:text-slate-100 text-gray-700"
+            />
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2 mb-4">
+          <Users className="w-5 h-5 text-green-700" />
+          <h3 className="text-sm font-bold text-green-700 tracking-wide dark:text-green-600">
+            BANCA EXAMINADORA
+          </h3>
+        </div>
+
+        {banca.map((membro, index) => (
+          <div
+            key={index}
+            className={` gap-6 mb-3 ${window.screen.width < 768 ? `flex flex-col bg-gray-200 rounded-lg p-6` : "grid grid-cols-2"}`}
+          >
+            <div className="flex flex-col">
+              <label
+                className={`text-sm font-medium  mb-1.5 ${window.screen.width < 768 ? "text-[#004bb5] dark:text-slate-400" : "text-gray-800 dark:text-slate-400"}`}
+              >
+                Nome do Integrante
+              </label>
+              <input
+                type="text"
+                placeholder="Nome Completo"
+                value={membro.nome}
+                onChange={(e) =>
+                  handleBancaChange(index, "nome", e.target.value)
+                }
+                className={`w-full border border-gray-300 rounded-md p-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 dark:text-slate-100 ${window.screen.width < 768 ? "bg-white border-gray-400" : "border-gray-300"}`}
+              />
+            </div>
+            <div className="flex flex-col">
+              <label
+                className={`text-sm font-medium mb-1.5 ${window.screen.width < 768 ? "text-[#004bb5] dark:text-slate-400" : "text-gray-800 dark:text-slate-400"}`}
+              >
+                E-mail Institucional
+              </label>
+              <input
+                type="email"
+                placeholder="nome@instituicao.edu"
+                value={membro.email}
+                onChange={(e) =>
+                  handleBancaChange(index, "email", e.target.value)
+                }
+                className={`w-full border  rounded-md p-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 dark:text-slate-100 ${window.screen.width < 768 ? "bg-white border-gray-400" : "border-gray-300"}`}
+              />
+            </div>
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={() => setBanca([...banca, { nome: "", email: "" }])}
+          className="flex items-center gap-2 text-[#004bb5] text-sm font-medium hover:text-blue-800 mb-8 transition-colors dark:text-[#004bb1]"
+        >
+          <PlusCircle className="w-4 h-4" /> Adicionar Integrante
+        </button>
+
+        <div className="flex items-center gap-2 mb-4">
+          <FileText className="w-5 h-5 text-green-700" />
+          <h3 className="text-sm font-bold text-green-700 tracking-wide dark:text-green-600">
+            DOCUMENTAÇÃO
+          </h3>
+        </div>
+
+        <div className={` gap-6 mb-8 ${window.screen.width < 768 ? `flex flex-col bg-gray-200 rounded-lg p-6` : "grid grid-cols-2"}`}>
+          <div>
+            <div className="flex justify-between items-end mb-1.5">
+              <span className="text-sm font-medium text-gray-800 dark:text-slate-400">
+                Ata de Defesa
+              </span>
+              <button className="flex items-center gap-1 text-[#004bb5] text-xs font-semibold hover:underline">
+                <Download className="w-3.5 h-3.5" /> Baixar Modelo
+              </button>
+            </div>
+            <label className={`border-2 border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors dark:bg-slate-900 dark:hover:bg-slate-700 group ${window.screen.width < 768 ? "bg-gray-200":"bg-white"}`}>
+              <FileUp className="w-6 h-6 text-[#004bb5] mb-2 group-hover:scale-110 transition-transform" />
+              <span className="text-sm font-semibold text-gray-800 text-center dark:text-slate-50">
+                {ataFile ? ataFile.name : "Arraste ou clique"}
+              </span>
+              {!ataFile && (
+                <span className="text-xs text-gray-500 font-medium uppercase mt-0.5 dark:text-slate-400">
+                  PDF até 5MB
+                </span>
+              )}
+              <input
+                type="file"
+                className="hidden"
+                accept=".pdf"
+                onChange={(e) => setAtaFile(e.target.files?.[0] || null)}
+              />
+            </label>
+          </div>
+
+          <div>
+            <div className="flex justify-between items-end mb-1.5">
+              <span className="text-sm font-medium text-gray-800 dark:text-slate-400">
+                Relatório Final
+              </span>
+              <button className="flex items-center gap-1 text-[#004bb5] text-xs font-semibold hover:underline">
+                <Download className="w-3.5 h-3.5" /> Baixar Modelo
+              </button>
+            </div>
+            <label className={`border-2 border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors dark:bg-slate-900 dark:hover:bg-slate-700  group ${window.screen.width < 768 ? "bg-gray-200":"bg-white "}`}>
+              <CloudUpload className="w-6 h-6 text-[#004bb5] mb-2 group-hover:scale-110 transition-transform" />
+              <span className="text-sm font-semibold text-gray-800 text-center dark:text-slate-50">
+                {relatorioFile ? relatorioFile.name : "Arraste ou clique"}
+              </span>
+              {!relatorioFile && (
+                <span className="text-xs text-gray-500 font-medium uppercase mt-0.5 dark:text-slate-400">
+                  PDF até 15MB
+                </span>
+              )}
+              <input
+                type="file"
+                className="hidden"
+                accept=".pdf"
+                onChange={(e) =>
+                  setRelatorioFile(e.target.files?.[0] || null)
+                }
+              />
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div className={`bg-gray-50/80 px-8 py-5 border-t border-gray-100 flex dark:bg-slate-900/50 items-center gap-6 ${window.screen.width <= 768 ? `flex-col` : "justify-end"}`}>
+        <button
+          onClick={fecharModal}
+          disabled={isSubmitting}
+          className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors disabled:opacity-50 dark:text-slate-400 dark:hover:text-slate-200"
+        >
+          Cancelar
+        </button>
+        <button
+          onClick={handleConfirmarAgendamento}
+          disabled={isSubmitting}
+          className="px-5 py-2.5 bg-[#0052cc] hover:bg-[#0043a6] text-white rounded-lg text-sm font-semibold flex items-center gap-2 transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {isSubmitting ? "Agendando..." : "Confirmar Agendamento"}
+          {!isSubmitting && <CheckCircle className="w-4 h-4" />}
+        </button>
       </div>
     </div>
-  );
+  </div>
+);
 }

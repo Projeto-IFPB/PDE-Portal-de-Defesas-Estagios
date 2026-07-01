@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 // Importações do nosso ecossistema Supabase
-import { supabase } from "@/lib/supabase/supabaseClient";
+import { supabaseBrowser as supabase } from "@/lib/supabase/browserClient";
 import { loginSchema, cadastroSchema, LoginFormData, CadastroFormData } from "@/lib/supabase/schemas";
 
 export default function Home() {
@@ -99,7 +99,6 @@ export default function Home() {
 
       if (dbError) throw dbError;
 
-      alert("Conta criada com sucesso! Faça seu login.");
       setIsLogin(true); // Joga o usuário para a tela de login
 
     } catch (error: any) {

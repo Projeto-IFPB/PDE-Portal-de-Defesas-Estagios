@@ -8,7 +8,7 @@ export default function CardTags({ tags }: CardTagsProps) {
       {tags.map((tag) => (
         <span
           key={tag}
-          className="bg-gray-100 text-gray-500 px-3 py-1.5 rounded-full text-sm font-medium"
+          className="bg-gray-100 dark:bg-slate-800 text-gray-500 dark:text-slate-300 px-3 py-1.5 rounded-full text-sm font-medium"
         >
           {tag}
         </span>

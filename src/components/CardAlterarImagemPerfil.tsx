@@ -90,7 +90,7 @@ export function CardAlterarImagemPerfilDesktop() {
             onClick={() => inputRef.current?.click()}>
                 Alterar Foto
             </button>
-            <p className="text-[0.7rem] font-semibold text-slate-500 mb-5 dark:text-slate-400">JPG ou PNG. Tamanho máx 5MB</p>
+            <p className="text-[0.7rem] font-semibold text-slate-500 mb-5 dark:text-slate-400">JPG ou PNG. Tamanho máx 15MB</p>
 
         </div>
     )
