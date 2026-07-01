@@ -8,12 +8,14 @@ import {
   GraduationCap,
   LucideIcon,
 } from "lucide-react";
+import ModalEstagioRecomendado from "../ModalCadastroEstagio";
 import CabecalhoBoasVindas from "@/components/CabecalhoBoasVindas";
 import CardInformativo, { VarianteCard } from "@/components/CardInformativo";
 import OrientacaoCard from "@/components/CardOrientacoes";
 import SecaoEstagiosCoordenador from "@/components/SecaoEstagiosCoordenador";
 import { listarEstagiosPorCoordenadorId } from "@/lib/supabase/functions-select";
 import { useOrientacoes } from "@/hooks/useOrientacoes";
+import { PlusCircle } from "lucide-react";
 
 interface DadosCardDashboard {
   titulo: string;
@@ -30,64 +32,65 @@ export default function DashboardCoordenador({
 }) {
   const [metricas, setMetricas] = useState<DadosCardDashboard[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { orientacoes } = useOrientacoes();
 
-  useEffect(() => {
-    async function carregarDados() {
-      setIsLoading(true);
-      try {
-        const estagiosCoordDB =
-          (await listarEstagiosPorCoordenadorId(usuarioId)) || [];
-        const ativosCoo = estagiosCoordDB.filter(
-          (e) => e.status?.toLowerCase() === "em_andamento"
-        ).length;
-        const pendentesCoo = estagiosCoordDB.filter(
-          (e) => e.status?.toLowerCase() === "pendente"
-        ).length;
-        const concluidosCoo = estagiosCoordDB.filter(
-          (e) => e.status?.toLowerCase() === "concluido"
-        ).length;
+  async function carregarDados() {
+    setIsLoading(true);
+    try {
+      const estagiosCoordDB =
+        (await listarEstagiosPorCoordenadorId(usuarioId)) || [];
+      const ativosCoo = estagiosCoordDB.filter(
+        (e) => e.status?.toLowerCase() === "em_andamento"
+      ).length;
+      const pendentesCoo = estagiosCoordDB.filter(
+        (e) => e.status?.toLowerCase() === "pendente"
+      ).length;
+      const concluidosCoo = estagiosCoordDB.filter(
+        (e) => e.status?.toLowerCase() === "concluido"
+      ).length;
 
-        setMetricas([
-          {
-            titulo: "Estágios em Andamento",
-            valor: ativosCoo.toString(),
-            subtitulo: "Acompanhamento regular",
-            icone: Users,
-            variante: "azul",
-          },
-          {
-            titulo: "Estágios Pendentes",
-            valor: pendentesCoo.toString(),
-            subtitulo:
-              pendentesCoo > 0
-                ? "Necessitam de revisão"
-                : "Nenhuma pendência ativa",
-            icone: ClipboardList,
-            variante: "laranja",
-          },
-          {
-            titulo: "Estágios Concluídos",
-            valor: concluidosCoo.toString(),
-            subtitulo: "Finalizados com sucesso",
-            icone: GraduationCap,
-            variante: "verde",
-          },
-          {
-            titulo: "Total de Estágios",
-            valor: estagiosCoordDB.length.toString(),
-            subtitulo: "Registrados no seu curso",
-            icone: Briefcase,
-            variante: "roxo",
-          },
-        ]);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-      }
+      setMetricas([
+        {
+          titulo: "Estágios em Andamento",
+          valor: ativosCoo.toString(),
+          subtitulo: "Acompanhamento regular",
+          icone: Users,
+          variante: "azul",
+        },
+        {
+          titulo: "Estágios Pendentes",
+          valor: pendentesCoo.toString(),
+          subtitulo:
+            pendentesCoo > 0
+              ? "Necessitam de revisão"
+              : "Nenhuma pendência ativa",
+          icone: ClipboardList,
+          variante: "laranja",
+        },
+        {
+          titulo: "Estágios Concluídos",
+          valor: concluidosCoo.toString(),
+          subtitulo: "Finalizados com sucesso",
+          icone: GraduationCap,
+          variante: "verde",
+        },
+        {
+          titulo: "Total de Estágios",
+          valor: estagiosCoordDB.length.toString(),
+          subtitulo: "Registrados no seu curso",
+          icone: Briefcase,
+          variante: "roxo",
+        },
+      ]);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
     }
+  }
 
+  useEffect(() => {
     if (usuarioId) carregarDados();
   }, [usuarioId]);
 
@@ -96,10 +99,27 @@ export default function DashboardCoordenador({
 
   return (
     <>
-      <CabecalhoBoasVindas
-        titulo="Bem-vindo, Coordenador"
-        subtitulo="Gerencie o curso e acompanhe o progresso acadêmico."
-      />
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 mb-6">
+        <CabecalhoBoasVindas
+          titulo="Bem-vindo, Coordenador"
+          subtitulo="Geerencie o curso e acompanhe o progresso acadêmico."
+        />
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="flex items-center justify-center gap-1.5 w-full md:w-auto px-4 py-3 text-sm font-medium text-white transition-colors bg-[#185adb] rounded-lg shadow-sm cursor-pointer hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        >
+          <PlusCircle size={18} strokeWidth={2} />
+          Cadastrar Nova Vaga
+        </button>
+      </div>
+      {isModalOpen && (
+        <ModalEstagioRecomendado
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onSuccess={carregarDados}
+          Id_usuario={usuarioId}
+        />
+      )}
 
       <section
         className={`grid grid-cols-1 gap-4 sm:grid-cols-2 ${gridColunasDesktop} lg:gap-6`}
