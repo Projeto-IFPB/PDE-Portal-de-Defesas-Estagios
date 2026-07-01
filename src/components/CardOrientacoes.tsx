@@ -16,7 +16,7 @@ interface OrientacaoCardProps {
   data: string;
   status: StatusEstagio;
   foto_perfil?: string;
-  onDelete: () => Promise<void>;
+  onDelete?: () => Promise<void>;
 }
 
 // Configuração visual dinâmica baseada no status do estágio
@@ -102,7 +102,7 @@ export default function OrientacaoCard({
             >
               {currentStatus.label}
             </span>
-            {status === "pendente" && (
+            {status === "pendente" && onDelete && (
               <button
                 onClick={() => setIsDeleteConfirmOpen(true)}
                 className="p-1.5 text-red-500 hover:bg-red-50 hover:text-red-700 rounded-full transition-colors duration-200 dark:hover:bg-red-900/20"
@@ -175,7 +175,7 @@ export default function OrientacaoCard({
                   onClick={async () => {
                     try {
                       setIsDeleting(true);
-                      await onDelete();
+                      await onDelete?.();
                       setIsDeleteConfirmOpen(false);
                     } catch (error) {
                       console.error("Erro ao deletar:", error);
