@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 // Importações do nosso ecossistema Supabase
-import { supabase } from "@/lib/supabase/supabaseClient";
+import { supabaseBrowser as supabase } from "@/lib/supabase/browserClient";
 import { loginSchema, cadastroSchema, LoginFormData, CadastroFormData } from "@/lib/supabase/schemas";
 
 export default function Home() {
