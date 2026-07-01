@@ -55,7 +55,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
           const { data: perfilDB, error } = await supabase
             .from("Usuarios")
-            .select("Nome_Completo, Email, tipo_de_perfil, data_cadastro")
+            .select("Nome_Completo, Email, tipo_de_perfil, data_cadastro, created_at")
             .eq("id", userId)
             .single();
 
@@ -64,27 +64,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           if (perfilDB) {
             const primeiroNome = perfilDB.Nome_Completo
               ? perfilDB.Nome_Completo.trim().split(" ")[0]
-              : "Usuário";
-
-            let dataCadastroFormatada = "---";
-            if (perfilDB.data_cadastro) {
-              const dataObj = new Date(`${perfilDB.data_cadastro}T00:00:00`);
-              const meses = [
-                "Jan",
-                "Fev",
-                "Mar",
-                "Abr",
-                "Mai",
-                "Jun",
-                "Jul",
-                "Ago",
-                "Set",
-                "Out",
-                "Nov",
-                "Dez",
-              ];
-              dataCadastroFormatada = `${meses[dataObj.getMonth()]} ${dataObj.getFullYear()}`;
-            }
+              : "Usuário"; 
 
             const caminho = await obterCaminhoFotoPerfil(userId);
             const url = await obterUrlPublicaFotoPerfil(caminho);
@@ -101,7 +81,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
               email: perfilDB.Email || session.user.email || "",
               perfil: (perfilDB.tipo_de_perfil as PerfilUsuario) || "aluno",
               fotoPerfil: fotoFinal,
-              dataCadastro: dataCadastroFormatada,
+              dataCadastro: perfilDB.data_cadastro
             });
           }
         }
