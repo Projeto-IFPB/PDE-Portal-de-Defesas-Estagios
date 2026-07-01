@@ -134,10 +134,10 @@ export default function PaginaDetalhesEstagio() {
 
      <hr className="my-6 border-gray-200 dark:border-slate-700" />
 
-      <div className="grid md:grid-cols-3 gap-6">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
 
       <div className="bg-gray-50 dark:bg-slate-800 rounded-xl p-4 flex gap-3 items-center">
-        <AccountIcon className="w-5 h-5 text-blue-600" />
+        <AccountIcon className="w-5 h-5 md:w-6 md:h-6 text-blue-600" />
 
         <div>
           <p className="text-xs text-gray-500 uppercase">
@@ -151,7 +151,7 @@ export default function PaginaDetalhesEstagio() {
       </div>
 
       <div className="bg-gray-50 dark:bg-slate-800 rounded-xl p-4 flex gap-3 items-center">
-        <AccountIcon className="w-5 h-5 text-blue-600" />
+        <AccountIcon className="w-5 h-5 md:w-6 md:h-6 text-blue-600" />
 
         <div>
           <p className="text-xs text-gray-500 uppercase">
@@ -164,7 +164,7 @@ export default function PaginaDetalhesEstagio() {
         </div>
       </div>
         <div className="bg-gray-50 dark:bg-slate-800 rounded-xl p-4 flex gap-3 items-center">
-            <CalendarIcon className="w-5 h-5 text-blue-600"/>
+            <CalendarIcon className="w-5 h-5 md:w-6 md:h-6 text-blue-600"/>
 
             <div>
                 <p className="text-xs text-gray-500 uppercase">
@@ -178,7 +178,7 @@ export default function PaginaDetalhesEstagio() {
         </div>
 
         <div className="bg-gray-50 dark:bg-slate-800 rounded-xl p-4 flex gap-3 items-center">
-          <ClockIcon className="w-5 h-5 text-blue-600"/>
+          <ClockIcon className="w-5 h-5 md:w-6 md:h-6 text-blue-600"/>
 
           <div>
             <p className="text-xs text-gray-500 uppercase">
@@ -192,7 +192,7 @@ export default function PaginaDetalhesEstagio() {
         </div>
 
         <div className="bg-gray-50 dark:bg-slate-800 rounded-xl p-4 flex gap-3 items-center">
-          <ClockIcon className="w-5 h-5 text-blue-600"/>
+          <ClockIcon className="w-5 h-5 md:w-6 md:h-6 text-blue-600"/>
 
           <div>
             <p className="text-xs text-gray-500 uppercase">
@@ -227,7 +227,7 @@ export default function PaginaDetalhesEstagio() {
 
         <div className="grid md:grid-cols-2 gap-4">
 
-          <div className="bg-gray-50 dark:bg-slate-800 rounded-xl p-5 flex justify-between items-center">
+          <div className="bg-gray-50 dark:bg-slate-800 rounded-xl p-5 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <h3 className="font-semibold dark:text-white">
                 Termo de Compromisso
@@ -240,13 +240,13 @@ export default function PaginaDetalhesEstagio() {
 
             <button
               onClick={() => visualizarDocumento("termo_de_compromisso")}
-              className="cursor-pointer px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700"
+              className="cursor-pointer shrink-0 px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700"
             >
               Visualizar
             </button>
           </div>
 
-        <div className="bg-gray-50 dark:bg-slate-800 rounded-xl p-5 flex justify-between items-center">
+        <div className="bg-gray-50 dark:bg-slate-800 rounded-xl p-5 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <h3 className="font-semibold dark:text-white">
               Termo de Orientação
@@ -259,7 +259,7 @@ export default function PaginaDetalhesEstagio() {
 
           <button
             onClick={() => visualizarDocumento("termo_de_orientacao")}
-            className="cursor-pointer px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700"
+            className="cursor-pointer shrink-0 px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700"
           >
             Visualizar
           </button>
