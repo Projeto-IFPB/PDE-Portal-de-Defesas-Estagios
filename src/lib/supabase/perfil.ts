@@ -1,28 +1,37 @@
-import { supabase } from './supabaseClient'; 
+import { supabaseBrowser as supabase } from "./browserClient";
 
-export async function atualizarDadosUsuario(idUsuario: string, nome: string, email: string, senha?: string) {
+export async function atualizarDadosUsuario(
+  idUsuario: string,
+  nome: string,
+  email: string,
+  senha?: string
+) {
   try {
     const emailLimpo = email.trim();
     const nomeLimpo = nome.trim();
 
     // Buscamos o usuário atual logado para poder comparar as informações
-    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
 
     if (userError || !user) {
+         console.log("DEBUG - Erro de autenticação:", { userError, user });
       return { sucesso: false, erro: "Usuário não autenticado." };
     }
 
     // Preparamos o objeto de atualização
     const authUpdates: any = {
-      data: { full_name: nomeLimpo }
+      data: { full_name: nomeLimpo },
     };
 
-    if (emailLimpo !== user.email) {
+    if (emailLimpo.toLowerCase() !== user.email?.toLowerCase()) {
       authUpdates.email = emailLimpo;
     }
 
     // Só adiciona a senha se ela foi preenchida
-    if (senha && senha.trim() !== '') {
+    if (senha && senha.trim() !== "") {
       authUpdates.password = senha.trim();
     }
 
@@ -36,12 +45,12 @@ export async function atualizarDadosUsuario(idUsuario: string, nome: string, ema
 
     // Força a atualização na sua tabela 'Usuarios'
     const { error: dbError } = await supabase
-      .from('Usuarios')
-      .update({ 
+      .from("Usuarios")
+      .update({
         Nome_Completo: nomeLimpo,
-        Email: emailLimpo 
+        Email: emailLimpo,
       })
-      .eq('id', idUsuario);
+      .eq("id", idUsuario);
 
     if (dbError) {
       console.error("Erro ao atualizar tabela Usuarios:", dbError.message);
@@ -51,6 +60,9 @@ export async function atualizarDadosUsuario(idUsuario: string, nome: string, ema
     return { sucesso: true };
   } catch (err: any) {
     console.error("Erro inesperado:", err);
-    return { sucesso: false, erro: err.message || "Erro interno ao tentar atualizar." };
+    return {
+      sucesso: false,
+      erro: err.message || "Erro interno ao tentar atualizar.",
+    };
   }
 }
