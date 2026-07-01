@@ -49,7 +49,7 @@ export default function OrientacaoCard({
   onDelete,
 }: OrientacaoCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false); 
+  const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const router = useRouter();
 
@@ -97,11 +97,13 @@ export default function OrientacaoCard({
             </div>
           </div>
           <div className="flex items-center gap-2 shrink-0 pt-1">
-            <span className={`px-2.5 py-1 text-xs font-medium border rounded-full ${currentStatus.colorClasses}`}>
+            <span
+              className={`px-2.5 py-1 text-xs font-medium border rounded-full ${currentStatus.colorClasses}`}
+            >
               {currentStatus.label}
             </span>
             {status === "pendente" && (
-              <button 
+              <button
                 onClick={() => setIsDeleteConfirmOpen(true)}
                 className="p-1.5 text-red-500 hover:bg-red-50 hover:text-red-700 rounded-full transition-colors duration-200 dark:hover:bg-red-900/20"
                 title="Excluir orientação"
@@ -109,7 +111,6 @@ export default function OrientacaoCard({
                 <Trash2 className="w-4 h-4" />
               </button>
             )}
-            
           </div>
         </div>
         <hr className="border-t border-gray-200 mb-6" />
@@ -150,48 +151,49 @@ export default function OrientacaoCard({
           Agendar Defesa
         </button>
         {isDeleteConfirmOpen && (
-  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-    <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 p-6 rounded-xl shadow-2xl max-w-sm w-full transition-all">
-      {/* Título */}
-      <h3 className="text-lg font-semibold text-gray-900 dark:text-slate-50 mb-2">
-        Confirmar Exclusão
-      </h3>
-      
-      {/* Descrição */}
-      <p className="text-gray-600 dark:text-slate-400 mb-6">
-        Tem certeza que deseja excluir esta orientação pendente? Esta ação não pode ser desfeita.
-      </p>
-      
-      {/* Botões */}
-      <div className="flex gap-3 justify-end">
-        <button 
-          onClick={() => setIsDeleteConfirmOpen(false)}
-          className="px-4 py-2 text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
-        >
-          Cancelar
-        </button>
-        <button 
-  disabled={isDeleting}
-  onClick={async () => {
-    try {
-      setIsDeleting(true);
-      await onDelete(); 
-      setIsDeleteConfirmOpen(false); 
-    } catch (error) {
-      console.error("Erro ao deletar:", error);
-      alert("Ocorreu um erro ao tentar excluir.");
-    } finally {
-      setIsDeleting(false);
-    }
-  }}
-  className={`px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed`}
->
-  {isDeleting ? "Excluindo..." : "Confirmar Exclusão"}
-</button>
-      </div>
-    </div>
-  </div>
-)}
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+            <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 p-6 rounded-xl shadow-2xl max-w-sm w-full transition-all">
+              {/* Título */}
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-slate-50 mb-2">
+                Confirmar Exclusão
+              </h3>
+
+              {/* Descrição */}
+              <p className="text-gray-600 dark:text-slate-400 mb-6">
+                Tem certeza que deseja excluir esta orientação pendente? Esta
+                ação não pode ser desfeita.
+              </p>
+
+              {/* Botões */}
+              <div className="flex gap-3 justify-end">
+                <button
+                  onClick={() => setIsDeleteConfirmOpen(false)}
+                  className="px-4 py-2 text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
+                >
+                  Cancelar
+                </button>
+                <button
+                  disabled={isDeleting}
+                  onClick={async () => {
+                    try {
+                      setIsDeleting(true);
+                      await onDelete();
+                      setIsDeleteConfirmOpen(false);
+                    } catch (error) {
+                      console.error("Erro ao deletar:", error);
+                      alert("Ocorreu um erro ao tentar excluir.");
+                    } finally {
+                      setIsDeleting(false);
+                    }
+                  }}
+                  className={`px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed`}
+                >
+                  {isDeleting ? "Excluindo..." : "Confirmar Exclusão"}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
       {/*modalzinho*/}
       {isModalOpen && (
@@ -206,17 +208,21 @@ export default function OrientacaoCard({
 }
 
 export function CardNenhumAluno() {
-    return (
-        <>
-        <div className="grid col-span-1 md:col-span-2 lg:col-span-3 bg-white py-10 justify-center items-center rounded-lg dark:bg-slate-900">
-            <div className="bg-blue-100 p-6 m-auto rounded-full mb-4">
-                <CalendarX className="w-10 h-10 text-blue-800" strokeWidth={1.2}/>
-            </div>
-            <div className="max-w-80 text-center">
-                <h1 className="text-xl font-semibold mb-3 dark:text-slate-50">Você não orienta nenhum aluno</h1>
-                <p className="text-slate-500 dark:text-slate-400">Você não orienta nenhum aluni. Novas orientações aparecerão aqui.</p>
-            </div>
+  return (
+    <>
+      <div className="grid col-span-1 md:col-span-2 lg:col-span-3 bg-white py-10 justify-center items-center rounded-lg dark:bg-slate-900">
+        <div className="bg-blue-100 p-6 m-auto rounded-full mb-4">
+          <CalendarX className="w-10 h-10 text-blue-800" strokeWidth={1.2} />
         </div>
-        </>
-    )
+        <div className="max-w-80 text-center">
+          <h1 className="text-xl font-semibold mb-3 dark:text-slate-50">
+            Você não orienta nenhum aluno
+          </h1>
+          <p className="text-slate-500 dark:text-slate-400">
+            Você não orienta nenhum aluni. Novas orientações aparecerão aqui.
+          </p>
+        </div>
+      </div>
+    </>
+  );
 }
