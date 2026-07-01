@@ -409,3 +409,37 @@ export async function getEstagiosDoCoordenador(coordenadorId: string): Promise<a
     orientador: estagio.orientador ? { ...estagio.orientador, fotoUrl: fotosMap[estagio.orientador.id] || null } : null
   }));
 }
+
+// 17. Buscar estágios dos alunos de determinado orientador
+
+export async function listarDefesasPorOrientadorId(usuarioId: string) {
+  const dataAtual = new Date().toISOString().split('T')[0]; // Data de hoje YYYY-MM-DD
+
+  const { data, error } = await supabase
+    .from('Defesa_estagios')
+    .select(`
+      id,
+      data_defesa,
+      horario_defesa,
+      local_defesa,
+      Estagios!id_estagio!inner (
+        Id_orientador,
+        Id_estagiario,
+        Usuarios:Id_estagiario (
+          Nome_Completo
+        )
+      )
+    `)
+    .eq('Estagios.Id_orientador', usuarioId)
+    .gte('data_defesa', dataAtual)
+    .order('data_defesa', { ascending: true })
+    .order('horario_defesa', { ascending: true });
+
+  if (error) {
+    // Força o log detalhado no terminal/console do navegador para nunca mais vir `{}`
+    console.error("Erro detalhado do Supabase:", error.message, error.details, error.hint);
+    throw error;
+  }
+
+  return data || [];
+}
