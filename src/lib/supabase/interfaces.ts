@@ -17,10 +17,12 @@ export interface Estagio {
   nome_estagiario?: string;
   email_estagiario?: string;
   foto_estagiario?: string;
-  curso?: string;
-  carga_horaria?: string;
-  previsao_data_fim?: string;
-}
+  curso?: string
+  carga_horaria?: string
+  previsao_data_fim?: string
+  descricao?: string;
+
+
 
 export interface AgendaDefesa {
   id?: string;
