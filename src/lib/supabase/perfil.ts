@@ -1,17 +1,32 @@
-import { supabase } from './supabaseClient'; // Ajuste o caminho se necessário
+import { supabase } from './supabaseClient'; 
 
 export async function atualizarDadosUsuario(idUsuario: string, nome: string, email: string, senha?: string) {
   try {
-    // 1. Atualiza as credenciais no Auth (Autenticação do Supabase)
-    const authUpdates: any = {
-      email: email,
-      data: { full_name: nome }
-    };
+    const emailLimpo = email.trim();
+    const nomeLimpo = nome.trim();
 
-    if (senha && senha.trim() !== '') {
-      authUpdates.password = senha;
+    // Buscamos o usuário atual logado para poder comparar as informações
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+
+    if (userError || !user) {
+      return { sucesso: false, erro: "Usuário não autenticado." };
     }
 
+    // Preparamos o objeto de atualização
+    const authUpdates: any = {
+      data: { full_name: nomeLimpo }
+    };
+
+    if (emailLimpo !== user.email) {
+      authUpdates.email = emailLimpo;
+    }
+
+    // Só adiciona a senha se ela foi preenchida
+    if (senha && senha.trim() !== '') {
+      authUpdates.password = senha.trim();
+    }
+
+    // Atualiza no Auth
     const { error: authError } = await supabase.auth.updateUser(authUpdates);
 
     if (authError) {
@@ -19,12 +34,12 @@ export async function atualizarDadosUsuario(idUsuario: string, nome: string, ema
       return { sucesso: false, erro: authError.message };
     }
 
-    // 2. Força a atualização na sua tabela 'Usuarios'
+    // Força a atualização na sua tabela 'Usuarios'
     const { error: dbError } = await supabase
       .from('Usuarios')
       .update({ 
-        Nome_Completo: nome,
-        Email: email 
+        Nome_Completo: nomeLimpo,
+        Email: emailLimpo 
       })
       .eq('id', idUsuario);
 
