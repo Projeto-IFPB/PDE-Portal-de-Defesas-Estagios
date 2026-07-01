@@ -8,7 +8,9 @@ export type PerfilUsuario = 'aluno' | 'orientador' | 'coordenador';
 
 interface UsuarioMock {
   id: string;
-  nome: string;
+  nome: string;          // Usado para menus e saudações (Ex: "Petrônio")
+  nomeCompleto: string;  // Usado para o formulário de edição
+  email: string;         // Usado para o formulário de edição
   perfil: PerfilUsuario;
   fotoPerfil: string | undefined;
   dataCadastro: string;
@@ -25,7 +27,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [usuario, setUsuario] = useState<UsuarioMock>({
     id: '',
     nome: 'Carregando...',
-    perfil: 'aluno', // Perfil padrão temporário de segurança
+    nomeCompleto: 'Carregando...',
+    email: '',
+    perfil: 'aluno', 
     fotoPerfil: undefined,
     dataCadastro: '---',
   });
@@ -40,7 +44,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
           const { data: perfilDB, error } = await supabase
             .from('Usuarios')
-            .select('Nome_Completo, tipo_de_perfil, data_cadastro')
+            .select('Nome_Completo, Email, tipo_de_perfil, data_cadastro')
             .eq('id', userId)
             .single();
 
@@ -63,10 +67,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             const foto_padrao = await obterUrlPublicaFotoPerfil("sem_foto_perfil.jpg");
             const fotoFinal = (url && url !== 'sem imagem') ? url : foto_padrao;
 
-            // 2. Substitui o placeholder pelos dados reais
+            // Atualiza o estado com todos os dados necessários
             setUsuario({
               id: userId,
               nome: primeiroNome,
+              nomeCompleto: perfilDB.Nome_Completo || '',
+              email: perfilDB.Email || session.user.email || '',
               perfil: (perfilDB.tipo_de_perfil as PerfilUsuario) || 'aluno',
               fotoPerfil: fotoFinal,
               dataCadastro: dataCadastroFormatada,
@@ -81,7 +87,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     sincronizarUsuario();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      // Atualiza os dados novamente caso o usuário faça login em outra conta
       if (session) {
         sincronizarUsuario();
       }
