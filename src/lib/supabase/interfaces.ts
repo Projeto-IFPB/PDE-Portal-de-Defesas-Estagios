@@ -43,7 +43,7 @@ export interface EstagioRecomendado {
   titulo: string;
   descricao?: string;
   empresa: string;
-  competencia?: string;
+  competencias?: string;
   vagas?: number | null;
 }
 

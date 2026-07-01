@@ -304,7 +304,28 @@ export async function listarDefesas(usuarioId: string, perfil: 'aluno' | 'orient
   return data ?? []
 }
 
-//14. Buscar Estagio por um id de estagio
+//14. Buscar Estagio Recomendado pelo ID
+export async function buscarEstagioRecomendadoPorId(id: string): Promise<EstagioRecomendado | null> {
+  try {
+    const { data, error } = await supabase
+      .from('Estagios_Recomendados')
+      .select('*')
+      .eq('id', id)
+      .maybeSingle();
+
+    if (error) {
+      console.error(`Erro ao buscar estágio recomendado ${id}:`, error.message);
+      return null;
+    }
+
+    return data as EstagioRecomendado;
+  } catch (error) {
+    console.error("Erro inesperado em buscarEstagioRecomendadoPorId:", error);
+    return null;
+  }
+}
+
+//15. Buscar Estagio por um id de estagio
 export async function buscarEstagioPorId(id: string): Promise<Estagio | null> {
   try {
     const { data, error } = await supabase
@@ -325,7 +346,7 @@ export async function buscarEstagioPorId(id: string): Promise<Estagio | null> {
   }
 }
 
-// 15. Listar Defesas de Estágios agendadas de um aluno
+// 16. Listar Defesas de Estágios agendadas de um aluno
 export async function listarDefesasAluno(id_aluno: string) {
   try {
     // Buscando estagios do aluno
@@ -356,7 +377,7 @@ export async function listarDefesasAluno(id_aluno: string) {
   }
 }
 
-// 16. Buscar Estágios para a Lista do Coordenador
+// 17. Buscar Estágios para a Lista do Coordenador
 export async function getEstagiosDoCoordenador(coordenadorId: string): Promise<any[]> {
   const { data, error } = await supabase
     .from('Estagios')
@@ -410,7 +431,7 @@ export async function getEstagiosDoCoordenador(coordenadorId: string): Promise<a
   }));
 }
 
-// 17. Buscar estágios dos alunos de determinado orientador
+// 18. Buscar estágios dos alunos de determinado orientador
 
 export async function listarDefesasPorOrientadorId(usuarioId: string) {
   const dataAtual = new Date().toISOString().split('T')[0]; // Data de hoje YYYY-MM-DD
