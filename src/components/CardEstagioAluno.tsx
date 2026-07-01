@@ -1,7 +1,10 @@
+"use client";
+
 import { Estagio } from "@/lib/supabase/interfaces";
 import BuildingIcon from '@iconify-react/mdi/building';
 import PeopleIcon from '@iconify-react/icon-park-solid/people';
 import GraduationCapFillIcon from '@iconify-react/ri/graduation-cap-fill';
+import { useRouter } from "next/navigation";
 
 interface CardEstagioAlunoProps {
     estagio: Estagio;
@@ -33,6 +36,8 @@ export function CardEstagioAluno({
 }: CardEstagioAlunoProps) {
     const dataFormatada = new Date(estagio.data_de_inicio).toLocaleDateString('pt-BR', {timeZone:'UTC'});
     const currentStatus =statusConfig[estagio.status];
+    const router = useRouter();
+
     return (
         <>
         <div className="hidden md:block bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-800 shadow-sm dark:shadow-slate-800 p-7 hover:shadow-md transition-shadow">
@@ -90,7 +95,9 @@ export function CardEstagioAluno({
 
             <hr className="my-4 border-gray-100 dark:border-slate-800"/>
             <div className="flex justify-end">
-                <button className="px-6 py-1.5 border border-blue-600 dark:border-blue-500 rounded-lg text-blue-600 dark:text-blue-400 text-sm font-semibold hover:bg-blue-600 hover:text-white transition-colors duration-200">
+                <button 
+                onClick={() => router.push(`/dashboard/meus_estagios/${estagio.id}`)}
+                className="cursor-pointer px-6 py-2 border border-blue-600 dark:border-blue-500 rounded-lg text-blue-600 dark:text-blue-500 text-sm font-semibold text-center hover:bg-blue-600 hover:text-white dark:hover:text-white transition-colors">
                     Detalhes do Estágio
                 </button>
             </div>
@@ -130,7 +137,9 @@ export function CardEstagioAluno({
                     {currentStatus.label}
                 </span>
 
-                <button className="text-sm font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-500 transition-colors">
+                <button 
+                onClick={() => router.push(`/dashboard/meus_estagios/${estagio.id}`)}
+                className="cursor-pointer px-6 py-2 border border-blue-600 dark:border-blue-500 rounded-lg text-blue-600 dark:text-blue-500 text-sm font-semibold text-center hover:bg-blue-600 hover:text-white dark:hover:text-white transition-colors">
                     Ver Detalhes
                 </button>
             </div>

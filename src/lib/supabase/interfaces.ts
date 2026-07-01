@@ -21,6 +21,7 @@ export interface Estagio {
   curso?: string
   carga_horaria?: string
   previsao_data_fim?: string
+  descricao?: string;
 }
 
 export interface AgendaDefesa {
