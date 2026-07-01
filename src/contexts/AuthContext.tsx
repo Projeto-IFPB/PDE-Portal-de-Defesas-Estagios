@@ -1,23 +1,32 @@
-'use client';
+"use client";
 
-import { useEffect, createContext, useContext, useState, ReactNode } from 'react';
-import { obterCaminhoFotoPerfil, obterUrlPublicaFotoPerfil } from '@/lib/supabase/functions-select';
-import { supabase } from '@/lib/supabase/supabaseClient'; 
+import {
+  createContext,
+  type ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { supabaseBrowser as supabase } from "@/lib/supabase/browserClient";
+import {
+  obterCaminhoFotoPerfil,
+  obterUrlPublicaFotoPerfil,
+} from "@/lib/supabase/functions-select";
 
-export type PerfilUsuario = 'aluno' | 'orientador' | 'coordenador';
+export type PerfilUsuario = "aluno" | "orientador" | "coordenador";
 
 interface UsuarioMock {
   id: string;
-  nome: string;          // Usado para menus e saudações (Ex: "Petrônio")
-  nomeCompleto: string;  // Usado para o formulário de edição
-  email: string;         // Usado para o formulário de edição
+  nome: string; // Usado para menus e saudações (Ex: "Petrônio")
+  nomeCompleto: string; // Usado para o formulário de edição
+  email: string; // Usado para o formulário de edição
   perfil: PerfilUsuario;
   fotoPerfil: string | undefined;
   dataCadastro: string;
 }
 
 interface AuthContextType {
-  usuario: UsuarioMock; 
+  usuario: UsuarioMock;
   setUsuario: (usuario: UsuarioMock) => void;
 }
 
@@ -25,55 +34,72 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [usuario, setUsuario] = useState<UsuarioMock>({
-    id: '',
-    nome: 'Carregando...',
-    nomeCompleto: 'Carregando...',
-    email: '',
-    perfil: 'aluno', 
+    id: "",
+    nome: "Carregando...",
+    nomeCompleto: "Carregando...",
+    email: "",
+    perfil: "aluno",
     fotoPerfil: undefined,
-    dataCadastro: '---',
+    dataCadastro: "---",
   });
 
   useEffect(() => {
     async function sincronizarUsuario() {
       try {
-        const { data: { session } } = await supabase.auth.getSession();
-        
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
+
         if (session?.user) {
           const userId = session.user.id;
 
           const { data: perfilDB, error } = await supabase
-            .from('Usuarios')
-            .select('Nome_Completo, Email, tipo_de_perfil, data_cadastro')
-            .eq('id', userId)
+            .from("Usuarios")
+            .select("Nome_Completo, Email, tipo_de_perfil, data_cadastro")
+            .eq("id", userId)
             .single();
 
           if (error) throw error;
 
           if (perfilDB) {
-            const primeiroNome = perfilDB.Nome_Completo 
-              ? perfilDB.Nome_Completo.trim().split(' ')[0] 
-              : 'Usuário';
+            const primeiroNome = perfilDB.Nome_Completo
+              ? perfilDB.Nome_Completo.trim().split(" ")[0]
+              : "Usuário";
 
-            let dataCadastroFormatada = '---';
+            let dataCadastroFormatada = "---";
             if (perfilDB.data_cadastro) {
               const dataObj = new Date(`${perfilDB.data_cadastro}T00:00:00`);
-              const meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+              const meses = [
+                "Jan",
+                "Fev",
+                "Mar",
+                "Abr",
+                "Mai",
+                "Jun",
+                "Jul",
+                "Ago",
+                "Set",
+                "Out",
+                "Nov",
+                "Dez",
+              ];
               dataCadastroFormatada = `${meses[dataObj.getMonth()]} ${dataObj.getFullYear()}`;
             }
 
             const caminho = await obterCaminhoFotoPerfil(userId);
             const url = await obterUrlPublicaFotoPerfil(caminho);
-            const foto_padrao = await obterUrlPublicaFotoPerfil("sem_foto_perfil.jpg");
-            const fotoFinal = (url && url !== 'sem imagem') ? url : foto_padrao;
+            const foto_padrao = await obterUrlPublicaFotoPerfil(
+              "sem_foto_perfil.jpg",
+            );
+            const fotoFinal = url && url !== "sem imagem" ? url : foto_padrao;
 
             // Atualiza o estado com todos os dados necessários
             setUsuario({
               id: userId,
               nome: primeiroNome,
-              nomeCompleto: perfilDB.Nome_Completo || '',
-              email: perfilDB.Email || session.user.email || '',
-              perfil: (perfilDB.tipo_de_perfil as PerfilUsuario) || 'aluno',
+              nomeCompleto: perfilDB.Nome_Completo || "",
+              email: perfilDB.Email || session.user.email || "",
+              perfil: (perfilDB.tipo_de_perfil as PerfilUsuario) || "aluno",
               fotoPerfil: fotoFinal,
               dataCadastro: dataCadastroFormatada,
             });
@@ -86,7 +112,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     sincronizarUsuario();
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session) {
         sincronizarUsuario();
       }
@@ -105,7 +133,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth deve ser usado dentro de um AuthProvider');
+    throw new Error("useAuth deve ser usado dentro de um AuthProvider");
   }
   return context;
 }
