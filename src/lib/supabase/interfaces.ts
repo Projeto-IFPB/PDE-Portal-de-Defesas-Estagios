@@ -1,34 +1,33 @@
-
 // --- INTERFACES PARA TIPAGEM
 export interface Usuario {
-  id: string; 
-  Email: string; 
-  Nome_Completo: string; 
-  tipo_de_perfil: 'aluno' | 'orientador' | 'coordenador' | 'pendente'; 
+  id: string;
+  Email: string;
+  Nome_Completo: string;
+  tipo_de_perfil: "aluno" | "orientador" | "coordenador" | "pendente";
 }
 
 export interface Estagio {
   id: string;
-  Id_estagiario: string; 
-  Id_orientador: string; 
+  Id_estagiario: string;
+  Id_orientador: string;
   Id_coordenador: string | null;
-  status: 'pendente' | 'em_andamento' | 'concluido';
+  status: "pendente" | "em_andamento" | "concluido";
   empresa: string;
-  data_de_inicio: string; 
+  data_de_inicio: string;
   nome_estagiario?: string;
   email_estagiario?: string;
   foto_estagiario?: string;
-  curso?: string
-  carga_horaria?: string
-  previsao_data_fim?: string
+  curso?: string;
+  carga_horaria?: string;
+  previsao_data_fim?: string;
 }
 
 export interface AgendaDefesa {
   id?: string;
-  id_estagio: string; 
-  data_defesa: string; 
+  id_estagio: string;
+  data_defesa: string;
   banca_examinadora: {};
-  status: 'agendado' | 'realizado' | 'cancelado';
+  status: "agendado" | "realizado" | "cancelado";
   created_at?: string;
   ata_defesa?: string;
   relatorio_final?: string;
@@ -48,17 +47,17 @@ export interface EstagioRecomendado {
 }
 
 export interface MembroBanca {
-    nome: string;
-    email?: string;
+  nome: string;
+  email?: string;
 }
 
 export interface InterfaceCardBancaDefesa {
-    data: string;
-    status: "agendado" | "realizado" | "cancelado";
-    titulo?: string;
-    horario?: string;
-    local: string;
-    banca: MembroBanca[];
+  data: string;
+  status: "agendado" | "realizado" | "cancelado";
+  titulo?: string;
+  horario?: string;
+  local: string;
+  banca: MembroBanca[];
 }
 
 export interface CadastroEstagio {
@@ -69,8 +68,18 @@ export interface CadastroEstagio {
   curso: string;
   cargaHoraria: string | number;
   dataFim: string;
-  descricao: string
-  usuariosSugestoes: Array<{ id: string; Nome_Completo: string; tipo_de_perfil: string }>;
-  termoCompromisso: File | null
-  termoOrientacao: File | null
+  descricao: string;
+  usuariosSugestoes: Array<{
+    id: string;
+    Nome_Completo: string;
+    tipo_de_perfil: string;
+  }>;
+  termoCompromisso: File | null;
+  termoOrientacao: File | null;
+}
+export interface cadastroEstagioRecomendado {
+  titulo: string;
+  empresa: string;
+  competencia: string;
+  descricao: string;
 }

@@ -1,11 +1,15 @@
 import { supabase } from "./supabaseClient";
-import {AgendaDefesa, CadastroEstagio} from "./interfaces";
+import {
+  AgendaDefesa,
+  CadastroEstagio,
+  cadastroEstagioRecomendado,
+} from "./interfaces";
 
 // 1. Agendar Defesa de Determinado Estagio
 export async function agendarDefesa(novaDefesa: AgendaDefesa) {
   try {
     const { data, error } = await supabase
-      .from('Defesa_estagios')
+      .from("Defesa_estagios")
       .insert([
         {
           id_estagio: novaDefesa.id_estagio,
@@ -14,7 +18,7 @@ export async function agendarDefesa(novaDefesa: AgendaDefesa) {
           banca_examinadora: novaDefesa.banca_examinadora,
           titulo: novaDefesa.titulo,
           horario_defesa: novaDefesa.horario_defesa,
-          status: 'agendado',
+          status: "agendado",
         },
       ])
       .select();
@@ -22,7 +26,7 @@ export async function agendarDefesa(novaDefesa: AgendaDefesa) {
     if (error) throw error;
     return data;
   } catch (error) {
-    console.error('Erro ao agendar defesa:', error);
+    console.error("Erro ao agendar defesa:", error);
     throw error;
   }
 }
@@ -30,15 +34,19 @@ export async function agendarDefesa(novaDefesa: AgendaDefesa) {
 export async function uploadESalvarDocumento(
   file: File,
   id_estagio: string,
-  tipo_documento: 'ata_defesa' | 'relatorio_final' | 'termo_de_compromisso' | 'termo_de_orientacao'
+  tipo_documento:
+    | "ata_defesa"
+    | "relatorio_final"
+    | "termo_de_compromisso"
+    | "termo_de_orientacao"
 ) {
   try {
-    const extensao = file.name.split('.').pop();
+    const extensao = file.name.split(".").pop();
     const nome = `${Date.now()}_${tipo_documento}.${extensao}`;
-    const caminho = `${id_estagio}/${nome}`; 
+    const caminho = `${id_estagio}/${nome}`;
 
     const { data: uploadData, error: uploadError } = await supabase.storage
-      .from('Documentos') 
+      .from("Documentos")
       .upload(caminho, file);
 
     if (uploadError) throw uploadError;
@@ -46,14 +54,14 @@ export async function uploadESalvarDocumento(
     const caminhoArquivo = uploadData.path;
 
     const { data: dbData, error: dbError } = await supabase
-      .from('Documentos') 
+      .from("Documentos")
       .insert([
         {
           nome: file.name,
           id_estagio: id_estagio,
           caminho_arquivo: caminhoArquivo,
           tipo_documento: tipo_documento,
-        }
+        },
       ])
       .select();
 
@@ -61,10 +69,14 @@ export async function uploadESalvarDocumento(
 
     return dbData;
   } catch (error) {
-    console.error(`Erro ao fazer upload do documento ${tipo_documento}:`, error);
+    console.error(
+      `Erro ao fazer upload do documento ${tipo_documento}:`,
+      error
+    );
     throw error;
   }
 }
+// 3. Cadastra estagio e os documentos deles no bucket
 export async function cadastrarEstagio({
   idEstagiario,
   nomeOrientador,
@@ -76,28 +88,28 @@ export async function cadastrarEstagio({
   descricao,
   usuariosSugestoes,
   termoCompromisso,
-  termoOrientacao
+  termoOrientacao,
 }: CadastroEstagio) {
-  console.log("====== DEBUG DE CADASTRO ======");
-  console.log("Digitado Orientador:", `"${nomeOrientador}"`);
-  console.log("Digitado Coordenador:", `"${nomeCoordenador}"`);
-  console.log("Lista de Sugestões na Memória:", usuariosSugestoes);
-  console.log("===============================");
-
-
   const orientador = usuariosSugestoes.find(
-    (u) => u.Nome_Completo === nomeOrientador && (u.tipo_de_perfil?.toLowerCase() === "orientador" || u.tipo_de_perfil?.toLowerCase() === "coordenador")
+    (u) =>
+      u.Nome_Completo === nomeOrientador &&
+      (u.tipo_de_perfil?.toLowerCase() === "orientador" ||
+        u.tipo_de_perfil?.toLowerCase() === "coordenador")
   );
   const coordenador = usuariosSugestoes.find(
-    (u) => u.Nome_Completo === nomeCoordenador && u.tipo_de_perfil?.toLowerCase() === "coordenador"
+    (u) =>
+      u.Nome_Completo === nomeCoordenador &&
+      u.tipo_de_perfil?.toLowerCase() === "coordenador"
   );
 
   if (!orientador || !coordenador) {
-    // Melhoramos o erro para te dizer no alert quem ele não encontrou
-    const quemFaltou = !orientador && !coordenador 
-      ? "Orientador e Coordenador" 
-      : !orientador ? "Orientador" : "Coordenador";
-      throw new Error(`Por favor, selecione um ${quemFaltou} válido da lista.`);
+    const quemFaltou =
+      !orientador && !coordenador
+        ? "Orientador e Coordenador"
+        : !orientador
+          ? "Orientador"
+          : "Coordenador";
+    throw new Error(`Por favor, selecione um ${quemFaltou} válido da lista.`);
   }
   const { data: novoEstagio, error: erroEstagio } = await supabase
     .from("Estagios")
@@ -117,19 +129,44 @@ export async function cadastrarEstagio({
     .single();
 
   if (erroEstagio) throw erroEstagio;
-  if (!novoEstagio?.id) throw new Error("Não foi possível obter o ID do estágio criado.");
+  if (!novoEstagio?.id)
+    throw new Error("Não foi possível obter o ID do estágio criado.");
 
-  if (termoCompromisso){
-      await uploadESalvarDocumento(
-        termoCompromisso,
-        novoEstagio.id,
-        "termo_de_compromisso"
-      );}
-  if (termoOrientacao){
-      await uploadESalvarDocumento(
-        termoOrientacao,
-        novoEstagio.id,
-        "termo_de_orientacao"
-      ); }
+  if (termoCompromisso) {
+    await uploadESalvarDocumento(
+      termoCompromisso,
+      novoEstagio.id,
+      "termo_de_compromisso"
+    );
+  }
+  if (termoOrientacao) {
+    await uploadESalvarDocumento(
+      termoOrientacao,
+      novoEstagio.id,
+      "termo_de_orientacao"
+    );
+  }
   return novoEstagio;
+}
+// 3. Cadastra estagio Recomendado
+
+export async function cadastrarEstagioRecomendado({
+  titulo,
+  empresa,
+  competencia,
+  descricao,
+}: cadastroEstagioRecomendado) {
+  const { data: novoEstagioRecomendado, error: erroEstagioRecomendado } = await supabase
+    .from("Estagios_Recomendados")
+    .insert([
+      {
+        titulo: titulo,
+        empresa: empresa,
+        competencia: competencia,
+        descricao: descricao,
+      },
+    ]);
+  if (erroEstagioRecomendado) throw erroEstagioRecomendado;
+
+  return novoEstagioRecomendado;
 }
