@@ -14,8 +14,10 @@ import CardInformativo, { VarianteCard } from "@/components/CardInformativo";
 import OrientacaoCard from "@/components/CardOrientacoes";
 import SecaoEstagiosCoordenador from "@/components/SecaoEstagiosCoordenador";
 import { listarEstagiosPorCoordenadorId } from "@/lib/supabase/functions-select";
+import { deletarEstagio } from "@/lib/supabase/functions-delete"
 import { useOrientacoes } from "@/hooks/useOrientacoes";
 import { PlusCircle } from "lucide-react";
+
 
 interface DadosCardDashboard {
   titulo: string;
@@ -34,6 +36,15 @@ export default function DashboardCoordenador({
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { orientacoes } = useOrientacoes();
+  const handleExcluir = async (id: string) => {
+    try {
+      await deletarEstagio(id);
+      // Opcional: Adicione um toast ou notificação de sucesso aqui
+    } catch (error) {
+      console.error("Erro ao deletar:", error);
+      // Opcional: Tratar erro (ex: toast de erro)
+    }
+  }
 
   async function carregarDados() {
     setIsLoading(true);
@@ -160,6 +171,7 @@ export default function DashboardCoordenador({
               data={orientacao.data_de_inicio}
               status={orientacao.status}
               foto_perfil={orientacao.foto_estagiario}
+              onDelete={() => handleExcluir(orientacao.id)}
             />
           ))}
         </div>
