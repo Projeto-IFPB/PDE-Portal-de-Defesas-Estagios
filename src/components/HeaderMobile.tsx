@@ -5,11 +5,16 @@ import LightModeOutlineIcon from "@iconify-react/material-symbols/light-mode-out
 import { useAuth } from "@/contexts/AuthContext";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { LogOut } from "lucide-react";
+import { logout } from "@/lib/supabase/functions-auth";
+
 
 export default function HeaderMobile() {
   const { usuario } = useAuth();
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     setMounted(true);
@@ -32,6 +37,17 @@ export default function HeaderMobile() {
           ) : (
             <LightModeOutlineIcon className="w-5 h-5 text-yellow-600" />
           )}
+        </button>
+          
+        <button
+          className="p-2 rounded-md hover:bg-gray-100 transition-colors cursor-pointer dark:hover:bg-slate-700"
+          aria-label="Logout"
+          onClick={async () => {
+            await logout();
+            router.push("/");
+          }}
+        >
+          <LogOut className="w-4 h-4 text-gray-900 hover:text-blue-700 dark:text-gray-300 dark:hover:text-red-500" />
         </button>
 
         <div className="w-10 h-10 rounded-full shrink-0 overflow-hidden">

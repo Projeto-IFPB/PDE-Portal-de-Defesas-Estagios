@@ -1,16 +1,19 @@
 "use client";
 
-import NotificationsOutlineIcon from "@iconify-react/material-symbols/notifications-outline";
 import DarkModeOutlineIcon from "@iconify-react/material-symbols/dark-mode-outline";
 import LightModeOutlineIcon from '@iconify-react/material-symbols/light-mode-outline';
 import { useAuth } from "@/contexts/AuthContext";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { LogOut } from "lucide-react";
+import { logout } from "@/lib/supabase/functions-auth";
 
 export default function Header() {
   const { usuario } = useAuth();
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     setMounted(true);
@@ -20,12 +23,6 @@ export default function Header() {
 
   return (
     <header className="hidden md:flex sticky top-0 z-30 items-center justify-end gap-4 h-16 px-6 bg-white w-full dark:bg-slate-900">
-      <button
-        className="p-2 rounded-md hover:bg-gray-100 transition-colors cursor-pointer dark:hover:bg-slate-700"
-        aria-label="Notificações"
-      >
-        <NotificationsOutlineIcon className="w-5 h-5 text-gray-600 hover:text-blue-700 dark:hover:text-yellow-600" />
-      </button>
 
       <button
         onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
@@ -37,6 +34,17 @@ export default function Header() {
         ) : (
           <LightModeOutlineIcon className="w-5 h-5 text-yellow-600" />
         )}
+      </button>
+
+       <button
+        onClick={async () => {
+          await logout();
+          router.push("/");
+        }}
+        className="p-2 rounded-md hover:bg-gray-100 transition-colors cursor-pointer dark:hover:bg-slate-700"
+        aria-label="Logout"
+      >
+        <LogOut className="w-4 h-4 text-gray-800 hover:text-blue-700 dark:text-gray-300 dark:hover:text-red-500" />
       </button>
 
       <div className="text-right border-l border-gray-300 pl-4">

@@ -101,14 +101,14 @@ export default function DashboardAluno({ usuarioId }: { usuarioId: string }) {
 
   return (
     <>
-    <div className="flex items-center justify-between">
+    <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 mb-6">
       <CabecalhoBoasVindas 
         titulo="Bem-vindo, Estudante"
         subtitulo="Gerencie seus estágios e acompanhe seu progresso."
       />
       <button
           onClick={() => setIsModalOpen(true)}
-          className="flex items-center justify-center gap-1.5 px-4 py-3 text-sm font-medium text-white transition-colors bg-[#185adb] rounded-lg shadow-sm cursor-pointer hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          className="flex items-center justify-center gap-1.5 w-full md:w-auto px-4 py-3 text-sm font-medium text-white transition-colors bg-[#185adb] rounded-lg shadow-sm cursor-pointer hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
           <PlusCircle size={18} strokeWidth={2} />
           Cadastrar Novo Estágio
