@@ -17,6 +17,7 @@ import { listarEstagiosPorCoordenadorId } from "@/lib/supabase/functions-select"
 import { deletarEstagio } from "@/lib/supabase/functions-delete"
 import { useOrientacoes } from "@/hooks/useOrientacoes";
 import { PlusCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 
 interface DadosCardDashboard {
@@ -32,17 +33,18 @@ export default function DashboardCoordenador({
 }: {
   usuarioId: string;
 }) {
+    const router = useRouter();
   const [metricas, setMetricas] = useState<DadosCardDashboard[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { orientacoes } = useOrientacoes();
+  const { orientacoes, setOrientacoes } = useOrientacoes();
   const handleExcluir = async (id: string) => {
     try {
       await deletarEstagio(id);
-      // Opcional: Adicione um toast ou notificação de sucesso aqui
+      setOrientacoes((prev) => prev.filter((e) => e.id !== id));
+      router.refresh(); 
     } catch (error) {
       console.error("Erro ao deletar:", error);
-      // Opcional: Tratar erro (ex: toast de erro)
     }
   }
 

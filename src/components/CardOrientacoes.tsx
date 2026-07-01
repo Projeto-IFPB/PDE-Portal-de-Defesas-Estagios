@@ -150,21 +150,19 @@ export default function OrientacaoCard({
         >
           Agendar Defesa
         </button>
+        {/* Modal Confirmar Exclusao */}
         {isDeleteConfirmOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
             <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 p-6 rounded-xl shadow-2xl max-w-sm w-full transition-all">
-              {/* Título */}
               <h3 className="text-lg font-semibold text-gray-900 dark:text-slate-50 mb-2">
                 Confirmar Exclusão
               </h3>
 
-              {/* Descrição */}
               <p className="text-gray-600 dark:text-slate-400 mb-6">
                 Tem certeza que deseja excluir esta orientação pendente? Esta
                 ação não pode ser desfeita.
               </p>
 
-              {/* Botões */}
               <div className="flex gap-3 justify-end">
                 <button
                   onClick={() => setIsDeleteConfirmOpen(false)}
