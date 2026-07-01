@@ -409,3 +409,48 @@ export async function getEstagiosDoCoordenador(coordenadorId: string): Promise<a
     orientador: estagio.orientador ? { ...estagio.orientador, fotoUrl: fotosMap[estagio.orientador.id] || null } : null
   }));
 }
+
+// 17. Buscar estágios dos alunos de determinado orientador
+
+export async function buscarProximasDefesas(idOrientador: string) {
+  const dataAtual = new Date().toISOString().split('T')[0]; // Pega a data de hoje 'AAAA-MM-DD'
+
+  const { data, error } = await supabase
+    .from('Defesa_estagios')
+    .select(`
+      id,
+      data_defesa,
+      horario_defesa,
+      local_defesa,
+      titulo,
+      status,
+      Estagios!inner (
+        id_orientador,
+        id_estagiario,
+        Usuarios:id_estagiario (
+          Nome_Completo
+        )
+      )
+    `)
+    // Filtra apenas os estágios pertencentes a este orientador
+    .eq('Estagios.id_orientador', idOrientador)
+    // Filtra apenas defesas que ainda vão acontecer (daqui para frente)
+    .gte('data_defesa', dataAtual)
+    // Ordena pela data mais próxima e depois pelo horário
+    .order('data_defesa', { ascending: true })
+    .order('horario_defesa', { ascending: true });
+
+  if (error) {
+    console.error("Erro ao buscar próximas defesas:", error);
+    return [];
+  }
+
+  // Mapeia os dados para simplificar a estrutura no front-end (testar depois se deu certo!!!)
+  return data.map((defesa: any) => ({
+    id: defesa.id,
+    dataDefesa: defesa.data_defesa,
+    horario: defesa.horario_defesa?.slice(0, 5), // Remove os segundos (deixa HH:MM)
+    local: defesa.local_defesa,
+    alunoNome: defesa.Estagios?.Usuarios?.Nome_Completo || "Aluno não identificado",
+  }));
+}
