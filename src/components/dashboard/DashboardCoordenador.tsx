@@ -8,7 +8,7 @@ import {
   GraduationCap,
   LucideIcon,
 } from "lucide-react";
-import ModalEstagioRecomendado from "../ModalCadastroEstagio";
+import ModalEstagioRecomendado from "../ModalEstagioRecomendado";
 import CabecalhoBoasVindas from "@/components/CabecalhoBoasVindas";
 import CardInformativo, { VarianteCard } from "@/components/CardInformativo";
 import OrientacaoCard from "@/components/CardOrientacoes";
@@ -117,7 +117,6 @@ export default function DashboardCoordenador({
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           onSuccess={carregarDados}
-          Id_usuario={usuarioId}
         />
       )}
 

@@ -1,4 +1,4 @@
-import { cadastrarEstagio, uploadESalvarDocumento } from "@/lib/supabase/functions-insert";
+import { cadastrarEstagio} from "@/lib/supabase/functions-insert";
 import { useEffect, useRef, useState } from "react";
 import {
   X,
@@ -118,7 +118,6 @@ export default function ModalEstagio({
   };
 
   const handleCadastrarEstagio = async () => {
-    // 1. Validação dos campos obrigatórios (Mantida exatamente como a sua)
     if (
       !empresa ||
       !cargaHoraria ||
@@ -138,8 +137,6 @@ export default function ModalEstagio({
 
     try {
       setIsSubmitting(true);
-
-      // 2. Chamada do serviço isolado que criamos
       await cadastrarEstagio({
         idEstagiario: Id_usuario,
         nomeOrientador: orientador,
