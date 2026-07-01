@@ -75,8 +75,8 @@ export function CardAlterarImagemPerfilDesktop() {
             src={usuario.fotoPerfil} 
             alt="Minha foto de perfil" /> 
 
-            <h2 className="font-semibold text-lg mt-4 dark:text-slate-50">{usuario.nome}</h2>
-            <p className="text-[0.7rem] font-semibold text-slate-500 mb-5 dark:text-slate-400">{'Membro desde ' + usuario.dataCadastro}</p>
+            <h2 className="font-semibold text-lg mt-4 mb-4 dark:text-slate-50">{usuario.nome}</h2>
+            
 
             <input
             type="file"
