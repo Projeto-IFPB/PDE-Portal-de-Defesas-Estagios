@@ -54,7 +54,7 @@ export default function ProximasDefesas({ defesas }: ProximasDefesasProps) {
             <div 
               key={defesa.id} 
               className="flex items-center gap-4 bg-[#F1F3F5] p-4 rounded-xl flex-1 border border-gray-200/50 
-              min-w-[240px]"
+              min-w-60"
             >
               {/* Badge da Data */}
               <div 
