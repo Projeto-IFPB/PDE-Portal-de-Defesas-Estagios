@@ -61,9 +61,9 @@ export default function Home() {
 
       // Redirecionamento baseado no tipo de perfil cadastrado!
       const perfil = usuarioDados.tipo_de_perfil;
-      if (perfil === "aluno") router.push("/aluno");
-      else if (perfil === "orientador") router.push("/orientador");
-      else if (perfil === "coordenador") router.push("/coordenador");
+      if (perfil === "aluno") router.push("/dashboard");
+      else if (perfil === "orientador") router.push("/dashboard");
+      else if (perfil === "coordenador") router.push("/dashboard");
       else router.push("/pendente");
 
     } catch (error: any) {
