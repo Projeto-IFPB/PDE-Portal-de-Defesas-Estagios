@@ -10,7 +10,7 @@ O PDE veio para facilitar a organização e interação entre aluno, orientador 
 - Visualizar estágios em andamento
 
 ## 🛠️ Tecnologias Utilizadas
-- Frontend: Html, TailwindCSS e TypeScript
+- Frontend: Html, TailwindCSS, React e TypeScript
 - Backend: TypeScript, SupaBase
 - Database: SupaBase
 - Deploy: Github Pages
@@ -33,7 +33,7 @@ O PDE veio para facilitar a organização e interação entre aluno, orientador 
    npm run dev
 
 ## 📱 Demo
-- [🌐 Site Online](https://projeto-ifpb.github.io/PDE-Portal-de-Defesas-Estagios/)
+- [🌐 Site Online](https://pde-portal-de-defesas-estagios.vercel.app/)
 - [🎨 Design no Stitch AI](https://stitch.withgoogle.com/projects/4209165456510572961)
 
 ## 📂 Estrutura do Projeto
