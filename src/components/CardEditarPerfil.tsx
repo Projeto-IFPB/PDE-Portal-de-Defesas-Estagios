@@ -12,6 +12,10 @@ export default function CardEditarPerfil() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [loading, setLoading] = useState(false);
+  const [feedback, setFeedback] = useState<{
+      tipo: "sucesso" | "erro";
+      mensagem: string;
+    } | null>(null);
 
   // Preenche os campos assim que o usuário carregar do contexto
   useEffect(() => {
@@ -39,7 +43,11 @@ export default function CardEditarPerfil() {
     const resultado = await atualizarDadosUsuario(usuario.id, nome, email, senha);
 
     if (resultado.sucesso) {
-      alert("Perfil atualizado com sucesso!");
+      setFeedback({
+        tipo: "sucesso",
+        mensagem: "Perfil atualizado com sucesso!"
+      });
+      setTimeout(() => setFeedback(null), 3000);
       // Atualiza o contexto corretamente com o nome completo
       setUsuario({ 
         ...usuario, 
@@ -49,13 +57,29 @@ export default function CardEditarPerfil() {
       });
       setSenha('');
     } else {
-      alert("Erro ao atualizar: " + resultado.erro);
+      setFeedback({
+        tipo: "erro",
+        mensagem: "Erro ao atualizar: " + resultado.erro,
+      });
+      setTimeout(() => setFeedback(null), 3000);
     }
     
     setLoading(false);
   };
 
   return (
+    <>
+    {feedback && (
+                <div
+          className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded-full font-semibold shadow-lg transition-all duration-300 animate-in fade-in slide-in-from-top-5 ${
+            feedback.tipo === "sucesso"
+              ? "bg-[#d1fae5] text-[#064e3b]"
+              : "bg-red-100 text-red-800"
+          }`}
+        >
+          {feedback.mensagem}
+        </div>
+      )}
     <div className="bg-white rounded-xl dark:bg-slate-900 shadow-sm border border-gray-100 p-6 sm:p-8">
       <h2 className="text-xl font-semibold dark:text-white text-gray-800 mb-6">Informações Pessoais</h2>
       
@@ -128,5 +152,6 @@ export default function CardEditarPerfil() {
         </div>
       </form>
     </div>
+    </>
   );
 }

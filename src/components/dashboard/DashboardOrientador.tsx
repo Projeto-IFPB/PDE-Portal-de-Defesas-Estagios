@@ -5,9 +5,10 @@ import { Briefcase, Users, ClipboardList, LucideIcon } from "lucide-react";
 import CabecalhoBoasVindas from "@/components/CabecalhoBoasVindas";
 import CardInformativo, { VarianteCard } from "@/components/CardInformativo";
 import OrientacaoCard from "@/components/CardOrientacoes";
-// Importamos as duas funções direto do seu arquivo centralizado
 import { listarEstagiosPorOrientadorId, listarDefesasPorOrientadorId } from "@/lib/supabase/functions-select";
+import { deletarEstagio } from "@/lib/supabase/functions-delete"
 import { useOrientacoes } from "@/hooks/useOrientacoes";
+import { useRouter } from "next/navigation";
 
 interface DadosCardDashboard {
   titulo: string;
@@ -26,10 +27,20 @@ interface DefesaItem {
 }
 
 export default function DashboardOrientador({ usuarioId }: { usuarioId: string }) {
+  const router = useRouter();
   const [metricas, setMetricas] = useState<DadosCardDashboard[]>([]);
   const [defesas, setDefesas] = useState<DefesaItem[]>([]); 
   const [isLoading, setIsLoading] = useState(true);
-  const { orientacoes } = useOrientacoes();
+  const { orientacoes, setOrientacoes } = useOrientacoes();
+  const handleExcluir = async (id: string) => {
+      try {
+        await deletarEstagio(id);
+        setOrientacoes((prev) => prev.filter((e) => e.id !== id));
+      router.refresh(); 
+      } catch (error) {
+        console.error("Erro ao deletar:", error);
+      }
+    }
 
   useEffect(() => {
     async function carregarDados() {
@@ -128,6 +139,7 @@ export default function DashboardOrientador({ usuarioId }: { usuarioId: string }
               data={orientacao.data_de_inicio}
               status={orientacao.status}
               foto_perfil={orientacao.foto_estagiario}
+              onDelete={() => handleExcluir(orientacao.id)}
             />
           ))}
         </div>
