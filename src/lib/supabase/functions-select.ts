@@ -412,8 +412,8 @@ export async function getEstagiosDoCoordenador(coordenadorId: string): Promise<a
 
 // 17. Buscar estágios dos alunos de determinado orientador
 
-export async function buscarProximasDefesas(idOrientador: string) {
-  const dataAtual = new Date().toISOString().split('T')[0]; // Pega a data de hoje 'AAAA-MM-DD'
+export async function listarDefesasPorOrientadorId(usuarioId: string) {
+  const dataAtual = new Date().toISOString().split('T')[0]; // Data de hoje YYYY-MM-DD
 
   const { data, error } = await supabase
     .from('Defesa_estagios')
@@ -422,35 +422,24 @@ export async function buscarProximasDefesas(idOrientador: string) {
       data_defesa,
       horario_defesa,
       local_defesa,
-      titulo,
-      status,
-      Estagios!inner (
-        id_orientador,
-        id_estagiario,
-        Usuarios:id_estagiario (
+      Estagios!id_estagio!inner (
+        Id_orientador,
+        Id_estagiario,
+        Usuarios:Id_estagiario (
           Nome_Completo
         )
       )
     `)
-    // Filtra apenas os estágios pertencentes a este orientador
-    .eq('Estagios.id_orientador', idOrientador)
-    // Filtra apenas defesas que ainda vão acontecer (daqui para frente)
+    .eq('Estagios.Id_orientador', usuarioId)
     .gte('data_defesa', dataAtual)
-    // Ordena pela data mais próxima e depois pelo horário
     .order('data_defesa', { ascending: true })
     .order('horario_defesa', { ascending: true });
 
   if (error) {
-    console.error("Erro ao buscar próximas defesas:", error);
-    return [];
+    // Força o log detalhado no terminal/console do navegador para nunca mais vir `{}`
+    console.error("Erro detalhado do Supabase:", error.message, error.details, error.hint);
+    throw error;
   }
 
-  // Mapeia os dados para simplificar a estrutura no front-end (testar depois se deu certo!!!)
-  return data.map((defesa: any) => ({
-    id: defesa.id,
-    dataDefesa: defesa.data_defesa,
-    horario: defesa.horario_defesa?.slice(0, 5), // Remove os segundos (deixa HH:MM)
-    local: defesa.local_defesa,
-    alunoNome: defesa.Estagios?.Usuarios?.Nome_Completo || "Aluno não identificado",
-  }));
+  return data || [];
 }
