@@ -2,15 +2,16 @@
 import {listarEstagiosPorOrientadorId, buscarUsuarioPorId, obterCaminhoFotoPerfil, obterUrlPublicaFotoPerfil } from '@/lib/supabase/functions-select'
 import { useState, useEffect } from 'react';
 import { Estagio } from '@/lib/supabase/interfaces'
+import { useAuth } from '@/contexts/AuthContext';
 
 
 //coloquei um id provisorio so para testar, quando colocarmos o login vamos puxar pelo id no local-storage
-const id_orientador = "db64bcca-172c-4b19-b3fe-33aea90e4df3"
 export const useOrientacoes = () => {
+    const { usuario } = useAuth();
     const [orientacoes, setOrientacoes ] = useState<Estagio[]>([])
     useEffect(() => {
       async function carregarOrientacoes() {
-        const estagios = await listarEstagiosPorOrientadorId(id_orientador);
+        const estagios = await listarEstagiosPorOrientadorId(usuario.id);
         if (estagios) {
           const estagiosComAluno = await Promise.all(estagios.map(async (estagio) => {
             const usuario = await buscarUsuarioPorId(estagio.Id_estagiario);
