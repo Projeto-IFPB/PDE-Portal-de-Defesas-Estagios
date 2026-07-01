@@ -1,29 +1,41 @@
-import { supabase } from "./supabaseClient";
+import { supabase } from './supabaseClient'; // Ajuste o caminho se necessário
 
-export async function atualizarDadosUsuario(nome: string, email: string, senha?: string) {
+export async function atualizarDadosUsuario(idUsuario: string, nome: string, email: string, senha?: string) {
   try {
-    // Montamos o objeto de atualização. O 'full_name' vai para os metadados
-    const updates: any = {
+    // 1. Atualiza as credenciais no Auth (Autenticação do Supabase)
+    const authUpdates: any = {
       email: email,
       data: { full_name: nome }
     };
 
-    // Só adicionamos a senha se o usuário realmente digitou uma nova
     if (senha && senha.trim() !== '') {
-      updates.password = senha;
+      authUpdates.password = senha;
     }
 
-    // O Supabase atualiza os dados do usuário logado atualmente
-    const { data, error } = await supabase.auth.updateUser(updates);
+    const { error: authError } = await supabase.auth.updateUser(authUpdates);
 
-    if (error) {
-      console.error("Erro ao atualizar perfil no Supabase:", error.message);
-      return { sucesso: false, erro: error.message };
+    if (authError) {
+      console.error("Erro ao atualizar Auth:", authError.message);
+      return { sucesso: false, erro: authError.message };
     }
 
-    return { sucesso: true, data };
-  } catch (err) {
+    // 2. Força a atualização na sua tabela 'Usuarios'
+    const { error: dbError } = await supabase
+      .from('Usuarios')
+      .update({ 
+        Nome_Completo: nome,
+        Email: email 
+      })
+      .eq('id', idUsuario);
+
+    if (dbError) {
+      console.error("Erro ao atualizar tabela Usuarios:", dbError.message);
+      return { sucesso: false, erro: dbError.message };
+    }
+
+    return { sucesso: true };
+  } catch (err: any) {
     console.error("Erro inesperado:", err);
-    return { sucesso: false, erro: "Erro interno ao tentar atualizar." };
+    return { sucesso: false, erro: err.message || "Erro interno ao tentar atualizar." };
   }
 }

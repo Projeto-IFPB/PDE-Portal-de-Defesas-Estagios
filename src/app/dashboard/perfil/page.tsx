@@ -4,10 +4,10 @@ import { useAuth } from "@/contexts/AuthContext";
 import { CardAlterarImagemPerfilDesktop, CardAlterarImagemPerfilMobile } from "@/components/CardAlterarImagemPerfil";
 import CabecalhoPaginas from "@/components/CabecalhoPaginas";
 import CardInformacoesPerfil from "@/components/CardInformacoesPerfil";
-import CardEditarPerfil from "@/components/CardEditarPerfil"; // Importando nosso componente novo
+import CardEditarPerfil from "@/components/CardEditarPerfil"; 
 
 export default function Dashboard() {
-  const { usuario } = useAuth(); // setUsuario não é mais necessário aqui, já usamos lá dentro do form
+  const { usuario } = useAuth(); 
 
   // Prevenção de quebra caso o usuário demore a carregar
   if (!usuario) return <p>Carregando perfil...</p>;
