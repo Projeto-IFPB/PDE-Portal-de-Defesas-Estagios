@@ -10,9 +10,9 @@ O PDE veio para facilitar a organização e interação entre aluno, orientador 
 - Visualizar estágios em andamento
 
 ## 🛠️ Tecnologias Utilizadas
-- Frontend: Html, Css e JavaScript
-- Backend: JavaScript
-- Database: Mockapi
+- Frontend: Html, TailwindCSS e TypeScript
+- Backend: TypeScript, SupaBase
+- Database: SupaBase
 - Deploy: Github Pages
 
 ## 🚀 Como Executar
@@ -34,50 +34,86 @@ O PDE veio para facilitar a organização e interação entre aluno, orientador 
 
 ## 📱 Demo
 - [🌐 Site Online](https://projeto-ifpb.github.io/PDE-Portal-de-Defesas-Estagios/)
-- [🎨 Design no Figma](https://www.figma.com/design/WfPFBLYlfd9QC99Kn2l0jx/Portal-De-Defesas-de-Est%C3%A1gio?node-id=0-1&t=JnLp7ufAWiUW9pzs-1)
+- [🎨 Design no Stitch AI](https://stitch.withgoogle.com/projects/4209165456510572961)
 
 ## 📂 Estrutura do Projeto
 ```text
 PDE-Portal-de-Defesa-Estagios
 |
-├── .github/                               # Diretório de configuração do github
-|      └── workflows/                      # Subpasta obrigatória para automatização utilizando o github
-|           ├── deploy.yml                 # Arquivo de configuração para automatização ao fazer deploy
-├── assets/                                # Diretório com todos os arquivos estáticos da aplicação
-|      ├── css/                            # Arquivos css
-|           ├── pagina_aluno.css           # CSS da página de aluno
-|           ├── pagina_coordenador.css     # CSS da página do coordenador
-|           ├── pagina_orientador.css      # CSS da página de orientador
-|           └── style.css                  # CSS da página de autenticação
-|      ├── img/                            # Imagens da aplicação
-|      └── js/                             # Arquivos JavaScript da aplicação
-|          ├── autenticacoes.js            # JavaScript da responsável pela troca de telas
-|          ├── coordenador.js              # JavaScript da página de coordenador
-|          ├── orientador.js               # JavaScript da página de orientador
-|          ├── pagina_aluno.js             # JavaScript da página de aluno
-|          └── script.js                   # JavaScript da página de autenticação
-├── components/                            # Componentes reutilizáveis
-|     └── Css/                             # Arquivos Css reutilizáveis
-|         ├── cabecalho.css                # Css reutilizável do header
-|         ├── dashboard-informativo.css    # Css reutilizável dos cards
-|         └── modal-base.css               # Css reutilizável dos modais
-|     └── Js/                              # JavaScripts reutilizáveis
-|         ├── cabecalho.js                 # Javascript reutilizável do cabeçalho
-|         └── functions.js                 # JavaScript com funções reutilizáveis
-├── pages/                                 # Páginas html da aplicação
-|    ├── coordenador.html                  # HTML da página de coordenador
-|    ├── orientador.html                   # HTML da página de orientador
-|    └── pagina_aluno.html                 # HTML da página de aluno
-├── public/                                # Pasta que contem os arquivos que não devem ser mimificados pelo Vite
-|    └── Logo_PDE_Isolada.png              # Logo da aplicação que fica no header     
-├── index.html                             # HTML da página de autenticação
-├── .env                                   # Arquivo com os endpoints do MOCKAPI
-├── .gitignore                             # Arquivos importantes que não sobem para o github
-├── package-lock.json                      # Dependências
-├── package.json                           # Dependências
-├── preview-pde.png                        # Imagem de preview da aplicação no IFPB Projects
-├── README.md                              # Documentação do Projeto
-├── vite.config.js                         # Configuração do Vite
+├── node_modules/
+|
+├── public/                                                    # Arquivos estáticos servidos publicamente
+|    └── img/                                                  
+|        ├── Logo_PDE_Isolada.png                              # Logotipo do PDE (versão isolada)
+|        ├── preview-pde-com-titulo-e-transparente.png         # Logo com título
+|        └── preview-pde-transparente.png                      # Logo sem fundo
+|
+├── src/                                                       # Código fonte da aplicação  
+|    ├── app/                                                  # Rotas e páginas (Next.js App Router)
+|    |   ├── dashboard/                                        # Rotas protegidas do painel
+|    |   |   ├── alunos/                                       
+|    |   |   |   ├── page.tsx                                  # Lista de alunos (coordenador/orientador)
+|    |   |   |   └── [id]/                                     # Página de detalhes de um aluno específico
+|    |   |   |       ├── page.tsx                              # Perfil detalhado do aluno
+|    |   |   |       ├── actions.ts                            # Server Actions (atualizar status, etc.)
+|    |   |   |       └── StatusSection.tsx                     # Componente de status do estÃ¡gio
+|    |   |   ├── bancas/                         
+|    |   |   |   └── pages.tsx                                 # Gerenciamento de bancas de defesa
+|    |   |   ├── calendario/                       
+|    |   |   |   └── pages.tsx                                 # Calendário de defesas (FullCalendar)
+|    |   |   ├── perfil/                         
+|    |   |   |   └── pages.tsx                                 # Página de perfil do usuário logado
+|    |   |   ├── layout.tsx                                    # Layout do dashboard (sidebar, header)
+|    |   |   └── page.tsx                                      # Página inicial do dashboard
+|    |   ├── globals.css                                       # Estilos globais (Tailwind CSS)
+|    |   ├── layout.tsx                                        # Layout raiz (html, body, fontes)
+|    |   ├── page.tsx                                          # Página inicial (Login/Cadastro)
+|    |   └── proveiders.tsx                                    # Providers globais (AuthContext, next-themes)
+|    ├── components/                                           # Componentes React reutilizáveis
+|    |   ├── dashboard/                                        # Componentes específicos de cada perfil
+|    |   |   ├── DashboardAluno.tsx                            # Dashboard do perfil Aluno
+|    |   |   ├── DashboardCoordenador.tsx                      # Dashboard do perfil Coordenador
+|    |   |   └── DashboardOrientador.tsx                       # Dashboard do perfil Orientador
+|    |   ├── Aside.tsx                                         # Asidebar de navegação lateral
+|    |   ├── CabecalhoBoasVindas.tsx                           # Cabeçalho com saudação ao usuário
+|    |   ├── CabecalhoPaginas.tsx                              # Cabeçalho padrão das páginas
+|    |   ├── CardAlterarImagemPerfil.tsx                       # Card para trocar foto de perfil
+|    |   ├── CardBancaDefesa.tsx                               # Card informativo de banca de defesa
+|    |   ├── CardEstagioAluno.tsx                              # Card de estágio do aluno
+|    |   ├── CardEstagioRecomendado.tsx                        # Card de estágio recomendado
+|    |   ├── CardInformativo.tsx                               # Card com informações diversas
+|    |   ├── CardOrientacoes.tsx                               # Card de orientações/notificações
+|    |   ├── Header.tsx                                        # Header principal do dashboard
+|    |   ├── HeaderMobile.tsx                                  # Header responsivo para mobile
+|    |   ├── ModalAgendarDefesa.tsx                            # Modal para agendar defesa
+|    |   ├── ModalCadastroEstagio.tsx                          # Modal para cadastrar estágio
+|    |   ├── ModalDetalhesDefesa.tsx                           # Modal com detalhes da defesa
+|    |   ├── ModalEstagioCoordenador.tsx                       # Modal para coordenação de estágio
+|    |   ├── NavMobile.tsx                                     # Navegação mobile
+|    |   └── SecaoEstagiosCoordenador.tsx                      # Sessão de estágios (visão coordenador)
+|    ├── contexts/
+|    |   └── AuthContext.tsx                                   # Contexto de autenticação (usuário logado)
+|    ├── data/
+|    |   └── cards-dashboard.tsx                               # Dados mockados para os cards do dashboardsu
+|    ├── hooks/
+|    |   └── useOrientacoes.tsx                                # Hook customizado para buscar orientações
+|    └── lib/
+|        └── supabase/                                         # Camada de integração com Supabase
+|            ├── functions-insert.ts                           # Funções de inserção (INSERT)
+|            ├── functions-select.ts                           # Funções de consulta (SELECT)
+|            ├── interfaces.ts                                 # Interfaces TypeScript (Usuario, Estagio, etc.)
+|            └── supabaseClient.ts                             # Cliente Supabase inicializado
+|
+├── .env                                                       # Variáveis de ambiente (credenciais Supabase, URLs, etc.)
+├── .gitignore                                                 # Arquivos/pastas ignorados pelo Git
+├── biome.json                                                 # Configurações do Biome (linter + formatter)
+├── next-env.d.ts                                              # Tipagens automáticas do Next.js
+├── next.config.ts                                             # Configurações do Next.js (compilador React, etc.)
+├── package.json                                               # Dependências e scripts do projeto
+├── package-lock.json                                          # Lockfile das dependências
+├── postcss.config.mjs                                         # Configurações do PostCSS + Tailwind CSS v4
+├── preview-pde.png                                            # Preview do projeto (usado em links sociais)
+└── tsconfig.json                                              # Configurações do TypeScript
 ```
 
 ## 👥 Autores
