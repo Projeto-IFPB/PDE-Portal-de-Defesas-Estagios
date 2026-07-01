@@ -29,15 +29,25 @@ export default function CardEditarPerfil() {
 
   const handleSalvar = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Proteção caso o usuário não tenha carregado ainda
+    if (!usuario) return;
+
     setLoading(true);
 
-    const resultado = await atualizarDadosUsuario(nome, email, senha);
+    // Passamos o usuario.id como primeiro parâmetro
+    const resultado = await atualizarDadosUsuario(usuario.id, nome, email, senha);
 
     if (resultado.sucesso) {
       alert("Perfil atualizado com sucesso!");
-      // Atualiza o contexto para refletir a mudança na tela na mesma hora
-      setUsuario({ ...usuario, nome, email });
-      setSenha(''); // Limpa o campo de senha por segurança
+      // Atualiza o contexto corretamente com o nome completo
+      setUsuario({ 
+        ...usuario, 
+        nomeCompleto: nome, 
+        nome: nome.trim().split(' ')[0], // Atualiza também o primeiro nome pros menus
+        email: email 
+      });
+      setSenha('');
     } else {
       alert("Erro ao atualizar: " + resultado.erro);
     }
